@@ -1,0 +1,20 @@
+{% extends 'root.html.twig' %}
+
+{% block body %}
+
+    {% set page = pageGroup[_language] ?? pageGroup[_fallback] %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+                <h1 class="my-5">{{ page.title }}</h1>
+                <div class="page__body">
+                    {% autoescape false %}
+                        {{ page.html }}
+                    {% endautoescape %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

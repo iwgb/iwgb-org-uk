@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="{{ _language }}">
+<head>
+    <title>{{ title }} - IWGB</title>
+    {% include 'head.html.twig' %}
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+    {% block prenav %}{% endblock %}
+
+    {% include 'nav/nav.html.twig' with {
+        data: nav,
+    } only %}
+
+    {% block body %}{% endblock %}
+
+    {% include 'footer/footer.html.twig' with {
+        data: footer,
+        mapFooter: mapFooter,
+    } only %}
+
+    {% include 'scripts.html.twig' %}
+    {% block scripts %}{% endblock %}
+
+    {% include 'debug.html.twig' %}
+</body>
+</html>

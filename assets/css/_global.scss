@@ -1,0 +1,91 @@
+@import '../../view/util';
+
+body:not([data-admin=yes]), .cc-window {
+    font-family: 'Fira Sans', Helvetica Neue, Arial, sans-serif !important;
+}
+
+.cc- {
+    &message, &btn {
+        font-size: 1rem !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    &window {
+        align-items: stretch !important;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .cc-window {
+        bottom: auto !important;
+        top: 0 !important;
+        position: absolute !important;
+    }
+}
+
+a {
+    cursor: pointer;
+}
+
+.link-unstyled, .link-unstyled:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.bg-grey {
+    background-color: #eee;
+}
+
+.bg-dark-grey {
+    background-color: #666;
+}
+
+.link-span-only {
+
+    &, &:hover {
+        text-decoration: none;
+    }
+
+    span {
+        text-decoration: underline;
+    }
+}
+
+.bg-image {
+    background-position: center;
+    background-size: cover;
+}
+
+.grecaptcha-badge {
+    visibility: hidden;
+}
+
+.debug {
+    border-top: 3px solid black;
+}
+
+h1, h2, h3, h4 {
+    font-weight: $font-weight-bold;
+}
+
+.interpunct-list span {
+
+    &::after {
+        content: "\00a0\00a0·\00a0"; // (nbsp)
+    }
+
+    &:last-of-type::after {
+        content: "";
+    }
+}
+
+.btn-iwgb {
+    background-color: $iwgbRed;
+    color: white !important;
+
+    &:hover {
+        background-color: $iwgbRedDark;
+        color: white !important;
+    }
+}

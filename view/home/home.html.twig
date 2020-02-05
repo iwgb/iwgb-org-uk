@@ -1,0 +1,152 @@
+{% extends 'root.html.twig' %}
+
+{% block prenav %}
+
+    <div class="container-fluid p-0 d-none d-md-block hero ">
+        <div class="d-flex align-items-end vh-100 hero__slideshow">
+            <div class="container-fluid hero__brand">
+                <div class="container-fluid d-flex px-4 py-2 justify-content-between align-items-center text-white">
+                    <div class="d-flex align-items-center">
+                        <img alt="{{ _('global', 'logo.roundel') }}"
+                             class="hero__brand__roundel"
+                             src="{{ _i("/assets/roundel-colour.png") }}"
+                        >
+                        <div class="hero__brand__names ml-3">
+                            <img alt="{{ _('global', 'logo.wordmark') }}"
+                                 class="hero__brand__wordmark"
+                                 src="{{ _i("/assets/wordmark-white.png") }}"
+                            >
+                            <span class="d-block hero__brand__names__long font-weight-bold">{{ _('global', 'iwgb') }}</span>
+                        </div>
+                    </div>
+                    <span
+                            class="hero__brand__slogan text-uppercase ml-3 font-weight-bold font-italic text-right"
+                    >
+                        {{ _(_self, 'slogan') }}
+                    </span>
+                </div>
+                <div class="container-fluid pb-1 d-flex justify-content-center">
+                    <a href="#top"
+                       class="link-unstyled"
+                    >
+                        <i class="fas fa-arrow-down text-white"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    {% include 'story/story-grid.html.twig' with {
+        'featured': featured,
+        'stories': posts,
+    } only %}
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <a href="#" class="text-dark link-span-only d-flex align-items-center">
+                <span class="pr-2 moreStories">{{ _('global', 'readMore') }}</span>
+                <i class="fas fa-chevron-right fa-lg"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        {% include 'home/photo-tile.html.twig' with {
+            headerTop: 'We are',
+            headerBottom: 'the IWGB.',
+            text: 'We’re a new and dynamic independent trade union. From our roots representing migrant workers, we’ve evolved to taking on the bosses of the so-called gig economy and government regulators, representing under-unionised and under-represented workforces.',
+            direction: 'left',
+            image: 'https://cdn.iwgb.org.uk/bucket/home/header5.jpg',
+            linkText: 'Watch the video',
+            linkHref: '#',
+            secondLinkText: 'Donate',
+            secondLinkHref: '#',
+        } only %}
+
+        {% for campaign in campaigns %}
+            {% if loop.index is divisible by(2) %}
+                {% set direction = 'left' %}
+            {% else %}
+                {% set direction = 'right' %}
+            {% endif %}
+            {% set headerArray = campaign.title|split(' ', 3) %}
+
+            {% include 'home/photo-tile.html.twig' with {
+                headerTop: headerArray[0] ~ ' ' ~ headerArray[1],
+                headerBottom: headerArray[2],
+                text: campaign.excerpt,
+                direction: direction,
+                image: campaign.featureImage,
+                linkText: 'Read more',
+            } only %}
+        {% endfor %}
+    </div>
+
+    <div class="container-fluid bg-image d-flex align-items-end lazyload benefits"
+         data-bg="https://cdn.iwgb.org.uk/bucket/home/5c85b1b827c26.jpg"
+    >
+        <div class="container my-5">
+            <h1 class="benefits__heading d-inline">{{ _(_self, 'slogan') }}</h1>
+        </div>
+    </div>
+    <div class="container-fluid bg-dark-grey text-white">
+        <div class="container">
+            <div class="row">
+                {% for i in 1..3 %}
+                    <div class="col-12 col-md my-4 my-md-5">
+                        <h2>{{ _(_self, 'benefit' ~ i ~ '.heading')}}</h2>
+                        <p>{{ _(_self, 'benefit' ~ i ~ '.text') }}</p>
+                        <a href="{{ _(_self, 'benefit' ~ i ~ '.href') }}"
+                           class="btn btn-iwgb"
+                        >
+                            <span>{{ _(_self, 'benefit' ~ i ~ '.link') }}</span>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% include 'contact/contact.html.twig' %}
+
+{% endblock %}
+
+{% block scripts %}
+
+    <script>
+        $(document).ready(function () {
+
+            const images = [
+                {% for image in slideshow %}
+                '{{ image }}'
+                {% if not loop.last %},{% endif %}
+                {% endfor %}
+            ];
+
+            function cycleImage() {
+                imageIndex++;
+                if (imageIndex === images.length) {
+                    imageIndex = 0;
+                }
+                const slideshow = $('.hero__slideshow');
+                if (slideshow.css('display') !== 'none') {
+                    slideshow.fadeTo(400, 0.2, () => {
+                        slideshow.css({
+                            background: 'url(' + images[imageIndex] + ') center/cover',
+                        });
+                    }).fadeTo(400, 1);
+                }
+            }
+
+            let imageIndex = -1;
+            cycleImage();
+            window.setInterval(cycleImage, 10000{# ms #});
+        });
+    </script>
+
+    <script>
+
+    </script>
+{% endblock %}

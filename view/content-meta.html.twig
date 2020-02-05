@@ -1,0 +1,28 @@
+<meta name="title" content="{{ resource.meta.title ?? resource.title  }}">
+<meta name="description" content="{{ resource.meta.description ?? resource.excerpt }}">
+
+{% set description = resource.meta.description ?? resource.excerpt|default('') %}
+
+{# open graph, facebook #}
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ _url }}">
+<meta property="og:title" content="{{ resource.meta.ogTitle ?? resource.meta.title ?? resource.title }}">
+{% if description is not empty %}
+    <meta property="og:description" content="{{ resource.meta.ogDescription ?? description }}">
+{% endif %}
+{% if resource.featureImage is defined or resource.meta.ogImage is defined %}
+    <meta property="og:image" content="{{ resource.meta.ogImage ?? resource.featureImage }}">
+{% endif %}
+
+{# twitter #}
+{% if resource.meta.twitterImage is defined or resource.featureImage is defined %}
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:image" content="{{ resource.meta.twitterImage ?? resource.featureImage }}">
+{% else %}
+    <meta property="twitter:card" content="summary">
+{% endif %}
+<meta property="twitter:url" content="{{ _url }}">
+<meta property="twitter:title" content="{{ resource.meta.twitterTitle ?? resource.meta.title ?? resource.title }}">
+{% if description is not empty %}
+    <meta property="twitter:description" content="{{ resource.meta.twitterDescription ?? description }}">
+{% endif %}

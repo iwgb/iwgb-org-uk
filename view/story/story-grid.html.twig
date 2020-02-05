@@ -1,0 +1,34 @@
+<div class="container mt-3 mb-5 my-md-5">
+    <h1 class="d-none d-md-block">{{ _('global', 'latestStories') }}</h1>
+    {% if featured[_language] is defined %}
+        {% set featuredPost = featured[_language] %}
+    {% else %}
+        {% set featuredPost = featured[_fallback] %}
+    {% endif %}
+    <div class="row">
+        <a href="{{ _a('/post/' ~ featuredPost.slug) }}"
+           class="link-unstyled col-12"
+        >
+            <div class="w-100 story story--pinned bg-image d-flex flex-column justify-content-end lazyload"
+                 data-bg="{{ featuredPost.featureImage }}"
+            >
+                <div class="story__data px-3 py-2">
+                    <h2 class="story__data__title text-white m-0">{{ featuredPost.title }}</h2>
+                    <div class="story__data__meta story__data__meta--pinned">
+                        <span>{{ featuredPost.primaryAuthor.name }}</span>
+                        <span>{{ timeAgo(featuredPost.publishedAt) }}</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="row my-3">
+        {% for story in stories %}
+            <div class="col-12 col-md-4">
+                {% include 'story/story.html.twig' with {
+                    story: story[_language] ?? story[_fallback],
+                } only %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

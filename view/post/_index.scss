@@ -1,0 +1,35 @@
+@import '../util';
+
+.post {
+
+    &__featured {
+
+        &__title {
+            @include stripeText;
+            font-size: 2.5rem;
+        }
+
+        &__image {
+            min-height: 30rem;
+        }
+    }
+
+    &__body {
+        @include bodyText;
+
+        @include media-breakpoint-up(md) {
+            border-left: 1px solid $gray-400;
+        }
+    }
+
+    &__donate {
+
+        &__header {
+            background-color: $iwgbRed;
+        }
+
+        &__body {
+            background-color: $iwgbRedLight;
+        }
+    }
+}

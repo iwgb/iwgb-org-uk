@@ -1,0 +1,28 @@
+@import '../vendor/twbs/bootstrap/scss/functions';
+@import '../vendor/twbs/bootstrap/scss/variables';
+@import '../vendor/twbs/bootstrap/scss/mixins';
+
+$iwgbRed: #c0392b;
+$iwgbRedDark: #962d22;
+$iwgbRedLight: #d65548;
+$iwgbGreen: #27ae60;
+
+$roundelHeight: 7.5rem;
+$smallWordmarkHeight: 3.5rem;
+$largeWordmarkHeight: 4.5rem;
+
+@mixin stripeText {
+    background-color: rgba($iwgbRed, .8);
+    font-weight: $font-weight-bold;
+    color: white;
+}
+
+@mixin bodyText {
+    font-size: 1rem;
+    line-height: 1.5;
+
+    a {
+        color: inherit;
+        text-decoration: underline;
+    }
+}

@@ -1,0 +1,11 @@
+.contact-office {
+
+    &__map {
+        border-top: 1px solid white;
+    }
+
+    &__phone {
+        unicode-bidi: bidi-override;
+        direction: rtl;
+    }
+}

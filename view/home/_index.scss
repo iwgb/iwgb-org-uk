@@ -1,0 +1,110 @@
+@import '../util';
+
+.hero {
+    background-color: black;
+
+    &__slideshow {
+        filter: grayscale(1);
+    }
+
+    &__brand {
+        background-color: rgba(black, 0.5);
+        box-shadow: 0 0 20px 20px rgba(black, 0.5);
+
+        &__roundel {
+            height: $roundelHeight
+        }
+
+        &__wordmark {
+            height: $largeWordmarkHeight
+        }
+
+        &__names {
+            justify-self: flex-start;
+
+            &__long {
+                font-size: $font-size-lg;
+            }
+        }
+
+        &__slogan {
+            font-size: 1.7rem;
+        }
+    }
+}
+
+.moreStories {
+    font-size: $font-size-lg;
+}
+
+@mixin tile($directionLabel, $direction, $flexDirection) {
+
+    .tile--#{$directionLabel} {
+        text-align: $direction;
+        flex-direction: $flexDirection;
+
+        .tile {
+            $margin: 10rem;
+
+            &__text {
+                padding-top: 5rem;
+
+                @include media-breakpoint-up(md) {
+                    background: none !important;
+                    margin-#{$direction}: $margin * -1;
+                }
+
+                @include media-breakpoint-down(sm) {
+                    text-align: left;
+                }
+
+                &__part {
+                    @include stripeText;
+                    font-size: 6rem;
+                    line-height: normal;
+
+                    @include media-breakpoint-down(sm) {
+                        font-size: 4rem;
+                    }
+
+                    &--bottom {
+                        @include media-breakpoint-up(md) {
+                            margin-#{$direction}: 5rem;
+                        }
+
+                        @include media-breakpoint-down(sm) {
+                            margin-left: 5rem;
+                        }
+                    }
+                }
+
+                &__description {
+                    margin-#{$direction}: $margin;
+                    background-color: white;
+                }
+            }
+
+            &__image {
+                height: auto;
+                margin-#{$direction}: 5rem;
+            }
+        }
+    }
+}
+
+.benefits {
+    height: 50vh;
+    min-height: 27rem;
+
+    &__heading {
+        @include stripeText;
+        font-size: 6rem;
+
+        @include media-breakpoint-up(md) {
+            font-size: 5rem;
+        }
+    }
+}
+
+@include tile(left, left, row);
+@include tile(right, right, row-reverse);

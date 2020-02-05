@@ -1,0 +1,56 @@
+.story {
+    $border: 1px solid #333;
+    border-top: $border;
+
+    &--pinned {
+        height: 70vh;
+    }
+
+    &--regular {
+        border-bottom: $border;
+
+        .story__image {
+            height: 15rem;
+            filter: grayscale(1);
+            transition: filter .3s;
+        }
+
+        &:hover .story__image {
+            filter: grayscale(0);
+        }
+    }
+
+    &__container {
+        background: rgba(white, .4);
+    }
+
+    &__data {
+
+        .story--pinned & {
+            background: rgba(#333, .7);
+        }
+
+        &__title {
+            line-height: .95em;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+        }
+
+        &__meta {
+
+            span:not(:last-of-type)::after {
+                content: " ·";
+            }
+
+            &--pinned {
+                color: #ccc
+            }
+        }
+    }
+
+    &:hover .story__data__title {
+        text-decoration: underline;
+    }
+}

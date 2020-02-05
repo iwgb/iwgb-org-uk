@@ -1,0 +1,8 @@
+@import '../util';
+
+.page {
+
+    &__body {
+        @include bodyText;
+    }
+}

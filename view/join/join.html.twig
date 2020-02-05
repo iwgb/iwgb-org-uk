@@ -1,0 +1,57 @@
+{% extends 'root.html.twig' %}
+
+{% set content = contentGroup[_language] ?? contentGroup[_fallback] %}
+
+{% block head %}
+    {% include 'content-meta.html.twig' with {
+        resource: content,
+    } only %}
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid lazyload bg-image" data-bg="{{ content.featureImage }}">
+        <div class="container join">
+            <div class="row pt-3">
+                <span class="join__heading">{{ _(_self, 'heading') }}</span>
+            </div>
+            <div class="row py-5">
+                {% for jobType in jobTypes %}
+                <div class="col-12 col-md-4 p-2 join__jobType">
+                    <a class="py-2 px-3 m-1 bg-white h-100 d-flex justify-content-between align-items-center link-unstyled"
+                       href="https://members.iwgb.org.uk/join/{{ jobType.Slug }}"
+                    >
+                        <div>
+                            <h3>{{ _(_self, jobType.Slug ~ '.name') }}</h3>
+                            <small class="text-muted">{{ _(_self, jobType.Slug ~ '.description') }}</small>
+                        </div>
+                        <i class="fas fa-arrow-right fa-md ml-2 join__jobType__icon"></i>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-dark text-white">
+        <div class="container">
+            <div class="row py-5">
+                <div class="col-12 col-md">
+                    <h3>{{ content.title }}</h3>
+                    <div class="join__content">
+                        {% autoescape false %}
+                            {{ content.html }}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                <div class="col-12 col-md">
+                    <h3>{{ _(_self, 'help.header') }}</h3>
+                    <p>{{ _(_self, 'help.text') }}</p>
+                    <h3>{{ _(_self, 'costs.header') }}</h3>
+                    <p>{{ _(_self, 'costs.text') }}</p>
+                    <p>
+                        <a href="{{ _a('/membership-costs') }}">{{ _(_self, 'costs.link') }}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

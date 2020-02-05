@@ -1,0 +1,22 @@
+<!--<div class="debug">
+    <table class="table" style="width: auto;">
+        {% for checkpoint, time in _time %}
+            <tr>
+                <td>{{ checkpoint }}</td>
+                <td>{{ timeCalc(time) }}s</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>Rendering this</td>
+            <td>{{ timeCalc() }}s</td>
+        </tr>
+    </table>
+
+    {% if _q.debug is defined and _q.debug == 1 %}
+        {% autoescape false %}
+            {{ dump() }}
+        {% endautoescape %}
+    {% else %}
+        <span>Full debug response hidden</span>
+    {% endif %}
+</div>-->

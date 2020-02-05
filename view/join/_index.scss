@@ -1,0 +1,32 @@
+@import '../util';
+
+.join {
+
+    &__jobType {
+
+        &__icon {
+            margin-right: .5rem;
+            transition: margin .3s;
+
+            @at-root .join__jobType:hover & {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &__heading {
+        @include stripeText;
+        font-size: 4rem;
+        margin-top: 35vh;
+
+        @include media-breakpoint-down(sm) {
+            font-size: 3rem;
+        }
+    }
+
+    &__content a {
+        color: inherit;
+        text-decoration: underline;
+    }
+
+}

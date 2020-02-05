@@ -1,0 +1,81 @@
+{% macro socialIcon(icon, href) %}
+    {% include 'social-icon.html.twig' with {
+        icon: icon,
+        href: href,
+        class: 'm-2',
+    } only %}
+{% endmacro %}
+
+{% macro externalLink(text, href) %}
+    <a href="{{ href }}"
+       class="text-reset"
+       target="_blank"
+       referrerpolicy="no-referrer"
+    >
+        <span>{{ text }}</span>
+    </a>
+{% endmacro %}
+
+<div class="footer container my-5">
+
+    <div class="row">
+
+        {% for column, subcategory in data %}
+            <div class="col-12 col-md footer__column">
+                <div class="footer__column__header d-flex align-items-center my-3">
+                    <span>{{ _(_self, subcategory['subcategory-' ~ column].tag.description) }}</span>
+                </div>
+                {% for page in subcategory['subcategory-' ~ column].pages %}
+                    {% if page[_language] is defined %}
+                        <a href="#" class="d-block my-2">{{ page[_language].title }}</a>
+                    {% else %}
+                        <a href="#" class="d-block my-2">{{ page[_fallback].title }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <div class="col-12 col-md footer__column">
+            <div class="footer__column__header d-flex align-items-center my-3">{{ _(_self, 'social.header') }}</div>
+            <div class="footer__column__social d-flex my-2">
+                {{ _self.socialIcon('twitter', _(_self, 'social.twitter')) }}
+                {{ _self.socialIcon('facebook', _(_self, 'social.facebook')) }}
+                {{ _self.socialIcon('youtube', _(_self, 'social.youtube')) }}
+            </div>
+        </div>
+        <div class="footer__roundel col-12 col-md">
+            <img src="{{ _i('/assets/roundel-colour.png') }}"
+                 alt="{{ _('global', 'logo.roundel') }}"
+                 class="my-3"
+            >
+        </div>
+    </div>
+</div>
+<div class="container text-center footer__bottom my-5">
+    <div>
+        <small class="text-muted d-block">© {{ _('global', 'iwgb') }} {{ "now"|date('Y') }}</small>
+        <small class="text-muted d-block">{{ _(_self, 'credit') }}</small>
+        {% if mapFooter is defined and mapFooter %}
+            <small class="text-muted d-block d-flex justify-content-center">
+                <span>{{ _(_self, 'maps.1') }} ©&nbsp;</span>
+                {{ _self.externalLink(_(_self, 'maps.2'), 'https://openstreetmap.org') }}
+                <span>,&nbsp;</span>
+                {{ _self.externalLink('CC-BY-SA', 'https://creativecommons.org/licenses/by-sa/2.0') }}
+                <span>, {{ _(_self, 'maps.3')}} © &nbsp;</span>
+                {{ _self.externalLink('Mapbox', 'https://creativecommons.org/licenses/by-sa/2.0') }}
+            </small>
+        {% endif %}
+        <small class="text-muted d-block d-flex justify-content-center">
+            <span>{{ _(_self, 'icons') }} ©&nbsp;</span>
+            {{ _self.externalLink('Freepik', 'https://freepik.com') }}
+        </small>
+        <small class="text-muted d-block">
+            <a href="https://cms.iwgb.org.uk" class="text-reset">Log in</a>
+            <span>&middot;</span>
+            <span>{{ _job }}</span>
+            <span>&middot;</span>
+            <span>{{ _language }}</span>
+            <span>&middot;</span>
+            <span>{{ _uri }}</span>
+        </small>
+    </div>
+</div>

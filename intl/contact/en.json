@@ -1,0 +1,20 @@
+{
+    "dataProtection": "Data protection",
+    "department": "Department",
+    "enquiries": "Enquiries",
+    "form.email": "Your email",
+    "form.email.desc": "So we can get back to you. We won't share your email with anyone else.",
+    "form.message": "What's your message?",
+    "form.name": "Your name",
+    "form.submit": "send",
+    "heading": "Get in touch",
+    "memberships": "Memberships",
+    "phone.desc": "We normally answer the phone 9am-5pm weekdays",
+    "recaptcha.1": "This form is protected by reCAPTCHA and the Google",
+    "recaptcha.2": "Privacy Policy",
+    "recaptcha.3": "and",
+    "recaptcha.4": "Terms of Service",
+    "recaptcha.5": "apply",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut leo magna, lacinia eget tempor non, fringilla sed nulla. Sed malesuada metus vitae scelerisque laoreet. Pellentesque mattis nunc urna, ut posuere metus tempor non. Ut pulvinar sagittis tellus at efficitur. In nec consequat justo. Morbi ante nisi, molestie eu fringilla vel, eleifend non orci. Nam pellentesque tellus sit amet ullamcorper imperdiet. Aliquam pretium risus dolor, eu porta dolor tempor in.",
+    "to": "to"
+}

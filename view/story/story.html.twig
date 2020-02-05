@@ -1,0 +1,23 @@
+{% set type = type ?? 'post' %}
+
+<a href="{{ _a('/' ~ type ~ '/' ~ story.slug) }}"
+   class="link-unstyled mb-3 mb-sm-0 d-flex flex-grow-1 h-100"
+>
+    <div class="story story--regular d-flex flex-column w-100">
+        {% if story.featureImage is defined %}
+
+            <div data-bg="{{ story.featureImage }}"
+                 class="story__image bg-image lazyload w-100 d-none d-md-block"
+            ></div>
+        {% endif %}
+        <div class="story__data px-3 py-2 flex-grow-1 d-flex flex-column justify-content-between bg-grey">
+            <h3 class="story__data__title m-0">{{ story.title }}</h3>
+            {% if story.publishedAt is defined %}
+                <div class="story__data__meta">
+                    <span>{{ story.primaryAuthor.name }}</span>
+                    <span title="{{ dateString(story.publishedAt) }}">{{ timeAgo(story.publishedAt) }}</span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</a>

@@ -1,0 +1,62 @@
+{% extends 'root.html.twig' %}
+
+{% block head %}
+    {% include 'content-meta.html.twig' with {
+        resource: post,
+    } only %}
+{% endblock %}
+
+{% set post = postGroup[_language] ?? postGroup[_fallback] %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-8">
+                {% if post.featureImage %}
+                    <div class="bg-image lazyload row align-items-end post__featured__image"
+                         data-bg="{{ post.featureImage }}"
+                    >
+                        <h1 class="post__featured__title col-12 col-md-9 offset-md-3 my-0">{{ post.title }}</h1>
+                    </div>
+                {% endif %}
+                <div class="row my-3">
+                    <div class="col-12 col-md-3">
+                        <div>
+                            <small class="text-muted">{{ post.publishedAt|date('d F Y h:i') }}</small>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        {% if post.featureImage is not defined %}
+                            <h2 class="my-5">{{ post.title }}</h2>
+                        {% endif %}
+                        <div class="post__body px-2">
+                            {% autoescape false %}
+                                {{ post.html }}
+                            {% endautoescape %}
+                        </div>
+                        <div class="post__donate text-white">
+                            <div class="post__donate__header p-2">
+                                <h3 class="m-0">{{ _(_self, 'donate.header') }}</h3>
+                            </div>
+                            <div class="post__donate__body p-2">
+                                <p>{{ _(_self, 'donate.body') }}</p>
+                                <a href="{{ _a('/donate') }}" class="btn btn-light text-dark">{{ _(_self, 'donate.cta') }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 my-3">
+                <h3>Featured</h3>
+                <h3>Recent</h3>
+                <h3>Related</h3>
+            </div>
+        </div>
+
+    </div>
+
+
+    {% autoescape false %}
+        {{ dump(post) }}
+    {% endautoescape %}
+{% endblock %}

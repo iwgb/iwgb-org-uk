@@ -1,0 +1,183 @@
+@import '../util';
+
+.nav {
+    position: sticky;
+    z-index: 1030;
+    top: 0;
+
+    a {
+        text-decoration: none;
+    }
+
+    &__bar {
+
+        background-color: $iwgbRedDark;
+
+        @include media-breakpoint-down(sm) {
+            &__container {
+                flex-direction: row-reverse;
+            }
+        }
+
+        &__wordmark img {
+            height: $smallWordmarkHeight;
+        }
+
+        $active: white;
+        $idle: $iwgbRedDark;
+
+        &__items {
+
+            & > div, & > a {
+                $border: 5px solid $idle;
+                border-top: $border;
+                border-bottom: $border;
+            }
+
+            & > a {
+                transition: border-bottom-color .3s;
+
+                &.nav--current, &.nav--open {
+                    border-bottom-color: $active;
+                }
+            }
+
+            &__join {
+                box-sizing: content-box;
+                width: 4ch;
+
+                &::after {
+                    content: "Join";
+                }
+
+                &:hover::after {
+                    content: "❤️";
+                }
+            }
+        }
+
+        &__items:hover > a {
+
+            &.current {
+                border-bottom-color: $idle;
+            }
+
+            &:hover {
+                border-bottom-color: $active;
+            }
+        }
+    }
+
+    &__menu {
+        border-bottom: 1px solid #333;
+
+        &--initial {
+            display: none;
+        }
+
+        &__items {
+
+            a {
+                color: #555;
+            }
+
+            div {
+                margin: 1rem;
+            }
+        }
+
+        &__campaigns {
+
+            &__scroll {
+                white-space: nowrap;
+                overflow-x: auto;
+
+                &__item {
+                    width: 20vw;
+                    min-width: 20rem;
+
+                    &:first-of-type {
+                        margin-left: 0 !important;
+                    }
+                }
+
+            }
+        }
+
+        &__branches {
+
+            &__scroll {
+                white-space: nowrap;
+                overflow-x: auto;
+
+                &__item {
+                    width: 25vw;
+                    min-width: 25rem;
+                    white-space: normal;
+
+                    &:first-of-type {
+                        margin-left: 0 !important;
+                    }
+                }
+            }
+
+            &__description {
+                font-size: $font-size-sm;
+                background-color: rgba($iwgbRedDark, 0.5);
+            }
+
+            &__image {
+                height: 10rem;
+            }
+
+            &__branch {
+                border-bottom: 1px solid black;
+                background-color: white;
+            }
+        }
+    }
+
+    &__mobile {
+        background-color: $iwgbRedDark;
+
+        @include media-breakpoint-down(sm) {
+            display: none;
+        }
+
+        &__join {
+            margin-left: 60px;
+        }
+    }
+}
+
+.hamburger {
+    padding: 0;
+    display: initial;
+
+    &-box {
+        margin-top: 2.1rem;
+    }
+
+    &-inner {
+        top: auto;
+    }
+
+    &, &.is-active {
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    &-inner, &.is-active &-inner {
+        &, &::before, &::after {
+            border-radius: 0;
+            background-color: white;
+            width: 2.5rem;
+        }
+    }
+
+    &:focus {
+        outline: none;
+    }
+}

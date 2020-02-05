@@ -1,0 +1,55 @@
+@import '../util';
+
+.footer {
+
+    &__roundel {
+
+        img {
+            height: $roundelHeight;
+        }
+
+        @include media-breakpoint-down(sm) {
+            text-align: center;
+        }
+    }
+
+    &__column {
+
+        @include media-breakpoint-down(sm) {
+            text-align: center;
+        }
+
+        a {
+            color: $gray-700;
+        }
+
+        &__header {
+            font-variant: all-small-caps;
+            font-weight: $font-weight-bold;
+            font-size: $font-size-lg;
+            letter-spacing: .1rem;
+
+            @include media-breakpoint-down(sm) {
+                justify-content: center;
+            }
+        }
+
+        &__social {
+
+            @include media-breakpoint-up(md) {
+                a:first-of-type {
+                    margin-left: 0 !important;
+                }
+            }
+
+            @include media-breakpoint-down(sm) {
+                justify-content: center;
+            }
+        }
+    }
+
+    &__bottom a {
+        text-decoration: underline;
+    }
+
+}

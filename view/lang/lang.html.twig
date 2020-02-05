@@ -1,0 +1,31 @@
+<div id="top"
+     class="container-fluid d-flex align-items-center justify-content-between bg-dark lang"
+>
+    <div class="text-muted">
+        {% if _language != _fallback %}
+            <a href="{{ _uri }}?persistLocale=yes"
+               class="text-white link-span-only"
+            >
+                <span>{{ _('global', 'languagePreference.save') }}</span>
+            </a>
+            <small>{{ _('global', 'languagePreference.cookieNotice') }}</small>
+        {% endif %}
+    </div>
+    <div class="lang__select">
+        {% for language in _languages %}
+            <a href="/{{ language }}{{ _strip(_uri) }}"
+               class="link-unstyled"
+               title="{{ localeInfo(language).getNativeName() }}"
+            >
+                <img alt="{{ localeInfo(language).getNativeName() }}"
+                     src="{{ _i('/assets/' ~ language ~ '.png') }}"
+                     class="m-2
+                        {% if _language == language %}
+                            current
+                        {% endif %}
+                    "
+                >
+            </a>
+        {% endfor %}
+    </div>
+</div>

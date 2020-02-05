@@ -1,0 +1,28 @@
+.lang {
+    position: relative;
+    z-index: 1;
+
+    $idle: #343a40;
+    $active: white;
+
+    &__select {
+
+        img {
+            height: 1.5rem;
+            border-bottom: 2px solid $idle;
+            transition: border-bottom-color .3s;
+
+            &.current {
+                border-bottom-color: $active;
+            }
+        }
+
+        &:hover img {
+            border-bottom-color: $idle;
+
+            &:hover {
+                border-bottom-color: $active;
+            }
+        }
+    }
+}

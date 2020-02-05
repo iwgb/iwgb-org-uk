@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>{{ title }}</title>
+        {% include 'head.html.twig' %}
+    </head>
+    <body data-admin="yes">
+    <div class="container admin">
+        <div class="row justify-content-between align-items-center py-3">
+            <div class="d-flex align-items-end">
+                <img src="{{ _i("/assets/wordmark-black.png") }}"
+                     alt="{{ _('global', 'logo.wordmark') }}"
+                     class="admin__nav__wordmark px-3"
+                >
+                <p class="admin__nav__header mb-1">{{ _(_self, 'heading') }}</p>
+            </div>
+
+            <div>
+                <!--suppress HtmlFormInputWithoutLabel -->
+                <label for="lang" class="sr-only">{{ _(_self, 'language') }}</label>
+                <select id="lang" class="custom-select custom-select-sm">
+                    {% for language in _languages %}
+                        <option value="{{ language }}">{{ language }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <form method="post">
+                {% for component, componentData in data[_fallback] %}
+                    <h3>{{ component }}</h3>
+                    {% for key, value in componentData %}
+                        <div class="row my-2">
+                            <div class="col-12 col-md">
+                                <p>{{ key }}</p>
+                            </div>
+                            {% for language in _languages %}
+                                {% set name = 'language[' ~ language ~ '][' ~ component ~ '][' ~ key ~ ']' %}
+                                <label class="sr-only" for="{{ name }}">{{ component }}: {{ key }} ({{ language }})</label>
+                                <div class="col-12 col-md">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">{{ language }}</div>
+                                        </div>
+                                        {% if value|length < 30 %}
+                                            <input id="{{ name }}"
+                                                   name="{{ name }}"
+                                                   class="form-control"
+                                                   value="{{ data[language][component][key] }}"
+                                            >
+                                        {% else %}
+                                            <textarea id="{{ name }}"
+                                                      name="{{ name }}"
+                                                      class="form-control"
+                                            >{{ data[language][component][key] }}</textarea>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            {% endfor %}
+                        </div>
+
+                    {% endfor %}
+                {% endfor %}
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        $(document).ready(function () {
+           $('textarea').each((i, el) => {
+               $(el).css('height', `${el.scrollHeight + 3}px`);
+           });
+        });
+    </script>
+
+    </body>
+</html>

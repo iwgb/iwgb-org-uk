@@ -1,0 +1,46 @@
+/.idea/
+
+#github/gitignore/Global/Windows.gitignore
+
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# cache
+/tmp/
+/temp/
+
+# compiled css
+*.css
+*.css.map
+
+# keys
+keys.php
+
+# Composer
+composer.phar
+composer.lock
+/vendor/
+
+# app caches
+/cache/
+/var/

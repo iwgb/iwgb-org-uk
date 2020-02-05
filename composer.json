@@ -1,0 +1,28 @@
+{
+    "require": {
+        "leocavalcante/siler": "^1.5",
+        "doctrine/orm": "^2.6",
+        "twig/twig": "^2.11",
+        "ext-json": "*",
+        "ext-fileinfo": "*",
+        "guym4c/ghost-api-php": "^0.1.3",
+        "zendframework/zend-diactoros": "^2.2",
+        "jimmiw/php-time-ago": "^3.1",
+        "twbs/bootstrap": "^4.4",
+        "fortawesome/font-awesome": "^5.12",
+        "shrikeh/teapot": "^2.3",
+        "ralouphie/mimey": "^2.1",
+        "pimple/pimple": "^3.2",
+        "guym4c/airtable-client": "^2.0",
+        "voku/portable-utf8": "^5.4",
+        "willdurand/negotiation": "^2.0",
+        "aura/session": "^2.1.0",
+        "nesbot/carbon": "^2.29",
+        "erusev/parsedown": "^1.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Iwgb\\OrgUk\\": "src/"
+        }
+    }
+}

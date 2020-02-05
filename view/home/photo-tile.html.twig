@@ -1,0 +1,19 @@
+<div class="row tile tile--{{ direction }} my-5 flex-nowrap">
+    <div data-bg="{{ image }}"
+         class="tile__image bg-image lazyload w-100 d-none d-md-block"
+    >
+    </div>
+    <div class="tile__text bg-image"
+         style="background-image: url({{ image }})"
+    >
+        <span class="tile__text__part text-white">{{ headerTop }}</span><br>
+        <span class="tile__text__part tile__text__part--bottom">{{ headerBottom }}</span><br>
+        <div class="tile__text__description p-3">
+            <div>{{ text }}</div>
+            <a href="{{ linkHref }}" class="btn btn-iwgb my-3 mr-2">{{ linkText }}</a>
+            {% if secondLinkHref is defined %}
+                <a href="{{ secondLinkHref }}" class="btn btn-iwgb">{{ secondLinkText }}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
