@@ -2,7 +2,15 @@
     <div class="row">
         <div class="d-none d-md-block col-md">
             <h3>{{ _(_self, 'contact') }}</h3>
-            <p>Phone number and link to contact section on homepage</p>
+            {% include 'contact-office/contact-phone.html.twig' with {
+                number: _('contact-office', 'London.phone'),
+                description: _('contact-office', 'London.phoneDesc'),
+                linkColor: 'text-dark',
+            } %}
+            <div class="d-flex">
+                <i class="fas fa-envelope-open fa-fw mx-3 my-1"></i>
+                <div>{{ _(_self, 'contactCtaPrefix') }} <a href="/#contact">{{ _(_self, 'contactCta') }}</a></div>
+            </div>
         </div>
         {% include 'nav/menu/cms-category.html.twig' with {
             data: data,
