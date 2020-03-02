@@ -1,4 +1,5 @@
 {
+    "benefits.heroImageUrl": "https://cdn.iwgb.org.uk/bucket/home/5c85b1b827c26.jpg",
     "benefit1.heading": "Organising support",
     "benefit1.href": "",
     "benefit1.link": "Join us",
@@ -11,5 +12,12 @@
     "benefit3.href": "",
     "benefit3.link": "Read more",
     "benefit3.text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas egestas nisi ac augue viverra, non rhoncus sem congue. Fusce sem nulla, porta et ultrices a, fringilla vel sem. Aliquam ullamcorper tincidunt placerat. Etiam pulvinar porta ligula. Phasellus convallis viverra nisi ac aliquet. Quisque vel condimentum metus. Quisque semper, massa sit amet varius efficitur, nisl tellus mollis mauris, a hendrerit purus justo et sapien. Nam fermentum, lectus id lobortis ultricies, massa mauris eleifend velit, sit amet pellentesque nunc mi ut mi. Nulla ut blandit augue. Aliquam erat volutpat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed velit nisl, cursus tincidunt tortor nec, interdum sagittis lorem. Donec elementum vel est et placerat. Nullam elementum blandit sapien eu auctor. Morbi imperdiet dolor sit amet faucibus ultrices.",
-    "slogan": "Putting workers first"
+    "slogan": "Putting workers first",
+    "weAre.headerTop": "We are",
+    "weAre.headerBottom": "the IWGB.",
+    "weAre.text": "We’re a new and dynamic independent trade union. From our roots representing migrant workers, we’ve evolved to taking on the bosses of the so-called gig economy and government regulators, representing under-unionised and under-represented workforces.",
+    "weAre.imageUrl": "https://cdn.iwgb.org.uk/bucket/home/header5.jpg",
+    "weAre.firstLinkText": "Watch the video",
+    "weAre.firstLinkHref": "#",
+    "weAre.donateLinkText": "Donate"
 }

@@ -54,15 +54,15 @@
 
     <div class="container">
         {% include 'home/photo-tile.html.twig' with {
-            headerTop: 'We are',
-            headerBottom: 'the IWGB.',
-            text: 'We’re a new and dynamic independent trade union. From our roots representing migrant workers, we’ve evolved to taking on the bosses of the so-called gig economy and government regulators, representing under-unionised and under-represented workforces.',
+            headerTop: _(_self, 'weAre.headerTop'),
+            headerBottom: _(_self, 'weAre.headerBottom'),
+            text: _(_self, 'weAre.text'),
             direction: 'left',
-            image: 'https://cdn.iwgb.org.uk/bucket/home/header5.jpg',
-            linkText: 'Watch the video',
-            linkHref: '#',
-            secondLinkText: 'Donate',
-            secondLinkHref: '#',
+            image: _(_self, 'weAre.imageUrl'),
+            linkText: _(_self, 'weAre.firstLinkText'),
+            linkHref: _(_self, 'weAre.firstLinkHref'),
+            secondLinkText: _(_self, 'weAre.donateLinkText'),
+            secondLinkHref: '/donate',
         } only %}
 
         {% for campaign in campaigns %}
@@ -85,7 +85,7 @@
     </div>
 
     <div class="container-fluid bg-image d-flex align-items-end lazyload benefits"
-         data-bg="https://cdn.iwgb.org.uk/bucket/home/5c85b1b827c26.jpg"
+         data-bg="{{ _(_self, 'benefits.heroImageUrl') }}"
     >
         <div class="container my-5">
             <h1 class="benefits__heading d-inline">{{ _(_self, 'slogan') }}</h1>
