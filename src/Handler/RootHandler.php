@@ -12,9 +12,11 @@ use Guym4c\GhostApiPhp\GhostApiException;
 use Guym4c\GhostApiPhp\Model as Cms;
 use Guym4c\GhostApiPhp\Sort;
 use Guym4c\GhostApiPhp\SortOrder;
-use Iwgb\OrgUk\Intl;
-use Iwgb\OrgUk\IntlCache as Cache;
-use Iwgb\OrgUk\IntlCmsResource;
+use Iwgb\OrgUk\Intl\IntlCmsAccessTrait;
+use Iwgb\OrgUk\Intl\IntlCache as Cache;
+use Iwgb\OrgUk\Intl\IntlCmsResource;
+use Iwgb\OrgUk\Intl\IntlUtility;
+use Iwgb\OrgUk\TwigEnvSetupTrait;
 use Pimple\Container;
 use Psr\Http\Message\ServerRequestInterface;
 use Siler\Http\Request;
@@ -43,7 +45,7 @@ abstract class RootHandler {
 
     protected Airtable $airtable;
 
-    protected Intl $intl;
+    protected IntlUtility $intl;
 
     private array $time;
 
@@ -174,7 +176,7 @@ abstract class RootHandler {
             '_language'  => $this->intl->getLanguage(),
             '_languages' => $this->intl->getLanguages(),
             '_fallback'  => $this->intl->getFallback(),
-            '_uri'       => Intl::removeFromUri($this->request->getUri()->getPath()),
+            '_uri'       => IntlUtility::removeFromUri($this->request->getUri()->getPath()),
             '_url'       => (string)$this->request->getUri(),
             '_recaptcha' => $this->settings['recaptcha']['siteKey'],
             '_time'      => $this->time,
@@ -194,14 +196,17 @@ abstract class RootHandler {
             '_i'     => fn(string $imageUri): string => "{$this->settings['cdn']['baseUrl']}{$imageUri}",
             '_a'     => fn(string $uri, ?string $lang = null): string =>
                 "{$this->intl::addToUri($lang ?? $this->intl->getLanguage(), $uri)}",
-            '_strip' => fn(string $uri): string => Intl::removeFromUri($uri),
 
-            'timeAgo'       => fn(/*DateTime*/ $datetime): string => $this->datetime->instance($datetime)->diffForHumans(),
-            'dateString'    => fn(DateTime $datetime): string => $this->datetime->instance($datetime)->format('Y-m-d H:i'),
             'toIntlKey'     => fn(string $branch, string $key): string => UTF8::str_camelize($branch) . ".{$key}",
             'timeCalc'      => fn(?float $time = null): string => round(($time ?? microtime(true)) - $this->time['app-init'], 3),
             'parseNewLines' => fn(string $s, string $replace = '<br>'): string => UTF8::str_replace("\n", $replace, $s),
             'localeInfo'    => fn(string $language): Carbon\Language => Carbon\Carbon::getAvailableLocalesInfo()[$language],
+        ]);
+
+        self::addFilters($this->view, [
+           'stripLanguage' => fn(string $uri): string => IntlUtility::removeFromUri($uri),
+           'timeAgo' => fn(DateTime $datetime): string => $this->datetime->instance($datetime)->diffForHumans(),
+           'dateFormat' => fn(DateTime $datetime): string => $this->datetime->instance($datetime)->format('Y-m-d H:i'),
         ]);
     }
 

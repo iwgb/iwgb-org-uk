@@ -6,8 +6,8 @@ use Guym4c\GhostApiPhp\Filter;
 use Guym4c\GhostApiPhp\Model as Cms;
 use Guym4c\GhostApiPhp\Sort;
 use Guym4c\GhostApiPhp\SortOrder;
-use Iwgb\OrgUk\IntlCache;
-use Iwgb\OrgUk\IntlCmsResource;
+use Iwgb\OrgUk\Intl\IntlCache;
+use Iwgb\OrgUk\Intl\IntlCmsResource;
 
 class Home extends RootHandler {
 

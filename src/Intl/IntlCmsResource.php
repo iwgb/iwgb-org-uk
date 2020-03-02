@@ -1,6 +1,6 @@
 <?php
 
-namespace Iwgb\OrgUk;
+namespace Iwgb\OrgUk\Intl;
 
 use Guym4c\GhostApiPhp\Ghost;
 use Guym4c\GhostApiPhp\GhostApiException;
@@ -12,7 +12,7 @@ class IntlCmsResource {
 
     private Ghost $cms;
 
-    private Intl $intl;
+    private IntlUtility $intl;
 
     private string $type;
 
@@ -22,12 +22,12 @@ class IntlCmsResource {
 
     /**
      * IntlCmsResource constructor.
-     * @param Ghost $cms
-     * @param Intl  $intl
+     * @param Ghost       $cms
+     * @param IntlUtility $intl
      * @param       $resource
      * @throws GhostApiException
      */
-    public function __construct(Ghost $cms, Intl $intl, $resource) {
+    public function __construct(Ghost $cms, IntlUtility $intl, $resource) {
         $this->cms = $cms;
         $this->intl = $intl;
         $this->fallbackResource = $resource;
@@ -75,12 +75,13 @@ class IntlCmsResource {
 
     /**
      * @param callable                    $getResource
-     * @param Intl                        $intl
+     * @param IntlUtility                 $intl
      * @param Cms\AbstractContentResource $resource
      * @return Cms\AbstractContentResource|null
      * @throws GhostApiException
+     * @noinspection PhpRedundantCatchClauseInspection
      */
-    private static function getIntlResource(callable $getResource, Intl $intl, Cms\AbstractContentResource $resource) {
+    private static function getIntlResource(callable $getResource, IntlUtility $intl, Cms\AbstractContentResource $resource) {
         try {
             $intlPage = $getResource("{$resource->slug}-{$intl->getLanguage()}");
         } catch (GhostApiException $e) {
@@ -94,13 +95,13 @@ class IntlCmsResource {
     }
 
     /**
-     * @param Ghost $cms
-     * @param Intl  $intl
-     * @param array $resources
+     * @param Ghost       $cms
+     * @param IntlUtility $intl
+     * @param array       $resources
      * @return array
      * @throws GhostApiException
      */
-    public static function getIntlResources(Ghost $cms, Intl $intl, array $resources): array {
+    public static function getIntlResources(Ghost $cms, IntlUtility $intl, array $resources): array {
         $intlResources = [];
         foreach ($resources as $resource) {
             $intlResources[] = new self($cms, $intl, $resource);

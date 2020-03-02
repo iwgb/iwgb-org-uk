@@ -4,7 +4,7 @@ namespace Iwgb\OrgUk\Provider;
 
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\FilesystemCache;
-use Iwgb\OrgUk\IntlCache;
+use Iwgb\OrgUk\Intl\IntlCache;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 

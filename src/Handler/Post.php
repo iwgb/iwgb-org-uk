@@ -3,7 +3,7 @@
 namespace Iwgb\OrgUk\Handler;
 
 use Guym4c\GhostApiPhp\Model as Cms;
-use Iwgb\OrgUk\IntlCmsResource;
+use Iwgb\OrgUk\Intl\IntlCmsResource;
 
 class Post extends RootHandler {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Iwgb\OrgUk;
+namespace Iwgb\OrgUk\Intl;
 
 use Doctrine\Common\Cache\Cache;
 use ReflectionClass;
@@ -9,7 +9,7 @@ class IntlCache implements Cache {
 
     private Cache $cache;
 
-    private Intl $intl;
+    private IntlUtility $intl;
 
     public const NAV_DATA = 'nav-data';
     public const FOOTER_DATA = 'footer-data';
@@ -17,10 +17,10 @@ class IntlCache implements Cache {
 
     /**
      * IntlCache constructor.
-     * @param Intl  $intl
-     * @param Cache $cache
+     * @param IntlUtility $intl
+     * @param Cache       $cache
      */
-    public function __construct(Intl $intl, Cache $cache) {
+    public function __construct(IntlUtility $intl, Cache $cache) {
         $this->intl = $intl;
         $this->cache = $cache;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Iwgb\OrgUk;
+namespace Iwgb\OrgUk\Intl;
 
 use Aura\Session\Segment as Session;
 use Aura\Session\Session as SessionManager;
@@ -12,7 +12,7 @@ use Siler\Http\Request;
 use stdClass;
 use voku\helper\UTF8;
 
-class Intl {
+class IntlUtility {
 
     private const LANGUAGE_IN_URI_REGEX = "/^\/(?<language>[a-z]{2})\//";
 

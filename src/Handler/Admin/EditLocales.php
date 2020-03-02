@@ -3,7 +3,7 @@
 namespace Iwgb\OrgUk\Handler\Admin;
 
 use Iwgb\OrgUk\Handler\RootHandler;
-use Iwgb\OrgUk\Intl;
+use Iwgb\OrgUk\Intl\IntlUtility;
 
 class EditLocales extends RootHandler {
 
@@ -14,7 +14,7 @@ class EditLocales extends RootHandler {
 
         $languages = [];
         foreach ($this->intl->getLanguages() as $language) {
-            $languages[$language] = Intl::readAll($language);
+            $languages[$language] = IntlUtility::readAll($language);
         }
 
         $this->render('admin/admin-root.html.twig', 'Edit locales', ['data' => $languages]);

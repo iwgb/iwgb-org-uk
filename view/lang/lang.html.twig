@@ -14,7 +14,7 @@
         </div>
         <div class="lang__select">
             {% for language in _languages %}
-                <a href="/{{ language }}{{ _strip(_uri) }}"
+                <a href="/{{ language }}{{ _uri|stripLanguage }}"
                    class="link-unstyled"
                    title="{{ localeInfo(language).getNativeName() }}"
                 >

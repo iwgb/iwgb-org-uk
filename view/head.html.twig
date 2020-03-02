@@ -18,6 +18,6 @@
 
 {% for language in _languages %}
     {% if language != _language %}
-        <link rel="alternate" hreflang="{{ language }}" href="/{{ language }}{{ _strip(_uri) }}">
+        <link rel="alternate" hreflang="{{ language }}" href="/{{ language }}{{ _uri|stripLanguage }}">
     {% endif %}
 {% endfor %}

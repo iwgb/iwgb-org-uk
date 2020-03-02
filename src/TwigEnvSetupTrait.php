@@ -1,6 +1,6 @@
 <?php
 
-namespace Iwgb\OrgUk\Handler;
+namespace Iwgb\OrgUk;
 
 use Twig;
 use Twig\TwigFilter;

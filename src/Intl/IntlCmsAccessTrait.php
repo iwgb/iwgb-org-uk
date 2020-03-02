@@ -1,6 +1,6 @@
 <?php
 
-namespace Iwgb\OrgUk\Handler;
+namespace Iwgb\OrgUk\Intl;
 
 use Guym4c\GhostApiPhp\Filter;
 use Guym4c\GhostApiPhp\Ghost;
@@ -8,20 +8,18 @@ use Guym4c\GhostApiPhp\GhostApiException;
 use Guym4c\GhostApiPhp\Model as Cms;
 use Guym4c\GhostApiPhp\Sort;
 use Guym4c\GhostApiPhp\SortOrder;
-use Iwgb\OrgUk\Intl;
-use Iwgb\OrgUk\IntlCmsResource;
 use voku\helper\UTF8;
 
 trait IntlCmsAccessTrait {
 
     /**
-     * @param Ghost  $cms
-     * @param Intl   $intl
-     * @param string $tag
+     * @param Ghost       $cms
+     * @param IntlUtility $intl
+     * @param string      $tag
      * @return Cms\Post[]
      * @throws GhostApiException
      */
-    private static function getFallbackPagesByTag(Ghost $cms, Intl $intl, string $tag): array {
+    private static function getFallbackPagesByTag(Ghost $cms, IntlUtility $intl, string $tag): array {
         return self::populateCategoryMenu($cms, $intl, Cms\Page::get($cms, null,
             new Sort('title', SortOrder::DESC),
             (new Filter())->by('tag', '=', $intl->getFallback())
@@ -30,13 +28,13 @@ trait IntlCmsAccessTrait {
     }
 
     /**
-     * @param Ghost      $cms
-     * @param Intl       $intl
-     * @param Cms\Page[] $pages
+     * @param Ghost       $cms
+     * @param IntlUtility $intl
+     * @param Cms\Page[]  $pages
      * @return Cms\Page[]
      * @throws GhostApiException
      */
-    private static function populateCategoryMenu(Ghost $cms, Intl $intl, array $pages): array {
+    private static function populateCategoryMenu(Ghost $cms, IntlUtility $intl, array $pages): array {
         $subcategories = [];
         // go through pages in category
         foreach ($pages as $page) {

@@ -5,7 +5,7 @@ $c = require '../bootstrap.php';
 use Iwgb\OrgUk\Handler;
 use Pimple\Container;
 use Siler\Route as http;
-use Iwgb\OrgUk\Intl;
+use Iwgb\OrgUk\Intl\IntlUtility;
 
 http\get("/assets/{type}/(?'file'[A-z0-9\/_-]+)\.{ext}", new Handler\AssetProxy($c));
 
@@ -22,5 +22,5 @@ http\get('/admin', new Handler\Admin\EditLocales($c));
 http\post('/callback/ghost/rebuild', new Handler\PurgeCmsCache($c));
 
 function _(Container $c, string $uri): string {
-    return Intl::getRoute($c, $uri);
+    return IntlUtility::getRoute($c, $uri);
 }
