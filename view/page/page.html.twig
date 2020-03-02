@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    {% set page = pageGroup[_language] ?? pageGroup[_fallback] %}
+    {% set page = pageGroup.getIntl() ?? pageGroup.getFallback() %}
 
     <div class="container">
         <div class="row">

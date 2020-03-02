@@ -6,13 +6,13 @@
     } only %}
 {% endblock %}
 
-{% set post = postGroup[_language] ?? postGroup[_fallback] %}
+{% set post = postGroup.getIntl() ?? postGroup.getFallback() %}
 
 {% block body %}
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-8">
-                {% if post.featureImage %}
+                {% if post.featureImage is not empty %}
                     <div class="bg-image lazyload row align-items-end post__featured__image"
                          data-bg="{{ post.featureImage }}"
                     >
@@ -21,13 +21,16 @@
                 {% endif %}
                 <div class="row my-3">
                     <div class="col-12 col-md-3">
-                        <div>
+                        <div {% if post.featureImage is empty %} class="mt-4" {% endif %}>
+                            {% if post.primaryTag.name != 'category:press-release' %}
+                                <div>{{ post.primaryAuthor.name }}</div>
+                            {% endif %}
                             <small class="text-muted">{{ post.publishedAt|date('d F Y h:i') }}</small>
                         </div>
                     </div>
                     <div class="col-12 col-md-9">
-                        {% if post.featureImage is not defined %}
-                            <h2 class="my-5">{{ post.title }}</h2>
+                        {% if post.featureImage is empty %}
+                            <h2 class="my-4">{{ post.title }}</h2>
                         {% endif %}
                         <div class="post__body px-2">
                             {% autoescape false %}

@@ -4,7 +4,7 @@
    class="link-unstyled mb-3 mb-sm-0 d-flex flex-grow-1 h-100"
 >
     <div class="story story--regular d-flex flex-column w-100">
-        {% if story.featureImage is defined %}
+        {% if story.featureImage is not empty %}
 
             <div data-bg="{{ story.featureImage }}"
                  class="story__image bg-image lazyload w-100 d-none d-md-block"
@@ -14,7 +14,9 @@
             <h3 class="story__data__title m-0">{{ story.title }}</h3>
             {% if story.publishedAt is defined %}
                 <div class="story__data__meta">
-                    <span>{{ story.primaryAuthor.name }}</span>
+                    {% if story.primaryTag.name != 'category:press-release' %}
+                        <span>{{ story.primaryAuthor.name }}</span>
+                    {% endif %}
                     <span title="{{ dateString(story.publishedAt) }}">{{ timeAgo(story.publishedAt) }}</span>
                 </div>
             {% endif %}

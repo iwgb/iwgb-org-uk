@@ -23,7 +23,7 @@
 {% endmacro %}
 
 <div class="w-100 nav">
-    <div id="nav"l
+    <div id="nav"
          class="container-fluid nav__bar"
     >
         <div class="nav__bar__container container d-flex align-items-stretch justify-content-between">
@@ -63,9 +63,11 @@
          class="container-fluid nav__mobile px-0"
     >
         {% for name, item in data %}
-            <div class="d-block d-md-none">
-                {{ _self.navItem(name, item) }}
-            </div>
+            {% if item.data is not empty %}
+                <div class="d-block d-md-none">
+                    {{ _self.navItem(name, item) }}
+                </div>
+            {% endif %}
             {% if item.kind == 'menu' %}
                 <div id="{{ item.id }}"
                      class="container-fluid bg-grey nav__menu nav__menu--initial"

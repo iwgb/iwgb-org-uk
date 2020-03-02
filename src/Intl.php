@@ -216,7 +216,7 @@ class Intl {
     }
 
     public function ghostFilterFactory(): Filter {
-        return (new Filter())->by('tag', '=', $this->getLanguage());
+        return (new Filter())->by('tag', '=', $this->getFallback());
     }
 
     public function isFallback(): bool {

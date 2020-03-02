@@ -1,6 +1,6 @@
 {% extends 'root.html.twig' %}
 
-{% set content = contentGroup[_language] ?? contentGroup[_fallback] %}
+{% set content = contentGroup.getIntl() ?? contentGroup.getFallback() %}
 
 {% block head %}
     {% include 'content-meta.html.twig' with {

@@ -9,6 +9,7 @@ use Guym4c\GhostApiPhp\Model as Cms;
 use Guym4c\GhostApiPhp\Sort;
 use Guym4c\GhostApiPhp\SortOrder;
 use Iwgb\OrgUk\IntlCache;
+use Iwgb\OrgUk\IntlCmsResource;
 
 class Home extends RootHandler {
 
@@ -32,12 +33,11 @@ class Home extends RootHandler {
                     'https://cdn.iwgb.org.uk/bucket/home/header2.jpg',
                 ],
                 'mapFooter' => true,
-                'featured'  => self::populatePostGroup($this->cms, $this->intl, $featured),
+                'featured'  => new IntlCmsResource($this->cms, $this->intl, $featured),
 
-                'posts'     => self::populatePostGroups($this->cms, $this->intl, Cms\Post::get($this->cms, 3,
+                'posts'     => IntlCmsResource::getIntlResources($this->cms, $this->intl, Cms\Post::get($this->cms, 3,
                     new Sort('published_at', SortOrder::DESC),
-                    (new Filter())->by('tag', '=', 'press-release')
-                        ->and('comment_id', '-', $featured->commentId)
+                    (new Filter())->by('comment_id', '-', $featured->commentId)
                 )->getResources()),
 
                 'campaigns' => Cms\Page::get($this->cms, null, null,

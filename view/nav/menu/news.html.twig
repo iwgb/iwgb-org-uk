@@ -18,7 +18,7 @@
                 {% for story in data %}
                     <div class="col-6 d-flex">
                         {% include 'story/story.html.twig' with {
-                            story: story,
+                            story: story.getIntl() ?? story.getFallback(),
                         } only %}
                     </div>
                 {% endfor %}

@@ -2,15 +2,12 @@
     <div class="col-12 col-md">
         <h3>{{ _(_self, subcategory.tag.slug) }}</h3>
         <div class="nav__menu__items">
-            {% for page in subcategory.pages %}
-                <a href="{{ _a('/page/' ~ page[_fallback].slug) }}"
+            {% for pageGroup in subcategory.pages %}
+                {% set page =  pageGroup.getIntl() ?? pageGroup.getFallback() %}
+                <a href="{{ _a('/page/' ~ pageGroup.getFallback().slug) }}"
                    class="d-block my-3"
                 >
-                    {% if page[_language] is defined %}
-                        <span>{{ page[_language].title }}</span>
-                    {% else %}
-                        <span>{{ page[_fallback].title }}</span>
-                    {% endif %}
+                    <span>{{ page.title }}</span>
                 </a>
             {% endfor %}
         </div>

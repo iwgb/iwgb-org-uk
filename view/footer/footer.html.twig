@@ -25,12 +25,9 @@
                 <div class="footer__column__header d-flex align-items-center my-3">
                     <span>{{ _(_self, subcategory['subcategory-' ~ column].tag.description) }}</span>
                 </div>
-                {% for page in subcategory['subcategory-' ~ column].pages %}
-                    {% if page[_language] is defined %}
-                        <a href="#" class="d-block my-2">{{ page[_language].title }}</a>
-                    {% else %}
-                        <a href="#" class="d-block my-2">{{ page[_fallback].title }}</a>
-                    {% endif %}
+                {% for pageGroup in subcategory['subcategory-' ~ column].pages %}
+                    {% set page = pageGroup.getIntl() ?? pageGroup.getFallback() %}
+                    <a href="/page/{{ pageGroup.getFallback().slug }}" class="d-block my-2">{{ page.title }}</a>
                 {% endfor %}
             </div>
         {% endfor %}

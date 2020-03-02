@@ -14,6 +14,7 @@ use Guym4c\GhostApiPhp\Sort;
 use Guym4c\GhostApiPhp\SortOrder;
 use Iwgb\OrgUk\Intl;
 use Iwgb\OrgUk\IntlCache as Cache;
+use Iwgb\OrgUk\IntlCmsResource;
 use Pimple\Container;
 use Psr\Http\Message\ServerRequestInterface;
 use Siler\Http\Request;
@@ -79,7 +80,6 @@ abstract class RootHandler {
      * @param string $template
      * @param string $title
      * @param array  $data
-     * @throws GhostApiException
      * @throws Twig\Error\LoaderError
      * @throws Twig\Error\RuntimeError
      * @throws Twig\Error\SyntaxError
@@ -112,13 +112,16 @@ abstract class RootHandler {
                         'kind' => 'internal',
                         'href' => '/donate',
                     ],
+                    //TODO i18n
                     'News'      => [
                         'kind' => 'menu',
                         'id'   => 'news',
-                        'data' => Cms\Post::get($this->cms, 2,
-                            new Sort('published_at', SortOrder::DESC),
-                            $this->intl->ghostFilterFactory()
-                        )->getResources(),
+                        'data' => IntlCmsResource::getIntlResources($this->cms, $this->intl,
+                            Cms\Post::get($this->cms, 2,
+                                new Sort('published_at', SortOrder::DESC),
+                                $this->intl->ghostFilterFactory()
+                            )->getResources()
+                        ),
                     ],
                     'Campaigns' => [
                         'kind' => 'menu',
@@ -193,7 +196,7 @@ abstract class RootHandler {
                 "{$this->intl::addToUri($lang ?? $this->intl->getLanguage(), $uri)}",
             '_strip' => fn(string $uri): string => Intl::removeFromUri($uri),
 
-            'timeAgo'       => fn(DateTime $datetime): string => $this->datetime->instance($datetime)->diffForHumans(),
+            'timeAgo'       => fn(/*DateTime*/ $datetime): string => $this->datetime->instance($datetime)->diffForHumans(),
             'dateString'    => fn(DateTime $datetime): string => $this->datetime->instance($datetime)->format('Y-m-d H:i'),
             'toIntlKey'     => fn(string $branch, string $key): string => UTF8::str_camelize($branch) . ".{$key}",
             'timeCalc'      => fn(?float $time = null): string => round(($time ?? microtime(true)) - $this->time['app-init'], 3),
@@ -212,8 +215,6 @@ abstract class RootHandler {
     }
 
     /**
-     * @throws AirtableApiException
-     * @throws GhostApiException
      * @throws Twig\Error\LoaderError
      * @throws Twig\Error\RuntimeError
      * @throws Twig\Error\SyntaxError

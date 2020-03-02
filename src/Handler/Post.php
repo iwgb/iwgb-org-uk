@@ -3,6 +3,7 @@
 namespace Iwgb\OrgUk\Handler;
 
 use Guym4c\GhostApiPhp\Model as Cms;
+use Iwgb\OrgUk\IntlCmsResource;
 
 class Post extends RootHandler {
 
@@ -11,19 +12,17 @@ class Post extends RootHandler {
      */
     public function __invoke(array $routeParams): void {
 
-        /** @var Cms\Post[] $postGroup */
-        $postGroup = self::populatePostGroup($this->cms, $this->intl,
-            Cms\Post::bySlug($this->cms, $routeParams['slug'])
-        );
-
-        if (empty($postGroup[$this->intl->getFallback()])) {
+        $fallbackPost = Cms\Post::bySlug($this->cms, $routeParams['slug']);
+        if (empty($fallbackPost)) {
             $this->notFound();
             return;
         }
 
+        $postGroup = new IntlCmsResource($this->cms, $this->intl, $fallbackPost);
+
         $this->render('post/post.html.twig',
-            $postGroup[$this->intl->getLanguage()]->title ??
-                $postGroup[$this->intl->getFallback()]->title,
+            $postGroup->getIntl()->title ??
+                $postGroup->getFallback()->title,
             ['postGroup' => $postGroup]
         );
     }
