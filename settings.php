@@ -14,7 +14,7 @@ return [
         'assetKey'     => $keys['assetCdn'],
         'assetBaseUrl' => 'https://iwgb-assets-f208.kxcdn.com',
     ],
-    'languages' => ['en', 'es', 'pt'],
+    'languages' => ['en', 'es'],
     'cms'       => [
         'baseUrl' => 'https://cms.iwgb.org.uk',
         'key'     => $keys['ghost'],
