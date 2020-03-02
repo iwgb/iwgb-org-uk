@@ -1,0 +1,5 @@
+{% macro _e(page, key, values = {}) %}
+    {% autoescape false %}
+        {{ _(page, key, values) }}
+    {% endautoescape %}
+{% endmacro %}

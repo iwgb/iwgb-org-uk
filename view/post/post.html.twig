@@ -23,7 +23,7 @@
                     <div class="col-12 col-md-3">
                         <div {% if post.featureImage is empty %} class="mt-4" {% endif %}>
                             {% if post.primaryTag.name != 'category:press-release' %}
-                                <div>{{ post.primaryAuthor.name }}</div>
+                                <div>{{ _(_self, 'by') }} {{ post.primaryAuthor.name }}</div>
                             {% endif %}
                             <small class="text-muted">{{ post.publishedAt|date('d F Y h:i') }}</small>
                         </div>

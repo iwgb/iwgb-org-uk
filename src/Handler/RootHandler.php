@@ -185,7 +185,7 @@ abstract class RootHandler {
 
         self::addFunctions($this->view, [
 
-            '_'      => fn(string $page, string $key): string => $this->intl->getText(explode('.', $page)[0], $key),
+            '_'      => fn(string $page, string $key, array $values = []): string => $this->intl->getText(explode('.', $page)[0], $key, $values),
             '_x'     => function (string $s): string {
                 if ($this->settings['dev']) {
                     return "/assets{$s}";

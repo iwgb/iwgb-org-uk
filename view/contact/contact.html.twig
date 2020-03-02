@@ -1,3 +1,5 @@
+{% from 'intl.html.twig' import _e %}
+
 <div class="container-fluid bg-dark text-white"
      id="contact"
 >
@@ -70,25 +72,28 @@
                     <div class="row">
                         <div class="col-12 my-2">
                             <small class="text-muted">
-                                <span>{{ _(_self, 'recaptcha.1') }} </span>
-                                <a href="https://policies.google.com/privacy"
-                                   target="blank"
-                                   referrerpolicy="no-referrer"
-                                   class="link-span-only text-white"
-                                >
-                                    <span>{{ _(_self, 'recaptcha.2') }}</span>
-                                    <i class="fas fa-external-link-alt fa-sm"></i>
-                                </a>
-                                <span> {{ _(_self, 'recaptcha.3') }}</span>
-                                <a href="https://policies.google.com/terms"
-                                   target="blank"
-                                   referrerpolicy="no-referrer"
-                                   class="link-span-only text-white"
-                                >
-                                    <span>{{ _(_self, 'recaptcha.4') }}</span>
-                                    <i class="fas fa-external-link-alt fa-sm"></i>
-                                </a>
-                                <span>{{ _(_self, 'recaptcha.5') }}.</span>
+                                <span>
+                                    {{ _e(_self, 'recaptcha.message', {
+                                        privacy:
+                                            '<a href="https://policies.google.com/privacy"
+                                               target="blank"
+                                               referrerpolicy="no-referrer"
+                                               class="link-span-only text-white"
+                                            >
+                                                <span>' ~ _(_self, 'recaptcha.privacy') ~ '</span>
+                                                <i class="fas fa-external-link-alt fa-sm"></i>
+                                            </a>',
+                                        terms:
+                                            '<a href="https://policies.google.com/terms"
+                                               target="blank"
+                                               referrerpolicy="no-referrer"
+                                               class="link-span-only text-white"
+                                            >
+                                                <span>' ~ _(_self, 'recaptcha.terms') ~ '</span>
+                                                <i class="fas fa-external-link-alt fa-sm"></i>
+                                            </a>',
+                                    }) }}
+                                </span>
                             </small>
                         </div>
                     </div>

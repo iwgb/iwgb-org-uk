@@ -1,3 +1,5 @@
+{% from 'intl.html.twig' import _e %}
+
 <div class="container py-3">
     <div class="row">
         <div class="d-none d-md-block col-md">
@@ -9,7 +11,12 @@
             } %}
             <div class="d-flex">
                 <i class="fas fa-envelope-open fa-fw mx-3 my-1"></i>
-                <div>{{ _(_self, 'contactCtaPrefix') }} <a href="/#contact">{{ _(_self, 'contactCta') }}</a></div>
+                <div>
+                    {{ _e(_self, 'contactCta.main', {
+                        cta:
+                            '<a href="/#contact">' ~ _(_self, 'contactCta.cta') ~ '</a>',
+                    }) }}
+                </div>
             </div>
         </div>
         {% include 'nav/menu/cms-category.html.twig' with {

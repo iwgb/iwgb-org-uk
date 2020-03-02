@@ -75,22 +75,23 @@ class IntlUtility {
         return $this->fallback;
     }
 
-    public function getText(string $template, string $key): string {
+    public function getText(string $template, string $key, array $values = []): string {
         if (strpos($template, "/")) {
             $page = explode('/', $template)[0];
         } else {
             $page = explode('.', $template)[0];
         }
-        return $this->get(UTF8::strtolower($page), $key);
+        return $this->get(UTF8::strtolower($page), $key, $values);
     }
 
     /**
      * @param string      $page
      * @param string      $key
+     * @param array       $values
      * @param string|null $language
      * @return string|string[]
      */
-    private function get(string $page, string $key, string $language = null) {
+    private function get(string $page, string $key, array $values = [], ?string $language = null) {
 
         $language = $language ?? $this->language;
 
@@ -101,7 +102,7 @@ class IntlUtility {
             self::write($page, $language, new stdClass());
 
             if ($language != $this->fallback) {
-                return $this->get($page, $key, $this->fallback);
+                return $this->get($page, $key, $values, $this->fallback);
             }
             return '';
         }
@@ -112,7 +113,7 @@ class IntlUtility {
             self::write($page, $language, $json);
 
             if ($language != $this->fallback) {
-                return $this->get($page, $key, $this->fallback);
+                return $this->get($page, $key, $values, $this->fallback);
             }
 
             return '';
@@ -122,11 +123,11 @@ class IntlUtility {
 
         if ($value === ''
             && $language != $this->fallback) {
-            return $this->get($page, $key, $this->fallback);
+            return $this->get($page, $key, $values, $this->fallback);
         }
 
         return preg_replace_callback('/{ *([a-zA-Z0-9\-_.]+) *}/',
-            fn(array $matches): string => $this->get($page, $matches[1]),
+            fn(array $matches): string => $values[$matches[1]] ?? $matches[1],
             $value
         );
     }
