@@ -1,7 +1,6 @@
 <?php
 
 use Iwgb\OrgUk\Provider;
-use Siler\Container;
 
 define('APP_ROOT', __DIR__);
 

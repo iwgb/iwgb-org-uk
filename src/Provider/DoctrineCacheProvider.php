@@ -7,7 +7,6 @@ use Doctrine\Common\Cache\FilesystemCache;
 use Iwgb\OrgUk\IntlCache;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
-use ReflectionClass;
 
 class DoctrineCacheProvider implements ServiceProviderInterface {
 

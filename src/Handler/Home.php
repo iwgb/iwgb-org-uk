@@ -2,9 +2,7 @@
 
 namespace Iwgb\OrgUk\Handler;
 
-use Guym4c\Airtable\AirtableApiException;
 use Guym4c\GhostApiPhp\Filter;
-use Guym4c\GhostApiPhp\GhostApiException;
 use Guym4c\GhostApiPhp\Model as Cms;
 use Guym4c\GhostApiPhp\Sort;
 use Guym4c\GhostApiPhp\SortOrder;
