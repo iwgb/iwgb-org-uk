@@ -39,11 +39,18 @@ class Home extends RootHandler {
                 )->getResources()),
 
                 'campaigns' => Cms\Page::get($this->cms, null, null,
-                    $this->intl->ghostFilterFactory()
+                    (new Filter())
+                        ->by('tag', '=', $this->intl->getLanguage())
                         ->and('tag', '=', 'category-campaign')
                         ->and('featured', '=', 'true', true)
                 )->getResources(),
-            ]
+
+                'contacts' => $this->settings['contacts'],
+                'meta' => [
+                    'title' => "IWGB: {$this->intl->getText('home', 'slogan')}",
+                    'image' => $this->settings['defaultImage'],
+                ],
+            ],
         );
     }
 }

@@ -3,8 +3,8 @@
          class="tile__image bg-image lazyload w-100 d-none d-md-block"
     >
     </div>
-    <div class="tile__text bg-image"
-         style="background-image: url({{ image }})"
+    <div class="tile__text bg-image lazyload"
+         data-bg="{{ image }}"
     >
         <span class="tile__text__part text-white">{{ headerTop }}</span><br>
         <span class="tile__text__part tile__text__part--bottom">{{ headerBottom }}</span><br>

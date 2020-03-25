@@ -36,7 +36,7 @@ class AssetProxy extends RootHandler {
         Response\output(
             file_get_contents($path),
             StatusCode::OK,
-            (new MimeTypes())->getMimeType($extension)
+            (new MimeTypes())->getMimeType($extension) ?? 'application/json'
         );
     }
 }

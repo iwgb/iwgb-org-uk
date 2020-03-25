@@ -1,5 +1,32 @@
 @import '../util';
 
+.covid {
+    h1 {
+        font-size: 4rem;
+    }
+
+    //noinspection CssReplaceWithShorthandSafely
+    &__background {
+
+        @include media-breakpoint-up(md) {
+            background: linear-gradient(90deg, rgb(0, 0, 0) 30%, rgba(255,255,255,0) 100%),
+            url('https://cdn.iwgb.org.uk/assets/virus.jpg'),
+            #000;
+            background-size: 50% !important;
+        }
+
+        @include media-breakpoint-down(sm) {
+            background: linear-gradient(90deg, rgb(0, 0, 0) 0%, rgba(255,255,255,0) 100%),
+            url('https://cdn.iwgb.org.uk/assets/virus.jpg'),
+            #000;
+            background-size: 80% !important;
+        }
+
+        background-position: right !important;
+        background-repeat: no-repeat !important;
+    }
+}
+
 .hero {
     background-color: black;
 
@@ -98,7 +125,7 @@
 
     &__heading {
         @include stripeText;
-        font-size: 6rem;
+        font-size: 4rem;
 
         @include media-breakpoint-up(md) {
             font-size: 5rem;

@@ -6,13 +6,14 @@
     "form.email.desc": "So we can get back to you. We won't share your email with anyone else.",
     "form.message": "What's your message?",
     "form.name": "Your name",
-    "form.submit": "send",
-    "heading": "Get in touch",
+    "form.submit": "Send",
+    "heading": "Getting in touch during the pandemic",
     "memberships": "Memberships",
-    "phone.desc": "We normally answer the phone 9am-5pm weekdays",
+    "press": "Press",
     "recaptcha.message": "This form is protected by reCAPTCHA and the Google {privacy} and {terms} apply.",
     "recaptcha.privacy": "Privacy Policy",
     "recaptcha.terms": "Terms of Service",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut leo magna, lacinia eget tempor non, fringilla sed nulla. Sed malesuada metus vitae scelerisque laoreet. Pellentesque mattis nunc urna, ut posuere metus tempor non. Ut pulvinar sagittis tellus at efficitur. In nec consequat justo. Morbi ante nisi, molestie eu fringilla vel, eleifend non orci. Nam pellentesque tellus sit amet ullamcorper imperdiet. Aliquam pretium risus dolor, eu porta dolor tempor in.",
+    "text": "Our offices are now closed due to the Covid-19 pandemic. For details on how to contact us during this time, please see our Covid-19 support and advice page, or use the form here.",
+    "supportAndAdvice": "Support and advice",
     "to": "to"
 }

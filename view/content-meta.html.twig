@@ -1,5 +1,5 @@
 <meta name="title" content="{{ resource.meta.title ?? resource.title  }}">
-<meta name="description" content="{{ resource.meta.description ?? resource.excerpt }}">
+<meta name="description" content="{{ resource.meta.description ?? resource.excerpt ?? '' }}">
 
 {% set description = resource.meta.description ?? resource.excerpt|default('') %}
 
@@ -24,5 +24,5 @@
 <meta property="twitter:url" content="{{ _url }}">
 <meta property="twitter:title" content="{{ resource.meta.twitterTitle ?? resource.meta.title ?? resource.title }}">
 {% if description is not empty %}
-    <meta property="twitter:description" content="{{ resource.meta.twitterDescription ?? description }}">
+    <meta property="twitter:description" content="{{ resource.meta.twitterDescription ?? description ?? '' }}">
 {% endif %}

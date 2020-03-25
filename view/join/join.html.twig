@@ -4,7 +4,10 @@
 
 {% block head %}
     {% include 'content-meta.html.twig' with {
-        resource: content,
+        resource: {
+            title: meta.title,
+            featureImage: meta.image,
+        }
     } only %}
 {% endblock %}
 
@@ -17,7 +20,7 @@
             <div class="row py-5">
                 {% for jobType in jobTypes %}
                 <div class="col-12 col-md-4 p-2 join__jobType">
-                    <a class="py-2 px-3 m-1 bg-white h-100 d-flex justify-content-between align-items-center link-unstyled"
+                    <a class="py-2 px-3 m-1 bg-white h-100 d-flex justify-content-between align-items-center link-unstyled join__goal"
                        href="https://members.iwgb.org.uk/join/{{ jobType.Slug }}"
                     >
                         <div>
@@ -54,4 +57,10 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $('.join__goal').click(() => fathom('trackGoal', 'J317TNNE', 0))
+    </script>
 {% endblock %}

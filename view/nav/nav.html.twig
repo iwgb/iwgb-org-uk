@@ -2,19 +2,30 @@
 
 {% macro join() %}
     <a href="/join"
-       class="btn btn-light nav__bar__items__join">
+       class="btn btn-light nav__bar__items__join nav__bar__items__join--{{ _language }}">
     </a>
 {% endmacro %}
 
-{% macro navItem(name, item) %}
+{% macro navItem(name, item, type) %}
     {% if item.kind == 'internal' or item.kind == 'external' %}
         {% set attrs = 'href="' ~ item.href ~ '"' %}
     {% else %}
         {% set attrs = 'data-toggle="#' ~ item.id ~ '"' %}
     {% endif %}
+
+
+    {% set initial = 'd-none' %}
+    {% if item.mdHide is not empty and item.mdHide %}
+        {% set breakpoint = 'd-lg-flex' %}
+    {% else %}
+        {% set breakpoint = 'd-md-flex' %}
+    {% endif %}
+    {% if type == 'mobile' %}
+        {% set initial = 'd-flex' %}
+    {% endif %}
     {% autoescape false %}
-        <a {{ attrs }} class="link-unstyled text-white h-100 d-flex align-items-center py-3 px-4">
-            <span>{{ name }}</span>
+        <a {{ attrs }} class="link-unstyled text-white h-100 {{ initial }} {{ breakpoint }} align-items-center py-3 px-4">
+            <span>{{ _(_self, 'heading.' ~ name) }}</span>
             {% if item.kind == 'menu' %}
                 <i class="fas fa-chevron-down ml-2"></i>
             {% endif %}
@@ -51,7 +62,7 @@
             </div>
             <div class="nav__bar__items d-none d-md-flex">
                 {% for name, item in data %}
-                    {{ _self.navItem(name, item) }}
+                    {{ _self.navItem(name, item, 'desktop') }}
                 {% endfor %}
                 <div class="d-flex align-items-center px-3">
                     {{ _self.join() }}
@@ -65,7 +76,7 @@
         {% for name, item in data %}
             {% if item.data is not empty %}
                 <div class="d-block d-md-none">
-                    {{ _self.navItem(name, item) }}
+                    {{ _self.navItem(name, item, 'mobile') }}
                 </div>
             {% endif %}
             {% if item.kind == 'menu' %}
@@ -73,7 +84,7 @@
                      class="container-fluid bg-grey nav__menu nav__menu--initial"
                 >
 
-                    {% include 'nav/menu/' ~ name ~ '.html.twig' with {
+                    {% include 'nav/menu/' ~ name|lower ~ '.html.twig' with {
                         data: item.data,
                     } only %}
                 </div>

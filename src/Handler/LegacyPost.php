@@ -5,6 +5,7 @@ namespace Iwgb\OrgUk\Handler;
 use DateTime;
 use Exception;
 use Parsedown;
+use Siler\Http\Response;
 
 class LegacyPost extends RootHandler {
 
@@ -18,6 +19,11 @@ class LegacyPost extends RootHandler {
 
         if (empty($post)) {
             $this->notFound();
+            return;
+        }
+
+        if (!empty($post['redirect'])) {
+            Response\redirect($post['redirect']);
             return;
         }
 

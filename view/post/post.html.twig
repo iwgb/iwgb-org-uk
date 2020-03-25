@@ -43,23 +43,18 @@
                             </div>
                             <div class="post__donate__body p-2">
                                 <p>{{ _(_self, 'donate.body') }}</p>
-                                <a href="{{ _a('/donate') }}" class="btn btn-light text-dark">{{ _(_self, 'donate.cta') }}</a>
+                                <a href="{{ _a('/page/donate') }}" class="btn btn-light text-dark">{{ _(_self, 'donate.cta') }}</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-4 my-3">
-                <h3>Featured</h3>
-                <h3>Recent</h3>
-                <h3>Related</h3>
+{#                <h3>Featured</h3>#}
+{#                <h3>Recent</h3>#}
+{#                <h3>Related</h3>#}
             </div>
         </div>
 
     </div>
-
-
-    {% autoescape false %}
-        {{ dump(post) }}
-    {% endautoescape %}
 {% endblock %}

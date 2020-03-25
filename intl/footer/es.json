@@ -1,1 +1,23 @@
-{"About":"","Legal":"","Resources":"","credit":"","icons":"","legal.constitution":"","legal.cookies":"","legal.gdpr":"","legal.header":"","legal.privacy":"","legal.rulebook":"","links.casework":"","links.contact":"","links.header":"","maps.1":"","maps.2":"","maps.3":"","social.facebook":"","social.header":"","social.twitter":"","social.youtube":""}
+{
+    "About": "Acerca de",
+    "Legal": "Jurídico",
+    "Resources": "Recursos",
+    "credit": "Diseñado y construido en la IWGB con amor, cuidado y café. Hasta la victoria siempre.",
+    "icons": "Algunos iconos",
+    "legal.constitution": "",
+    "legal.cookies": "",
+    "legal.gdpr": "",
+    "legal.header": "",
+    "legal.privacy": "",
+    "legal.rulebook": "",
+    "links.casework": "",
+    "links.contact": "",
+    "links.header": "",
+    "maps.1": "Datos del mapa",
+    "maps.2": "colaboradores de OpenStreetMap",
+    "maps.3": "imágenes",
+    "social.facebook": "",
+    "social.header": "",
+    "social.twitter": "",
+    "social.youtube": ""
+}

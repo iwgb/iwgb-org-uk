@@ -1,1 +1,17 @@
-{"cookies.dismiss":"","cookies.link":"","cookies.message":"","copy":"","iwgb":"","iwgb.full":"","languagePreference.cookieNotice":"","languagePreference.save":"","latestStories":"","logo.roundel":"","logo.wordmark":"","readMore":"","slogan":""}
+{
+    "contactForm.error": "Hubo un problema para hacer llegar su mensaje. Por favor, intente otra manera - ¡lo siento!",
+    "contactForm.success": "Hemos enviado tu mensaje usando tubos de mensajería sindicalizados de internet. Nos pondremos en contacto con usted lo antes posible.",
+    "cookies.dismiss": "Gracias",
+    "cookies.link": "Aprende más",
+    "cookies.message": "Usamos cookies para hacer que este sitio web funcione, y nunca las usaremos para rastrearte.",
+    "copy": "Copia",
+    "iwgb": "Unión de Trabajadores Independientes de Gran Bretaña",
+    "languagePreference.cookieNotice": "utiliza una cookie",
+    "languagePreference.save": "Guarda mi preferencia",
+    "latestStories": "Titulares",
+    "logo.roundel": "roundel",
+    "logo.wordmark": "wordmark",
+    "readMore": "Leer más",
+    "slogan": "Poniendo a los trabajadores primero",
+    "notFound": "Lo siento, pero no pudimos encontrar la página que buscabas, así que te hemos llevado a nuestra página principal."
+}

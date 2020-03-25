@@ -1,0 +1,14 @@
+@import '../util';
+
+.error {
+
+    &__title {
+        @include stripeText;
+        font-size: 7rem;
+        line-height: 1.2;
+
+        @include media-breakpoint-down(sm) {
+            font-size: 5rem;
+        }
+    }
+}

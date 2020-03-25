@@ -18,6 +18,10 @@ class Join extends RootHandler {
         $this->render('join/join.html.twig', $this->intl->getText('join', 'title'), [
             'contentGroup' => new IntlCmsResource($this->cms, $this->intl, Cms\Page::bySlug($this->cms, 'join')),
             'jobTypes'     => $jobTypes,
+            'meta' => [
+                'title' => "IWGB: {$this->intl->getText('join', 'title')}",
+                'image' => $this->settings['defaultImage'],
+            ],
         ]);
     }
 }

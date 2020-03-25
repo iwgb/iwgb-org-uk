@@ -1,1 +1,27 @@
-{"charityWorkers.description":"","charityWorkers.name":"","cleanersAndFacilities.description":"","cleanersAndFacilities.name":"","couriersAndLogistics.description":"","couriersAndLogistics.name":"","cycleInstructors.description":"","cycleInstructors.name":"","electricalWorkers.description":"","electricalWorkers.name":"","fosterCareWorkers.description":"","fosterCareWorkers.name":"","gameWorkersUniteUK.description":"","gameWorkersUniteUK.name":"","header":"","latestNews":"","securityAndReceptionists.description":"","securityAndReceptionists.name":"","unitedPrivateHireDrivers.description":"","unitedPrivateHireDrivers.name":"","universityOfGreenwich.description":"","universityOfGreenwich.name":"","universityOfLondon.description":"","universityOfLondon.name":"","viewWebsite":""}
+{
+    "charityWorkers.description": "La Rama de Trabajadores de Caridad está abierta a todos los trabajadores sin fines de lucro con sede en Londres que no trabajan para instituciones de subvención",
+    "charityWorkers.name": "Trabajadores de Caridad",
+    "cleanersAndFacilities.description": "Luchando por un salario digno y contratos justos para los limpiadores de todo Londres, incluyendo la Royal Opera House y John Lewis",
+    "cleanersAndFacilities.name": "Limpiadores y Facilidades",
+    "couriersAndLogistics.description": "Las empresas están corriendo asustadas. Cambiando la forma de la industria de la mensajería, de Deliveroo a CitySprint y muchos otros",
+    "couriersAndLogistics.name": "Mensajeros y Logística",
+    "cycleInstructors.description": "La Rama de Instructores de Ciclismo de la IWGB está abierta a todos los instructores de ciclismo con sede en Londres.",
+    "cycleInstructors.name": "Instructores de Ciclismo",
+    "electricalWorkers.description": "Luchando con electricistas, obreros eléctricos, compañeros eléctricos, mejoradores, aprendices adultos y aprendices por mejores condiciones y tratamiento",
+    "electricalWorkers.name": "Trabajadores Eléctricos",
+    "fosterCareWorkers.description": "Exigir derechos laborales para los trabajadores de los hogares de acogida en todo el Reino Unido",
+    "fosterCareWorkers.name": "Cuidadores de Acogida",
+    "gameWorkersUniteUK.description": "Abogar por los derechos de los trabajadores y la sindicalización en el desarrollo de juegos",
+    "gameWorkersUniteUK.name": "Game Workers Unite UK",
+    "header": "Ramas de la IWGB",
+    "latestNews": "Últimas noticias",
+    "securityAndReceptionists.description": "Dando voz a los guardias de seguridad de todo Londres.",
+    "securityAndReceptionists.name": "Seguridad y Recepcionistas",
+    "unitedPrivateHireDrivers.description": "Has leído los titulares. Estamos cambiando el curso de los derechos laborales de los conductores privados para siempre.",
+    "unitedPrivateHireDrivers.name": "United Private Hire Drivers",
+    "universityOfGreenwich.description": "Para todos los trabajadores de la Universidad de Greenwich, en gran medida las campañas de lucha por los trabajadores subcontratados de la UoG",
+    "universityOfGreenwich.name": "University of Greenwich",
+    "universityOfLondon.description": "Representando a los guardias de seguridad, limpiadores y todos los demás trabajadores de todas las universidades de la Universidad de Londres.",
+    "universityOfLondon.name": "Universidad de Londres",
+    "viewWebsite": "Ver página web"
+}

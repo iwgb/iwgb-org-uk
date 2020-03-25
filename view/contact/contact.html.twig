@@ -8,17 +8,20 @@
             <div class="col-12 col-md-6 pt-5">
                 <h1 class="contact__header">{{ _(_self, 'heading') }}</h1>
                 <p>{{ _(_self, 'text') }}</p>
+                <p><a href="/page/covid-support-and-advice" class="btn btn-iwgb">{{ _(_self, 'supportAndAdvice') }}</a></p>
             </div>
             <div class="col-12 col-md-6 pt-5">
-                <form id="contact"
+                <form id="contactForm"
                       method="post"
+                      action="/contact"
                 >
                     <div class="row">
                         <div class="col-12 col-md-6">
                             <div class="form-group">
-                                <label for="contact__name">Your name</label>
+                                <label for="contact__name">{{ _(_self, 'form.name') }}</label>
                                 <input id="contact__name"
                                        class="form-control"
+                                       name="name"
                                        required
                                 >
                             </div>
@@ -28,6 +31,7 @@
                                 <label for="contact__email">{{ _(_self, 'form.email') }}</label>
                                 <input id="contact__email"
                                        class="form-control"
+                                       name="email"
                                        required
                                 >
                                 <small class="form-text text-muted">{{ _(_self, 'form.email.desc') }}</small>
@@ -41,6 +45,7 @@
                                 <textarea id="contact__message"
                                           class="form-control contact__message"
                                           rows="3"
+                                          name="message"
                                           required
                                 >
                                 </textarea>
@@ -49,23 +54,22 @@
                     </div>
                     <div class="row">
                         <div class="col-12 d-flex justify-content-start align-items-center">
-                            <button id="contact__submit"
+                            <input id="contact__submit"
                                     type="submit"
                                     class="btn btn-iwgb contact__submit g-recaptcha"
                                     data-sitekey="{{ _recaptcha }}"
-                                    data-callback="onSubmit"
+                                    data-callback="onContactSubmit"
+                                    value="{{ _(_self, 'form.submit') }}"
                             >
-                                <span>Send</span>
-                            </button>
                             <span class="mx-2">{{ _(_self, 'to') }}</span>
                             <label for="target" class="sr-only">{{ _(_self, 'department') }}</label>
                             <select id="target"
                                     name="target"
                                     class="custom-select text-dark w-auto"
                             >
-                                <option value="office">{{ _(_self, 'enquiries') }}</option>
-                                <option value="membership">{{ _(_self, 'memberships') }}</option>
-                                <option value="membership">{{ _(_self, 'dataProtection') }}</option>
+                                {% for name, email in contacts %}
+                                    <option value="{{ name }}">{{ _(_self, name) }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>

@@ -3,11 +3,11 @@
 namespace Iwgb\OrgUk\Intl;
 
 use Doctrine\Common\Cache\Cache;
-use ReflectionClass;
+use Doctrine\Common\Cache\FlushableCache;
 
 class IntlCache implements Cache {
 
-    private Cache $cache;
+    private FlushableCache $cache;
 
     private IntlUtility $intl;
 
@@ -17,10 +17,10 @@ class IntlCache implements Cache {
 
     /**
      * IntlCache constructor.
-     * @param IntlUtility $intl
-     * @param Cache       $cache
+     * @param IntlUtility    $intl
+     * @param FlushableCache $cache
      */
-    public function __construct(IntlUtility $intl, Cache $cache) {
+    public function __construct(IntlUtility $intl, FlushableCache $cache) {
         $this->intl = $intl;
         $this->cache = $cache;
     }
@@ -79,10 +79,6 @@ class IntlCache implements Cache {
     }
 
     public function purge(): void {
-        foreach ((new ReflectionClass(self::class))->getConstants() as $key) {
-            foreach ($this->intl->getLanguages() as $language) {
-                $this->cache->delete($this->getIntlKey($key, $language));
-            }
-        }
+        $this->cache->flushAll();
     }
 }

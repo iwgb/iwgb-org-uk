@@ -22,7 +22,7 @@
             </div>
             <div class="d-block d-md-none nav__menu__items">
                 {% for campaign in data %}
-                    <a href="#"
+                    <a href="/page/{{ campaign.slug }}"
                        class="d-block my-3"
                     >
                         <span>{{ campaign.title }}</span>

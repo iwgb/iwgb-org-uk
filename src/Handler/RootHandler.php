@@ -12,8 +12,8 @@ use Guym4c\GhostApiPhp\GhostApiException;
 use Guym4c\GhostApiPhp\Model as Cms;
 use Guym4c\GhostApiPhp\Sort;
 use Guym4c\GhostApiPhp\SortOrder;
-use Iwgb\OrgUk\Intl\IntlCmsAccessTrait;
 use Iwgb\OrgUk\Intl\IntlCache as Cache;
+use Iwgb\OrgUk\Intl\IntlCmsAccessTrait;
 use Iwgb\OrgUk\Intl\IntlCmsResource;
 use Iwgb\OrgUk\Intl\IntlUtility;
 use Iwgb\OrgUk\TwigEnvSetupTrait;
@@ -104,15 +104,16 @@ abstract class RootHandler {
      */
     private function getNavData(): array {
 
-        return $this->cache->get(Cache::NAV_DATA, function(): array {
+        return $this->cache->get(Cache::NAV_DATA, function (): array {
             $branches = $this->airtable->list('Branches')->getRecords();
             shuffle($branches);
 
             return [
                 'nav' => [
                     'Donate'    => [
-                        'kind' => 'internal',
-                        'href' => '/donate',
+                        'kind'   => 'internal',
+                        'href'   => '/page/donate',
+                        'mdHide' => true,
                     ],
                     //TODO i18n
                     'News'      => [
@@ -126,13 +127,14 @@ abstract class RootHandler {
                         ),
                     ],
                     'Campaigns' => [
-                        'kind' => 'menu',
-                        'id'   => 'campaigns',
-                        'data' => Cms\Page::get($this->cms, null,
+                        'kind'   => 'menu',
+                        'id'     => 'campaigns',
+                        'data'   => Cms\Page::get($this->cms, null,
                             new Sort('published_at', SortOrder::DESC),
                             $this->intl->ghostFilterFactory()
                                 ->and('tag', '=', 'category-campaign')
                         )->getResources(),
+                        'mdHide' => true,
                     ],
                     'Branches'  => [
                         'kind' => 'menu',
@@ -185,17 +187,16 @@ abstract class RootHandler {
 
         self::addFunctions($this->view, [
 
-            '_'      => fn(string $page, string $key, array $values = []): string => $this->intl->getText(explode('.', $page)[0], $key, $values),
-            '_x'     => function (string $s): string {
+            '_'  => fn(string $page, string $key, array $values = []): string => $this->intl->getText(explode('.', $page)[0], $key, $values),
+            '_x' => function (string $s): string {
                 if ($this->settings['dev']) {
                     return "/assets{$s}";
                 } else {
-                    return "{$this->settings['cdn']['baseUrl']}{$s}";
+                    return "{$this->settings['cdn']['assetBaseUrl']}{$s}";
                 }
             },
-            '_i'     => fn(string $imageUri): string => "{$this->settings['cdn']['baseUrl']}{$imageUri}",
-            '_a'     => fn(string $uri, ?string $lang = null): string =>
-                "{$this->intl::addToUri($lang ?? $this->intl->getLanguage(), $uri)}",
+            '_i' => fn(string $imageUri): string => "{$this->settings['cdn']['baseUrl']}{$imageUri}",
+            '_a' => fn(string $uri, ?string $lang = null): string => "{$this->intl::addToUri($lang ?? $this->intl->getLanguage(), $uri)}",
 
             'toIntlKey'     => fn(string $branch, string $key): string => UTF8::str_camelize($branch) . ".{$key}",
             'timeCalc'      => fn(?float $time = null): string => round(($time ?? microtime(true)) - $this->time['app-init'], 3),
@@ -204,9 +205,9 @@ abstract class RootHandler {
         ]);
 
         self::addFilters($this->view, [
-           'stripLanguage' => fn(string $uri): string => IntlUtility::removeFromUri($uri),
-           'timeAgo' => fn(DateTime $datetime): string => $this->datetime->instance($datetime)->diffForHumans(),
-           'dateFormat' => fn(DateTime $datetime): string => $this->datetime->instance($datetime)->format('Y-m-d H:i'),
+            'stripLanguage' => fn(string $uri): string => IntlUtility::removeFromUri($uri),
+            'timeAgo'       => fn(DateTime $datetime): string => $this->datetime->instance($datetime)->diffForHumans(),
+            'dateFormat'    => fn(DateTime $datetime): string => $this->datetime->instance($datetime)->format('Y-m-d H:i'),
         ]);
     }
 
@@ -219,12 +220,7 @@ abstract class RootHandler {
         return self::getFallbackPagesByTag($this->cms, $this->intl, $tag);
     }
 
-    /**
-     * @throws Twig\Error\LoaderError
-     * @throws Twig\Error\RuntimeError
-     * @throws Twig\Error\SyntaxError
-     */
     protected function notFound(): void {
-        $this->render('not-found/not-found.html.twig', 'Page not found');
+        Response\redirect('/?notFound');
     }
 }

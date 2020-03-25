@@ -44,11 +44,16 @@
 
             &__join {
                 box-sizing: content-box;
-                width: 4ch;
+                width: 5ch;
 
-                &::after {
+                &--en::after {
                     content: "Join";
                 }
+
+                &--es::after {
+                    content: "Únete";
+                }
+
 
                 &:hover::after {
                     content: "❤️";
