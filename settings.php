@@ -24,8 +24,9 @@ return [
         'secret'  => $keys['recaptcha'],
     ],
     'airtable'     => [
-        'key'  => $keys['airtable'],
-        'base' => 'app8RK2AsBtnIcezs',
+        'key'            => $keys['airtable'],
+        'membershipBase' => 'app8RK2AsBtnIcezs',
+        'branchesBase'   => 'apprFq13GweQpFk0x',
     ],
     'mailgun'      => [
         'key'    => $keys['mailgun'],

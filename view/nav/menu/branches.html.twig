@@ -16,42 +16,51 @@
         <div class="col-12">
             <div class="d-none d-md-flex nav__menu__branches__scroll">
                 {% for branch in data %}
-                    <div class="nav__menu__branches__scroll__item d-inline-block m-2">
-                         <div class="nav__menu__branches__branch d-flex flex-column">
-                             {% if branch.Image is defined %}
-                                 <div class="nav__menu__branches__image bg-image lazyload flex-grow-1"
-                                      data-bg="{{ branch.Image }}"
-                                 >
-                                     <div class="nav__menu__branches__description h-100 w-100 text-white d-flex justify-content-center align-items-center p-2 text-center">
-                                         <span>{{ _('branches', toIntlKey(branch.Name, 'description')) }}</span>
+                    {% if branch.Name != 'Central Union' %}
+                        <div class="nav__menu__branches__scroll__item d-inline-block m-2">
+                             <div class="nav__menu__branches__branch d-flex flex-column">
+                                 {% if branch.Image is defined %}
+                                     <div class="nav__menu__branches__image bg-image lazyload flex-grow-1"
+                                          data-bg="{{ branch.Image }}"
+                                     >
+                                         <div class="nav__menu__branches__description h-100 w-100 text-white d-flex justify-content-center align-items-center p-2 text-center">
+                                             <span>{{ _('branches', toIntlKey(branch.Name, 'description')) }}</span>
+                                         </div>
+                                     </div>
+                                 {% endif %}
+                                 <div class="nav__menu__branches__info flex flex-column bg-white mx-3 my-2">
+                                     <h4 class="m-0">{{ _('branches', toIntlKey(branch.Name, 'name')) }}</h4>
+                                     <div class="mt-3">
+                                         {% if branch.Website is not null %}
+                                             <a href="{{ branch.Website }}"
+                                                class="mr-3 text-dark link-span-only"
+                                                {% if branch.Website[0:20] != 'https://iwgb.org.uk/' %}
+                                                    target="_blank"
+                                                {% endif %}
+                                             >
+                                                {% if branch.Website[0:20] == 'https://iwgb.org.uk/' %}
+                                                    <span>{{ _('branches', 'moreInfo') }}</span>
+                                                {% else %}
+                                                    <span>{{ _('branches', 'viewWebsite') }}</span>
+                                                {% endif %}
+                                             </a>
+                                         {% endif %}
+                                         <a href="/maintenance"
+                                            class="text-dark link-span-only"
+                                         >
+                                             <span>{{ _('branches', 'latestNews') }}</span>
+                                         </a>
+                                         {% if branch.Twitter is not null %}
+                                             {{ _self.socialIcon('twitter', branch.Twitter) }}
+                                         {% endif %}
+                                         {% if branch.Facebook is not null %}
+                                             {{ _self.socialIcon('facebook', branch.Facebook) }}
+                                         {% endif %}
                                      </div>
                                  </div>
-                             {% endif %}
-                             <div class="nav__menu__branches__info flex flex-column bg-white mx-3 my-2">
-                                 <h4 class="m-0">{{ _('branches', toIntlKey(branch.Name, 'name')) }}</h4>
-                                 <div class="mt-3">
-                                     {% if branch.Website is not null %}
-                                         <a href="{{ branch.Website }}"
-                                            class="mr-3 text-dark link-span-only"
-                                         >
-                                             <span>{{ _('branches', 'viewWebsite') }}</span>
-                                         </a>
-                                     {% endif %}
-                                     <a href="/maintenance"
-                                        class="text-dark link-span-only"
-                                     >
-                                         <span>{{ _('branches', 'latestNews') }}</span>
-                                     </a>
-                                     {% if branch.Twitter is not null %}
-                                         {{ _self.socialIcon('twitter', branch.Twitter) }}
-                                     {% endif %}
-                                     {% if branch.Facebook is not null %}
-                                         {{ _self.socialIcon('facebook', branch.Facebook) }}
-                                     {% endif %}
-                                 </div>
                              </div>
-                         </div>
-                    </div>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
             <div class="d-block d-md-none nav__menu__items">

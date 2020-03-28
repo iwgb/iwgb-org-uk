@@ -43,7 +43,9 @@ abstract class RootHandler {
 
     protected Ghost $cms;
 
-    protected Airtable $airtable;
+    protected Airtable $membership;
+
+    protected Airtable $branches;
 
     protected IntlUtility $intl;
 
@@ -62,7 +64,8 @@ abstract class RootHandler {
         $this->intl = $c['intl'];
         $this->cms = $c['cms'];
         $this->time = $c['time'];
-        $this->airtable = $c['airtable'];
+        $this->membership = $c['membership'];
+        $this->branches = $c['branches'];
         $this->cache = $c['cache'];
         $this->sm = $c['session'];
         $this->datetime = $c['datetime'];
@@ -105,7 +108,7 @@ abstract class RootHandler {
     private function getNavData(): array {
 
         return $this->cache->get(Cache::NAV_DATA, function (): array {
-            $branches = $this->airtable->list('Branches')->getRecords();
+            $branches = $this->branches->list('Branches')->getRecords();
             shuffle($branches);
 
             return [

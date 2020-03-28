@@ -11,7 +11,7 @@ class PurgeCmsCache extends RootHandler {
      */
     public function __invoke(array $routeParams): void {
         $this->cache->purge();
-        $this->airtable->flushCache();
+        $this->membership->flushCache();
         $this->cms->flushCache();
         Response\no_content();
     }

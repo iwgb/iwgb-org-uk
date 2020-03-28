@@ -23,13 +23,15 @@ function dispatch(Container $c) {
 
     http\get(__($c, ''), new Handler\Home($c));
 
-    http\get(__($c, "/post/(?'id'5[a-f][0-9a-f]{11})/{slug}"), new Handler\LegacyPost($c));
+    http\get(__($c, '/page/covid-19'), fn(array $params) => Response\redirect('/covid-19'));
+
+    http\get(__($c, "/post/{id}/{slug}"), new Handler\LegacyPost($c));
     http\get(__($c, '/post/{slug}'), new Handler\Post($c));
     http\get(__($c, '/page/{slug}'), new Handler\Page($c));
 
     http\get(__($c, '/join'), new Handler\Join($c));
 
-    http\get('/admin', new Handler\Admin\EditLocales($c));
+//    http\get('/admin', new Handler\Admin\EditLocales($c));
 
     http\post('/callback/ghost/rebuild', new Handler\PurgeCmsCache($c));
 
@@ -38,8 +40,13 @@ function dispatch(Container $c) {
 
     http\post(__($c, '/contact'), new Handler\Contact($c));
 
-    http\get(__($c, '/page/info/coronavirus'), fn(array $params) => Response\redirect('/page/covid-19'));
+    http\get(__($c, '/covid-19'), new Handler\CovidPage($c));
+    http\get(__($c, '/covid-19/{page}'), new Handler\CovidPage($c));
+
+    http\get(__($c, '/page/info/coronavirus'), fn(array $params) => Response\redirect('/covid-19'));
     http\get(__($c, '/donate'), fn(array $params) => Response\redirect('/page/donate'));
+
+    http\get(__($c, '/page/{subcategory}/{page}'), fn(array $params) => Response\redirect("/page/{$params['page']}"));
 }
 
 function __(Container $c, string $uri): string {

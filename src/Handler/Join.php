@@ -12,7 +12,7 @@ class Join extends RootHandler {
      */
     public function __invoke(array $routeParams): void {
 
-        $jobTypes = $this->airtable->list('Job types')->getRecords();
+        $jobTypes = $this->membership->list('Job types')->getRecords();
         shuffle($jobTypes);
 
         $this->render('join/join.html.twig', $this->intl->getText('join', 'title'), [

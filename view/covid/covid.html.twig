@@ -1,0 +1,65 @@
+{% extends 'root.html.twig' %}
+
+{% set page = pageGroup.getIntl() ?? pageGroup.getFallback() %}
+
+{% block head %}
+    {% include 'content-meta.html.twig' with {
+        resource: page,
+    } only %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:800&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid bg-dark text-white">
+        <div class="container">
+            {% if jason is defined and jason %}
+                <div class="row">
+                    <div class="col-12 col-md-8 col-lg-6">
+                        <div>
+                            <div class="covid__art__bg bg-image lazyload"
+                                 data-bg="https://cdn.iwgb.org.uk/bucket/UoL/protest.jpg"
+                            >
+                                <div class="covid__art__text">
+                                    {% for i in 1..5 %}
+                                        <span>CORONAVIRUS</span><br>
+                                    {% endfor %}
+                                    <div>
+                                        <img class="covid__art__hero"
+                                             src="https://cdn.iwgb.org.uk/bucket/justice-portrait.jpg"
+                                             alt=
+                                        >
+                                    </div>
+                                </div>
+                                <div>
+                                    <img  class="covid__art__wordmark"
+                                          src="https://cdn.iwgb.org.uk/assets/wordmark-white-outline-cropped.png"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-6">
+                        <div class="covid__quote mt-5"></div>
+                        <p>I know many of you are worried and concerned about what is going on. These are scary times, and many of you work in jobs which are at higher risk and receive less protection than average. But I can assure you, <strong>your union has your back.</strong></p>
+                        <p>We will do everything possible to keep you informed with the latest public health guidance, to advise you, represent you, work with you to hold employers to account, and use media pressure and legal action to protect your health and safety, rights and dignity. Now more than ever we need to come together and enforce our rights.</p>
+                        <p><strong>Jason Moyer-Lee</strong><br>
+                        General Secretary<br>
+                        IWGB</p>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-12 col-md-8 offset-md-2">
+                    <h1 class="my-5">{{ page.title }}</h1>
+                    <div class="page__body">
+                        {% autoescape false %}
+                            {{ page.html }}
+                        {% endautoescape %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,9 +1,14 @@
 {% extends 'root.html.twig' %}
 
+{% set page = pageGroup.getIntl() ?? pageGroup.getFallback() %}
+
+{% block head %}
+    {% include 'content-meta.html.twig' with {
+        resource: page,
+    } only %}
+{% endblock %}
+
 {% block body %}
-
-    {% set page = pageGroup.getIntl() ?? pageGroup.getFallback() %}
-
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-8 offset-md-2">
