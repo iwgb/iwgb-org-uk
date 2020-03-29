@@ -19,14 +19,16 @@ class AirtableProvider implements ServiceProviderInterface {
             AirtableClientFactory::build(
                 $c['settings']['airtable']['key'],
                 $c['settings']['airtable']['membershipBase'],
-                ['Job types']
+                ['Job types'],
+                $c['settings']['airtable']['proxyKey']
             );
 
         $c['branches'] = fn (Container $c): Airtable =>
             AirtableClientFactory::build(
                 $c['settings']['airtable']['key'],
                 $c['settings']['airtable']['branchesBase'],
-                ['Branches']
+                ['Branches'],
+                $c['settings']['airtable']['proxyKey']
             );
     }
 }

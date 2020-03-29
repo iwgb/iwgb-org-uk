@@ -12,11 +12,14 @@ class AirtableClientFactory {
     /**
      * {@inheritdoc}
      */
-    public static function build(string $key, string $baseId, array $cachableTables = []) {
+    public static function build(string $key, string $baseId, array $cachableTables = [], string $proxyKey) {
 
         return new Airtable($key, $baseId,
             new FilesystemCache(APP_ROOT . "/var/cache/airtable/{$baseId}"),
-            $cachableTables
+            $cachableTables,
+            'https://airtable.iwgb.org.uk/v0',
+            ['X-Proxy-Auth' => $proxyKey],
+            false
         );
     }
 }

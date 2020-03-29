@@ -212,7 +212,7 @@ class IntlUtility {
     }
 
     public static function getRoute(Container $c, string $uri): string {
-        return '(/' . $c['intl']->getLanguage() . ")?${uri}";
+        return "(/{$c['intl']->getLanguage()})?${uri}/?";
     }
 
     public function ghostFilterFactory(): Filter {

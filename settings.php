@@ -27,6 +27,7 @@ return [
         'key'            => $keys['airtable'],
         'membershipBase' => 'app8RK2AsBtnIcezs',
         'branchesBase'   => 'apprFq13GweQpFk0x',
+        'proxyKey'       => $keys['airtableProxy'],
     ],
     'mailgun'      => [
         'key'    => $keys['mailgun'],
