@@ -14,7 +14,7 @@ class Page extends RootHandler {
 
         $fallbackPage = Cms\Page::bySlug($this->cms, $routeParams['slug']);
         if (empty($fallbackPage)) {
-            $this->notFound();
+            self::notFound();
             return;
         }
 

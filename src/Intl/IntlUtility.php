@@ -58,10 +58,6 @@ class IntlUtility {
             return $cookieValue;
         }
 
-        if (isset($_SESSION['language'])) {
-            return $_SESSION['language'];
-        }
-
         // header
         $acceptHeader = $request->getHeaderLine('Accept');
         if (!empty($acceptHeader)) {
@@ -212,7 +208,7 @@ class IntlUtility {
     }
 
     public static function getRoute(Container $c, string $uri): string {
-        return "(/{$c['intl']->getLanguage()})?${uri}/?";
+        return "(/{$c['intl']->getLanguage()})?${uri}";
     }
 
     public function ghostFilterFactory(): Filter {

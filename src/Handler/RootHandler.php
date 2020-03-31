@@ -223,7 +223,7 @@ abstract class RootHandler {
         return self::getFallbackPagesByTag($this->cms, $this->intl, $tag);
     }
 
-    protected function notFound(): void {
+    public static function notFound(): void {
         Response\redirect('/?notFound');
     }
 }

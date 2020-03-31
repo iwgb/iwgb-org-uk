@@ -14,7 +14,7 @@ class Post extends RootHandler {
 
         $fallbackPost = Cms\Post::bySlug($this->cms, $routeParams['slug']);
         if (empty($fallbackPost)) {
-            $this->notFound();
+            self::notFound();
             return;
         }
 

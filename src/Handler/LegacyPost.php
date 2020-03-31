@@ -18,7 +18,7 @@ class LegacyPost extends RootHandler {
         $post = json_decode(file_get_contents(APP_ROOT . '/var/archive.json'), true)[$routeParams['id']] ?? null;
 
         if (empty($post)) {
-            $this->notFound();
+            self::notFound();
             return;
         }
 

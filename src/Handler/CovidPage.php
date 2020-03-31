@@ -19,7 +19,7 @@ class CovidPage extends RootHandler {
             empty($fallbackPage)
             || $fallbackPage->primaryTag->slug !== 'covid-19'
         ) {
-            $this->notFound();
+            self::notFound();
             return;
         }
 

@@ -58,5 +58,5 @@ function _catch(Exception $e): void {
 }
 
 if (!Router\get(http\DID_MATCH, false)) {
-    Response\redirect('/?notFound');
+    Handler\RootHandler::notFound();
 }
