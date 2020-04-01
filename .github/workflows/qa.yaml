@@ -43,6 +43,12 @@ jobs:
             cd /var/repo/iwgb-org-uk-qa/.deploy
             sh ./qa.sh
 
+      - name: Purge
+        uses: jakejarvis/cloudflare-purge-action@0.3.0
+        env:
+          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+
       - name: Verify
         run: echo ::set-env name=status::$(http -a iwgb:${{ secrets.QA_PASSWORD }} -h https://qa.iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2)
 
