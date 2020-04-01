@@ -36,7 +36,7 @@ jobs:
       - name: Build
         uses: appleboy/ssh-action@v0.0.2
         with:
-          host: noproxy.iwgb.org.uk
+          host: "noproxy.iwgb.org.uk"
           username: deploy
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
