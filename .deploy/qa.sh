@@ -1,7 +1,7 @@
 #!/bin/bash
 cd /var/repo/iwgb-org-uk-qa
 
-rsync -a . /var/www/iwgb-org-uk-qa --delete --exclude .git --exclude .deploy --exclude .github --exclude vendor
+rsync -a . /var/www/iwgb-org-uk-qa --delete --exclude .git --exclude .deploy --exclude .github --exclude vendor --exclude .gitignore
 
 cd /var/www/iwgb-org-uk-qa/public
 mv index.php index.temp.php
