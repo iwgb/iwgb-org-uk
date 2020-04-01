@@ -46,16 +46,12 @@ jobs:
       - name: Verify
         run: echo ::set-env name=status::$(http -h https://iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2)
 
-      - name: Fail
+      - name: Check
         if: env.status != 200
         run: exit 1
 
       - name: Notify
-        run: http POST https://maker.ifttt.com/trigger/build/with/key/${{ secrets.IFTTT_KEY }} value1=${{ github.action }} value2=${{ github.repository }} value3=${{ github.actor }}
-        uses: screendriver/ifttt-action@v1.0.0
-        with:
-          event: build
-          key: ${{ secrets.IFTTT_KEY }}
+          run: http POST https://maker.ifttt.com/trigger/build/with/key/${{ secrets.IFTTT_KEY }} value1=${{ github.action }} value2=${{ github.repository }} value3=${{ github.run_id }}
 
 
 
