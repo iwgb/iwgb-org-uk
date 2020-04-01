@@ -15,7 +15,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
-        ref: master
+        with:
+          ref: master
 
       - name: Deploy
         id: deploy
@@ -46,7 +47,7 @@ jobs:
         run: echo ::set-env name=STATUS::$(http -h https://iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2)
 
       - name: Fail
-        if: ${{ STATUS }} != 200
+        if: ${STATUS} != 200
         run: exit 1
 
       - name: Notify
