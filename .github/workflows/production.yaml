@@ -51,7 +51,9 @@ jobs:
         run: exit 1
 
       - name: Notify
-        run: http POST https://maker.ifttt.com/trigger/build/with/key/${{ secrets.IFTTT_KEY }} value1=${{ github.action }} value2=${{ github.repository }} value3=${{ github.run_id }}
+        run: http POST https://maker.ifttt.com/trigger/build/with/key/${{ secrets.IFTTT_KEY }} value1="${{ github.workflow }}" value2="${{ github.repository }}" value3="${{ github.run_id }}"
+
+
 
 
 
