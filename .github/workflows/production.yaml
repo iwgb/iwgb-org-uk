@@ -44,10 +44,10 @@ jobs:
             sh ./deploy.sh
 
       - name: Verify
-        run: echo ::set-env name=STATUS::$(http -h https://iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2)
+        run: echo ::set-env name=status::$(http -h https://iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2)
 
       - name: Fail
-        if: ${STATUS} != 200
+        if: status != 200
         run: exit 1
 
       - name: Notify
