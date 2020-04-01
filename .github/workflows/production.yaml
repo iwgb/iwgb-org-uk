@@ -47,7 +47,7 @@ jobs:
         run: echo ::set-env name=status::$(http -h https://iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2)
 
       - name: Fail
-        if: status != 200
+        if: env.status != 200
         run: exit 1
 
       - name: Notify
