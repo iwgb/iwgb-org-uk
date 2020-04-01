@@ -20,7 +20,7 @@ jobs:
 
       - name: Deploy
         id: deploy
-        uses: contention/rsync-deployments@v1.0.0
+        uses: Pendect/action-rsyncer@v1.1.0
         env:
           DEPLOY_KEY: ${{secrets.DEPLOY_KEY}}
         with:
