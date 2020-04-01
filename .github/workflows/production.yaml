@@ -1,0 +1,59 @@
+name: deploy-production
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup
+        run: sudo apt-get install httpie
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        ref: master
+
+      - name: Deploy
+        id: deploy
+        uses: contention/rsync-deployments@v1.0.0
+        env:
+          DEPLOY_KEY: ${{secrets.DEPLOY_KEY}}
+        with:
+          flags: '-avzr --delete'
+          options: ''
+          ssh_options: ''
+          src: './'
+          dest: 'deploy@noproxy.iwgb.org.uk:/var/repo/iwgb-org-uk'
+
+      - name: Status
+        run: echo "${{ steps.deploy.outputs.status }}"
+
+      - name: Build
+        uses: appleboy/ssh-action@v0.0.2
+        with:
+          host: noproxy.iwgb.org.uk
+          username: deploy
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            cd /var/repo/iwgb-org-uk-static
+            sh ./deploy.sh
+
+      - name: Verify
+        run: echo ::set-env name=STATUS::$(http -h https://iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2)
+
+      - name: Fail
+        if: ${{ STATUS }} != 200
+        run: exit 1
+
+      - name: Notify
+        uses: screendriver/ifttt-action@v1
+        with:
+          event: build_success
+          key: ${{ secrets.IFTTT_KEY }}
+
+
+
