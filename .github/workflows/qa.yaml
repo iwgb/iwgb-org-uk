@@ -40,8 +40,8 @@ jobs:
           username: deploy
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            cd /var/repo/iwgb-org-uk-qa-static
-            sh ./deploy.sh
+            cd /var/repo/iwgb-org-uk-qa/.deploy
+            sh ./qa.sh
 
       - name: Verify
         run: echo ::set-env name=status::$(http -a iwgb:${{ secrets.QA_PASSWORD }} -h https://qa.iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2)

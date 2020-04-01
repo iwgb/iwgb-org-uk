@@ -1,3 +1,7 @@
+<?php
+
+echo <<<'HTML'
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -44,3 +48,5 @@
     </script>
 </body>
 </html>
+
+HTML;
