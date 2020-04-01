@@ -15,7 +15,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
-        ref: develop
+        with:
+          ref: develop
 
       - name: Deploy
         id: deploy
@@ -43,17 +44,14 @@ jobs:
             sh ./deploy.sh
 
       - name: Verify
-        run: echo ::set-env name=STATUS::$(http -h https://qa.iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2)
+        run: echo ::set-env name=status::$(http -h https://qa.iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2)
 
       - name: Fail
-        if: ${{ STATUS }} != 200
+        if: env.status != 200
         run: exit 1
 
       - name: Notify
-        uses: screendriver/ifttt-action@v1
+        uses: screendriver/ifttt-action@v1.0.0
         with:
           event: build_success_qa
           key: ${{ secrets.IFTTT_KEY }}
-
-
-
