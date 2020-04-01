@@ -34,7 +34,7 @@ jobs:
         run: echo "${{ steps.deploy.outputs.status }}"
 
       - name: Build
-        uses: appleboy/ssh-action@v0.0.2
+        uses: appleboy/ssh-action@v0.0.7
         with:
           host: "noproxy.iwgb.org.uk"
           username: deploy
