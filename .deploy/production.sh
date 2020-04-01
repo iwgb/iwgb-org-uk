@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /var/www/repo/iwgb-org-uk
+cd /var/repo/iwgb-org-uk
 
 rsync -a . /var/www/iwgb-org-uk --delete --exclude .git --exclude .deploy --exclude .github --exclude vendor
 
