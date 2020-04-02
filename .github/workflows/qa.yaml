@@ -43,14 +43,14 @@ jobs:
             cd /var/repo/iwgb-org-uk-qa/.deploy
             sh ./qa.sh
 
-      - name: Purge CACHE
+      - name: Purge cache
         uses: jakejarvis/cloudflare-purge-action@v0.3.0
         env:
           CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
 
       - name: Purge assets
-        run: http GET https://api.keycdn.com/zones/purge/${{ secrets.KEYCDN_ZONE_ID }}.json -a ${{ secrets.KEYCDN_API_KEY}}
+        run: 'http GET https://api.keycdn.com/zones/purge/${{ secrets.KEYCDN_ZONE_ID }}.json -a ${{ secrets.KEYCDN_API_KEY}}:'
 
       - name: Verify
         run: echo ::set-env name=status::$(http -a iwgb:${{ secrets.QA_PASSWORD }} -h https://qa.iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2)
