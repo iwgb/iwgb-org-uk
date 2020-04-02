@@ -1,5 +1,7 @@
 <?php
 
+header('Cache-Control: no-cache');
+
 echo <<<'HTML'
 
 <!doctype html>
