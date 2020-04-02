@@ -1,13 +1,13 @@
 #!/bin/bash
 cd /var/repo/iwgb-org-uk
 
-rsync -a . /var/www/iwgb-org-uk --delete --exclude .git --exclude .deploy --exclude .github --exclude vendor
+rsync -a . /var/www/iwgb-org-uk --delete --exclude .git --exclude .deploy --exclude .github --exclude vendor --exclude .gitignore
 
 cd /var/www/iwgb-org-uk/public
 mv index.php index.temp.php
 mv maintenance.php index.php
 
-cd /var/repo/iwgb.org.uk-static
+cd /var/repo/iwgb-org-uk-static
 rsync -a . /var/www/iwgb.org.uk
 
 cd /var/www/iwgb-org-uk
