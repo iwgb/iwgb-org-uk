@@ -24,11 +24,11 @@ jobs:
         env:
           DEPLOY_KEY: ${{secrets.DEPLOY_KEY}}
         with:
-          flags: '-avzr --delete'
+          flags: -avzr --delete
           options: ''
           ssh_options: ''
           src: './'
-          dest: 'deploy@noproxy.iwgb.org.uk:/var/repo/iwgb-org-uk'
+          dest: ${{ secrets.DEPLOY_USER }}@noproxy.iwgb.org.uk:/var/repo/iwgb-org-uk
 
       - name: Status
         run: echo "${{ steps.deploy.outputs.status }}"
@@ -36,18 +36,21 @@ jobs:
       - name: Build
         uses: appleboy/ssh-action@v0.0.7
         with:
-          host: "noproxy.iwgb.org.uk"
-          username: deploy
+          host: noproxy.iwgb.org.uk
+          username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
             cd /var/repo/iwgb-org-uk/.deploy
             sh ./production.sh
 
-      - name: Purge
+      - name: Purge cache
         uses: jakejarvis/cloudflare-purge-action@v0.3.0
         env:
           CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+
+      - name: Purge assets
+        run: http GET https://api.keycdn.com/zones/purge/${{ secrets.KEYCDN_ZONE_ID }}.json -a ${{ secrets.KEYCDN_API_KEY}}
 
       - name: Verify
         run: echo ::set-env name=status::$(http -h https://iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2)
