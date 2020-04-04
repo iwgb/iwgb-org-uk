@@ -1,7 +1,7 @@
-name: backup
+name: backup-cms
 on:
   schedule:
-    - cron: '25 16 * * *'
+    - cron: '0 * * * *'
 
 jobs:
   backup:
