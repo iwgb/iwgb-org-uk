@@ -1,7 +1,7 @@
 name: backup
 on:
   schedule:
-    cron: '15 16 * * *'
+    - cron: '20 16 * * *'
 
 jobs:
   backup:
