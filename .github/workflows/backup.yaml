@@ -1,0 +1,43 @@
+name: backup
+on:
+  schedule:
+    cron: '15 16 * * *'
+
+jobs:
+  backup:
+    name: Backup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup
+        uses: shimataro/ssh-key-action@v2.0.1
+          with:
+            key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Create snapshot
+        uses: appleboy/ssh-action@v0.0.7
+        with:
+          host: noproxy.cms.iwgb.org.uk
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            mysqldump -u ${{ secrets.DEPLOY_USER }} -p${{ secrets.DEPLOY_PASS }} iwgb_cms > /var/backup/db.sql
+            zip /var/backup/snapshot.zip /var/backup/db.sql
+
+      - name: Retrieve
+        runs: |
+          mkdir backup
+          scp ${{ secrets.DEPLOY_USER }}@noproxy.cms.iwgb.org.uk:/var/backup/snapshot.zip ./backup/$(date +"%m-%d-%y").zip -i .ssh/id_rsa
+
+      - name: Sync
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: iwgb
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ams3
+          AWS_S3_ENDPOINT: digitaloceanspaces.com
+          SOURCE_DIR: './backup'
+          DEST_DIR: 'backup/'
