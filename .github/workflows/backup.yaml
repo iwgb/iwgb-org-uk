@@ -14,6 +14,7 @@ jobs:
         uses: shimataro/ssh-key-action@v2.0.1
         with:
           key: ${{ secrets.DEPLOY_KEY }}
+          known_hosts: noproxy.cms.iwgb.org.uk
 
       - name: Create snapshot
         uses: appleboy/ssh-action@v0.0.7
