@@ -25,7 +25,7 @@ jobs:
             zip /var/backup/snapshot.zip /var/backup/db.sql
 
       - name: Retrieve
-        runs: |
+        run: |
           mkdir backup
           scp ${{ secrets.DEPLOY_USER }}@noproxy.cms.iwgb.org.uk:/var/backup/snapshot.zip ./backup/$(date +"%m-%d-%y").zip -i .ssh/id_rsa
 

@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Setup
-        run: sudo apt-get install httpie
+        run: sudo apt-get update && sudo apt-get install httpie
 
       - name: Checkout
         uses: actions/checkout@v2
