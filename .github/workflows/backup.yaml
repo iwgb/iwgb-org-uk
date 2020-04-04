@@ -15,6 +15,7 @@ jobs:
         with:
           key: ${{ secrets.DEPLOY_KEY }}
           known_hosts: noproxy.cms.iwgb.org.uk
+          name: id_rsa
 
       - name: Create snapshot
         uses: appleboy/ssh-action@v0.0.7
@@ -29,7 +30,7 @@ jobs:
       - name: Retrieve
         run: |
           mkdir backup
-          scp ${{ secrets.DEPLOY_USER }}@noproxy.cms.iwgb.org.uk:/var/backup/snapshot.zip ./backup/$(date +"%m-%d-%y").zip -i id_rsa
+          scp ${{ secrets.DEPLOY_USER }}@noproxy.cms.iwgb.org.uk:/var/backup/snapshot.zip ./backup/$(date +"%m-%d-%y").zip -i ./.ssh/id_rsa
 
       - name: Sync
         uses: jakejarvis/s3-sync-action@v0.5.1
