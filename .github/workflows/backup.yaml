@@ -11,11 +11,10 @@ jobs:
 
     steps:
       - name: Setup
-        uses: shimataro/ssh-key-action@v2.0.1
+        uses: kielabokkie/ssh-key-and-known-hosts-action@v1.0.1
         with:
-          key: ${{ secrets.DEPLOY_KEY }}
-          known_hosts: noproxy.cms.iwgb.org.uk
-          name: id_rsa
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+          ssh-host: noproxy.cms.iwgb.org.uk
 
       - name: Create snapshot
         uses: appleboy/ssh-action@v0.0.7
@@ -30,7 +29,7 @@ jobs:
       - name: Retrieve
         run: |
           mkdir backup
-          scp ${{ secrets.DEPLOY_USER }}@noproxy.cms.iwgb.org.uk:/var/backup/snapshot.zip ./backup/$(date +"%m-%d-%y").zip -i ./.ssh/id_rsa
+          scp ${{ secrets.DEPLOY_USER }}@noproxy.cms.iwgb.org.uk:/var/backup/snapshot.zip ./backup/$(date +"%m-%d-%y").zip -i ~/.ssh/id_rsa
 
       - name: Sync
         uses: jakejarvis/s3-sync-action@v0.5.1
