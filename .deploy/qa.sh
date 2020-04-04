@@ -11,7 +11,7 @@ cd /var/repo/iwgb-org-uk-static || exit 1
 rsync -a . /var/www/iwgb-org-uk-qa
 
 runuser -l deploy -c 'cd /var/www/iwgb-org-uk-qa && composer install'
-chmod -R 777 var
+chmod -R 777 /var/www/iwgb-org-uk-qa/var
 
 cd /var/www/iwgb-org-uk-qa/assets/css || exit 1
 sass --update --no-cache --style compressed .:.
