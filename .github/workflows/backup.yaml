@@ -29,10 +29,10 @@ jobs:
       - name: Retrieve
         run: |
           mkdir backup
-          scp ${{ secrets.DEPLOY_USER }}@noproxy.cms.iwgb.org.uk:/var/backup/snapshot.zip ./backup/$(date +"%m-%d-%y").zip -i .ssh/id_rsa
+          scp ${{ secrets.DEPLOY_USER }}@noproxy.cms.iwgb.org.uk:/var/backup/snapshot.zip ./backup/$(date +"%m-%d-%y").zip -i id_rsa
 
       - name: Sync
-        uses: jakejarvis/s3-sync-action@master
+        uses: jakejarvis/s3-sync-action@v0.5.1
         with:
           args: --follow-symlinks --delete
         env:
