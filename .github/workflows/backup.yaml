@@ -1,7 +1,8 @@
 name: backup-cms
 on:
-  schedule:
-    - cron: '0 * * * *'
+  push:
+    branches:
+      - develop
 
 jobs:
   backup:
