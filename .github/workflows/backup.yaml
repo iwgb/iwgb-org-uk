@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Setup
-        run: |
-          mkdir ~/.ssh
-          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+        uses: kielabokkie/ssh-key-and-known-hosts-action@v1.0.1
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+          ssh-host: noproxy.cms.iwgb.org.uk
 
       - name: Create snapshot
         uses: appleboy/ssh-action@v0.0.7
