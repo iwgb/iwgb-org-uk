@@ -32,7 +32,7 @@ return [
     'mailgun'      => [
         'key'    => $keys['mailgun'],
         'domain' => 'mx.iwgb.org.uk',
-        'from'   => 'activist-robot-noreply@iwgb.org.uk'
+        'from'   => 'IWGB Activist Robot <activist-robot-noreply@iwgb.org.uk>'
     ],
     'contacts'     => [
         'enquiries'      => 'office@iwgb.org.uk',

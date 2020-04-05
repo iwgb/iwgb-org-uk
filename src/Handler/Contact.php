@@ -11,7 +11,7 @@ use voku\helper\UTF8;
 
 class Contact extends RootHandler {
 
-    private const EMAIL_HEADER = "New website contact from {name} {email}.\nReply to this email to contact them.\n\n";
+    private const EMAIL_HEADER = "New website contact from {name} {email}.\nReply to this email to contact them.\n\nMessage:\n\n";
 
     private const NAME_DEFAULT = 'Unknown name';
 
