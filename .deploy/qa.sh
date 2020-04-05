@@ -15,7 +15,7 @@ chmod -R 774 /var/www/iwgb-org-uk-qa
 runuser -l deploy -c 'cd /var/www/iwgb-org-uk-qa && composer install'
 
 cd /var/www/iwgb-org-uk-qa/assets/css || exit 1
-sass --update --no-cache --style compressed .:.
+sass --style compressed style.scss:style.css
 
 cd /var/www/iwgb-org-uk-qa/public || exit 1
 mv index.php maintenance.php
