@@ -10,8 +10,8 @@ mv maintenance.php index.php
 cd /var/repo/iwgb-org-uk-static || exit 1
 rsync -a . /var/www/iwgb-org-uk
 
-chown -R www-data:www-data /var/www/iwgb-org-uk-qa
-chmod -R 774 /var/www/iwgb-org-uk-qa
+chown -R www-data:www-data /var/www/iwgb-org-uk
+chmod -R 774 /var/www/iwgb-org-uk
 runuser -l deploy -c 'cd /var/www/iwgb-org-uk && composer install'
 
 cd /var/www/iwgb-org-uk/assets/css || exit 1
