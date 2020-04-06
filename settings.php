@@ -36,7 +36,7 @@ return [
     ],
     'contacts'     => [
         'enquiries'      => 'office@iwgb.org.uk',
-        'memberships'    => 'memberships@iwgb.co.uk',
+        'memberships'    => 'membership@iwgb.co.uk',
         'dataProtection' => 'dataprotection@iwgb.co.uk',
         'press'          => 'press@iwgb.co.uk',
     ],
