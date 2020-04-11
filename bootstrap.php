@@ -18,4 +18,5 @@ return (new \Pimple\Container([
     ->register(new Provider\AuraSessionProvider())
     ->register(new Provider\DoctrineCacheProvider())
     ->register(new Provider\CarbonDateTimeProvider())
-    ->register(new Provider\DiactorosPsr7Provider());
+    ->register(new Provider\DiactorosPsr7Provider())
+    ->register(new Provider\GuzzleHttpProvider());

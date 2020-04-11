@@ -14,10 +14,19 @@
                 <h1>{{ _(_self, 'subtitle') }} 🤦</h1>
                 <p>{{ _(_self, 'body.1') }}</p>
                 <p>{{ _(_self, 'body.2') }}</p>
-                <p>{{ _(_self, 'body.3') }}</p>
+
+                {% if aid is not empty %}
+                    <p>{{ _(_self, 'body.aid') }}</p>
+                    <p>
+                        <span>{{ aid|split('-')[0] }}</span>
+                        <span class="text-muted">-{{ aid|split('-', 2)[1] }}</span>
+                    </p>
+                {% endif %}
+
+                <p>{{ _(_self, 'body.cause') }}</p>
                 <p class="text-muted">
                     <span>{{ _(_self, 'body.4') }}<br></span>
-                    <small class="text-muted">{{ _(_self, 'cause') }}: invalid session / {{ _(_self, 'job') }}: {{ _job }}</small>
+                    <small class="text-muted">{{ _(_self, 'cause') }}: {{ error }} / {{ _(_self, 'job') }}: {{ _job }}</small>
                 </p>
 
             </div>

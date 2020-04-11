@@ -12,6 +12,22 @@
 {% endblock %}
 
 {% block body %}
+
+    {% if error is defined %}
+        <div class="container">
+            <h1>{{ _(_self, 'error.heading') }}</h1>
+            <p>{{ _(_self, 'error.body') }}</p>
+            {% if error.aid is defined %}
+                <p>{{ _(_self, 'error.aid') }}</p>
+                <p>
+                    <span>{{ error.aid|split('-')[0] }}</span>
+                    <span class="text-muted">-{{ error.aid|split('-', 2)[1] }}</span>
+                </p>
+            {% endif %}
+            <p class="text-muted">{{ error.message }}</p>
+        </div>
+    {% endif %}
+
     <div class="container-fluid lazyload bg-image" data-bg="{{ content.featureImage }}">
         <div class="container join">
             <div class="row pt-3">

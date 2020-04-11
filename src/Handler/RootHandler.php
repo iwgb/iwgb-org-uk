@@ -201,7 +201,7 @@ abstract class RootHandler {
             '_i' => fn(string $imageUri): string => "{$this->settings['cdn']['baseUrl']}{$imageUri}",
             '_a' => fn(string $uri, ?string $lang = null): string => "{$this->intl::addToUri($lang ?? $this->intl->getLanguage(), $uri)}",
 
-            'toIntlKey'     => fn(string $branch, string $key): string => UTF8::str_camelize($branch) . ".{$key}",
+            'toIntlKey'     => fn($branch, $key): string => UTF8::str_camelize($branch) . ".{$key}",
             'timeCalc'      => fn(?float $time = null): string => round(($time ?? microtime(true)) - $this->time['app-init'], 3),
             'parseNewLines' => fn(string $s, string $replace = '<br>'): string => UTF8::str_replace("\n", $replace, $s),
             'localeInfo'    => fn(string $language): Carbon\Language => Carbon\Carbon::getAvailableLocalesInfo()[$language],

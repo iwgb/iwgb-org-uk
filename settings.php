@@ -41,4 +41,7 @@ return [
         'press'          => 'press@iwgb.co.uk',
     ],
     'defaultImage' => 'https://cdn.iwgb.org.uk/bucket/home/header5.jpg',
+    'membersApi'   => [
+        'token' => $keys['membersApi'],
+    ],
 ];
