@@ -8,9 +8,6 @@ require APP_ROOT . '/vendor/autoload.php';
 
 return (new \Pimple\Container([
     'settings' => require APP_ROOT . '/settings.php',
-    'time' => [
-        'app-init' => microtime(true),
-    ],
 ]))->register(new Provider\TwigTemplateProvider())
     ->register(new Provider\IntlProvider())
     ->register(new Provider\GhostCmsProvider())
