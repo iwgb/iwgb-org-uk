@@ -13,15 +13,15 @@
 
 {% block body %}
 
-    {% if error is defined %}
+    {% if error is not empty %}
         <div class="container">
-            <h1>{{ _(_self, 'error.heading') }}</h1>
+            <h2>{{ _(_self, 'error.title') }}</h2>
             <p>{{ _(_self, 'error.body') }}</p>
             {% if error.aid is defined %}
                 <p>{{ _(_self, 'error.aid') }}</p>
                 <p>
                     <span>{{ error.aid|split('-')[0] }}</span>
-                    <span class="text-muted">-{{ error.aid|split('-', 2)[1] }}</span>
+                    <span class="text-muted">{{ error.aid|split('-', 2)[1] }}</span>
                 </p>
             {% endif %}
             <p class="text-muted">{{ error.message }}</p>
@@ -30,7 +30,7 @@
 
     <div class="container-fluid lazyload bg-image" data-bg="{{ content.featureImage }}">
         <div class="container join">
-            <div class="row pt-3">
+            <div class="row pt-5">
                 <span class="join__heading">{{ _(_self, 'heading') }}</span>
             </div>
             <div class="row py-5">

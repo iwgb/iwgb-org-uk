@@ -17,7 +17,10 @@
     &__heading {
         @include stripeText;
         font-size: 4rem;
-        margin-top: 35vh;
+
+        @include media-breakpoint-up(md) {
+            margin-top: 35vh;
+        }
 
         @include media-breakpoint-down(sm) {
             font-size: 3rem;
