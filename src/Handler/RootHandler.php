@@ -63,7 +63,6 @@ abstract class RootHandler {
         $this->request = $c['request'];
         $this->intl = $c['intl'];
         $this->cms = $c['cms'];
-        $this->time = $c['time'];
         $this->membership = $c['membership'];
         $this->branches = $c['branches'];
         $this->cache = $c['cache'];
@@ -90,8 +89,6 @@ abstract class RootHandler {
      * @throws Twig\Error\SyntaxError
      */
     protected function render(string $template, string $title, array $data = []) {
-
-        $this->time['Start render'] = microtime(true);
 
         $this->populateTemplateEnvironment();
 
@@ -184,7 +181,6 @@ abstract class RootHandler {
             '_uri'       => IntlUtility::removeFromUri($this->request->getUri()->getPath()),
             '_url'       => (string)$this->request->getUri(),
             '_recaptcha' => $this->settings['recaptcha']['siteKey'],
-            '_time'      => $this->time,
             '_q'         => Request\get(),
         ]);
 
@@ -202,7 +198,6 @@ abstract class RootHandler {
             '_a' => fn(string $uri, ?string $lang = null): string => "{$this->intl::addToUri($lang ?? $this->intl->getLanguage(), $uri)}",
 
             'toIntlKey'     => fn($branch, $key): string => UTF8::str_camelize($branch) . ".{$key}",
-            'timeCalc'      => fn(?float $time = null): string => round(($time ?? microtime(true)) - $this->time['app-init'], 3),
             'parseNewLines' => fn(string $s, string $replace = '<br>'): string => UTF8::str_replace("\n", $replace, $s),
             'localeInfo'    => fn(string $language): Carbon\Language => Carbon\Carbon::getAvailableLocalesInfo()[$language],
         ]);

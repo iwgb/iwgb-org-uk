@@ -40,7 +40,7 @@ class Join extends RootHandler {
             'contentGroup' => new IntlCmsResource($this->cms, $this->intl, Cms\Page::bySlug($this->cms, 'join')),
             'jobTypes'     => $jobTypes,
             'meta'         => [
-                'title' => "IWGB: {$this->intl->getText('join', 'title')}",
+                'title' => "{$this->intl->getText('join', 'title')} - IWGB",
                 'image' => $this->settings['defaultImage'],
             ],
             'error'        => $error,

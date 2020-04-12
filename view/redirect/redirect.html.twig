@@ -1,0 +1,28 @@
+{% extends 'root.html.twig' %}
+
+{% block head %}
+    {% include 'content-meta.html.twig' with {
+        resource: {
+            title: meta.title,
+            featureImage: meta.image,
+        }
+    } only %}
+{% endblock %}
+
+{% block body %}
+    <div class="container d-flex align-items-center justify-content-center">
+        <div class="text-center m-5 redirect__pad">
+            <i class="fas fa-spinner fa-spin fa-2x"></i>
+            <h3 class="m-2">{{ _('join', 'loading') }}</h3>
+        </div>
+
+    </div>
+    <script>
+        (
+            () => window.setTimeout(
+                () => window.location.replace('{{ url }}'),
+                4 * 1000
+            )
+        )();
+    </script>
+{% endblock %}
