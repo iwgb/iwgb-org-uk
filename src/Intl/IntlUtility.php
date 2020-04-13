@@ -24,10 +24,6 @@ class IntlUtility {
         $this->languages = $languages;
         $this->fallback = $fallback ?? $languages[0];
         $this->language = $this->processLanguage($request, $sm, $redirect);
-
-        if (Request\get('persistLocale') == 'yes') {
-            session_set_cookie_params(['lifetime' => 60 * 60 * 24 * 365 /* 1 year */]);
-        }
     }
 
     private function processLanguage(RequestInterface $request, SessionManager $sm, callable $redirect): string {

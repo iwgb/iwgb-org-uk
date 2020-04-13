@@ -1,17 +1,7 @@
 {% if _languages|length > 1 %}
     <div id="top"
-         class="container-fluid d-flex align-items-center justify-content-between bg-dark lang"
+         class="container-fluid d-flex align-items-center justify-content-end bg-dark lang"
     >
-        <div class="text-muted">
-            {% if _language != _fallback %}
-                <a href="{{ _uri }}?persistLocale=yes"
-                   class="text-white link-span-only"
-                >
-                    <span>{{ _('global', 'languagePreference.save') }}</span>
-                </a>
-                <small>{{ _('global', 'languagePreference.cookieNotice') }}</small>
-            {% endif %}
-        </div>
         <div class="lang__select">
             {% for language in _languages %}
                 <a href="/{{ language }}{{ _uri|stripLanguage }}"
