@@ -1,0 +1,33 @@
+{{
+    props({
+        number: t.string().isRequired(),
+        linkColor: t.string().isRequired(),
+        description: t.string().isRequired(),
+    })
+}}
+
+<div class="d-flex my-3">
+    <i class="fas fa-phone fa-fw mx-3 my-1"></i>
+    <div>
+        <div class="office__phone m-0">
+            <span>{{ number|reverse }}</span>
+        </div>
+        <small class="text-muted interpunct-list">
+            <span>
+                {% include 'copy.html.twig' with {
+                    text: number,
+                    linkColor: linkColor,
+                } only %}
+            </span>
+            <span>
+                <a href="tel:{{ number }}"
+                   class="link-span-only {{ linkColor }}"
+                >
+                    <i class="fas fa-phone fa-sm fa-fw"></i>
+                    <span>{{ _(_self, 'call') }}</span>
+                </a>
+            </span>
+            <span>{{ description }}</span>
+        </small>
+    </div>
+</div>

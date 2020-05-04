@@ -1,3 +1,24 @@
+{{
+    props({
+        story: t.oneOfType([
+            t.instanceOf('Guym4c.GhostApiPhp.Model.Post'),
+            t.shape({
+                slug: t.string().isRequired(),
+                featureImage: t.string(),
+                title: t.string().isRequired(),
+                publishedAt: t.instanceOf('DateTime'),
+                primaryTag: t.shape({
+                    name: t.string().isRequired(),
+                }),
+                primaryAuthor: t.shape({
+                    name: t.string().isRequired(),
+                }),
+            }),
+        ]).isRequired(),
+        type: t.string(),
+    })
+}}
+
 {% set type = type ?? 'post' %}
 
 <a href="{{ _a('/' ~ type ~ '/' ~ story.slug) }}"
@@ -12,12 +33,12 @@
         {% endif %}
         <div class="story__data px-3 py-2 flex-grow-1 d-flex flex-column justify-content-between bg-grey">
             <h3 class="story__data__title m-0">{{ story.title }}</h3>
-            {% if story.publishedAt is defined %}
+            {% if story.publishedAt is not null %}
                 <div class="story__data__meta">
                     {% if story.primaryTag.name != 'category:press-release' %}
                         <span>{{ story.primaryAuthor.name }}</span>
                     {% endif %}
-                    <span title="{{ story.publishedAt|dateFormat }}">{{ story.publishedAt|timeAgo }}</span>
+                    <span title="{{ story.publishedAt|dateFormat }}">{#{{ story.publishedAt|timeAgo }}#}</span>
                 </div>
             {% endif %}
         </div>

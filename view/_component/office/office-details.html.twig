@@ -1,0 +1,47 @@
+{{
+    props({
+        office: t.string().isRequired(),
+        linkColor: t.string(),
+    })
+}}
+
+{% set linkColor = linkColor ?? 'text-white' %}
+
+<div class="col-12 col-md-6 py-3">
+    <h2>{{ _(_self, office ~ '.heading') }}</h2>
+    {% if _(_self, office ~ '.phone') %}
+        {% include '_component/office/contact-phone.html.twig' with {
+            number: _(_self, office ~ '.phone'),
+            description: _(_self, office ~ '.phoneDesc'),
+            linkColor: linkColor,
+        } only %}
+    {% endif %}
+    <div class="d-flex my-3">
+        <i class="fas fa-map-marker-alt fa-fw mx-3 my-1"></i>
+        <div>
+            <div>
+                {% autoescape false %}
+                    {{ parseNewLines(_(_self, office ~ '.address')) }}
+                {% endautoescape %}
+            </div>
+            <small class="text-muted interpunct-list">
+                <span>
+                    {% include 'copy.html.twig' with {
+                        text: parseNewLines(_(_self, office ~ '.address'), ', '),
+                        linkColor: linkColor,
+                    } only %}
+                </span>
+                <span>
+                    <a href="{{ _(_self, office ~ '.directionsLink') }}"
+                       target="_blank"
+                       referrerpolicy="no-referrer"
+                       class="link-span-only text-white"
+                    >
+                        <i class="fas fa-location-arrow fa-sm fa-fw"></i>
+                        <span>{{ _(_self, 'directions') }}</span>
+                    </a>
+                </span>
+            </small>
+        </div>
+    </div>
+</div>

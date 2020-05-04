@@ -15,9 +15,9 @@
 
     {% block body %}{% endblock %}
 
-    {% include 'footer/footer.html.twig' with {
-        data: footer,
-        mapFooter: mapFooter,
+    {% include '_component/footer/footer.html.twig' with {
+        columns: footer,
+        showMapCredit: mapFooter,
     } only %}
 
     {% include 'scripts.html.twig' %}

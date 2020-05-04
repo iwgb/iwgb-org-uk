@@ -29,6 +29,9 @@ function dispatch(Container $c) {
     http\get(__($c, '/post/{slug}'), new Handler\Post($c));
     http\get(__($c, '/page/{slug}'), new Handler\Page($c));
 
+    http\get(__($c, '/feed/{tag}/{page}'), new Handler\Feed($c));
+    http\get(__($c, '/feed/{tag}'), new Handler\Feed($c));
+
     http\get(__($c, '/join'), new Handler\Join($c));
     http\get(__($c, '/join/{jobType}'), new Handler\RedirectToJobType($c));
 

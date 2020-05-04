@@ -12,6 +12,7 @@ use Guym4c\GhostApiPhp\GhostApiException;
 use Guym4c\GhostApiPhp\Model as Cms;
 use Guym4c\GhostApiPhp\Sort;
 use Guym4c\GhostApiPhp\SortOrder;
+use Guym4c\TwigProps\PropTypesExtension;
 use Iwgb\OrgUk\Intl\IntlCache as Cache;
 use Iwgb\OrgUk\Intl\IntlCmsAccessTrait;
 use Iwgb\OrgUk\Intl\IntlCmsResource;
@@ -168,10 +169,13 @@ abstract class RootHandler {
         ]]);
     }
 
-    /** @noinspection PhpUndefinedVariableInspection */
     private function populateTemplateEnvironment(): void {
 
-        $this->view->addExtension(new Twig\Extension\DebugExtension());
+        $this->view->addExtension(new PropTypesExtension($this->view, !$this->settings['dev'], 't'));
+
+        if ($this->settings['dev']) {
+            $this->view->addExtension(new Twig\Extension\DebugExtension());
+        }
 
         self::addGlobals($this->view, [
             '_job'       => uniqid(),
@@ -211,7 +215,7 @@ abstract class RootHandler {
 
     /**
      * @param string $tag
-     * @return Cms\Post[]
+     * @return Cms\Page[]
      * @throws GhostApiException
      */
     private function getFallbackPages(string $tag): array {
