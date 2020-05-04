@@ -6,12 +6,12 @@
 
         {% include 'story/story-grid.html.twig' with {
             stories: stories,
-            title: title,
+            title: _(_self, tag),
         } only %}
         <div class="row justify-content-between m-3">
             <div>
                 {% if page > 1 %}
-                    <a href="/feed/{{ tag }}/{{ page - 1 }}" class="btn btn-light">
+                    <a href="/feed/{{ tag }}/{{ page - 1 }}" class="btn btn-iwgb">
                         <i class="fas fa-angle-left"></i>
                         <span class="ml-1">Previous</span>
                     </a>
@@ -19,7 +19,7 @@
             </div>
             <div>
                 {% if showNext %}
-                    <a href="/feed/{{ tag }}/{{ page + 1 }}" class="btn btn-light">
+                    <a href="/feed/{{ tag }}/{{ page + 1 }}" class="btn btn-iwgb">
                         <span class="mr-1">Next</span>
                         <i class="fas fa-angle-right"></i>
                     </a>

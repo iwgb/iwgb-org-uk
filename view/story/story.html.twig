@@ -38,7 +38,7 @@
                     {% if story.primaryTag.name != 'category:press-release' %}
                         <span>{{ story.primaryAuthor.name }}</span>
                     {% endif %}
-                    <span title="{{ story.publishedAt|dateFormat }}">{#{{ story.publishedAt|timeAgo }}#}</span>
+                    <span title="{{ story.publishedAt|dateFormat }}">{{ story.publishedAt|timeAgo }}</span>
                 </div>
             {% endif %}
         </div>

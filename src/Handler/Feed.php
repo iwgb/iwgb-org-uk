@@ -11,9 +11,9 @@ use Iwgb\OrgUk\Intl\IntlCmsResource;
 class Feed extends RootHandler {
 
     private const ALLOWED_TAGS = [
-        'press-release' => 'Press releases',
-        'blog'          => 'Blog posts',
-        'all'           => 'Stories',
+        'press-releases' => 'press-release',
+        'blog'          => 'blog',
+        'all'           => 'all',
     ];
 
     public function __invoke(array $routeParams): void {
@@ -24,7 +24,7 @@ class Feed extends RootHandler {
         }
 
         $filter = $routeParams['tag'] !== 'all'
-            ? (new Filter())->by('tag', '=', $routeParams['tag'])
+            ? (new Filter())->by('tag', '=', self::ALLOWED_TAGS[$routeParams['tag']])
             : null;
 
         $page = empty($routeParams['page']) || !is_numeric($routeParams['page'])
@@ -37,7 +37,7 @@ class Feed extends RootHandler {
             $page
         )->getResources());
 
-        $this->render('feed.html.twig', self::ALLOWED_TAGS[$routeParams['tag']], [
+        $this->render('feed.html.twig', $this->intl->getText('feed', $routeParams['tag']), [
             'stories' => $stories,
             'page'    => $page,
             'tag'     => $routeParams['tag'],
