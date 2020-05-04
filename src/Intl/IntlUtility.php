@@ -69,7 +69,17 @@ class IntlUtility {
 
     public function getText(string $template, string $key, array $values = []): string {
         if (strpos($template, "/")) {
-            $page = explode('/', $template)[0];
+
+            $page = (function (string $template): string {
+                $templateDirs = explode('/', $template);
+                foreach ($templateDirs as $templateDir) {
+                    if (substr($templateDir, 0, 1) !== '_') {
+                        return $templateDir;
+                    }
+                }
+                return $templateDirs[0];
+            })($template);
+
         } else {
             $page = explode('.', $template)[0];
         }

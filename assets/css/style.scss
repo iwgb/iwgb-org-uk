@@ -6,9 +6,9 @@
 @use '../../view/lang';
 @use '../../view/nav';
 @use '../../view/story';
-@use '../../view/contact';
-@use '../../view/footer';
-@use '../../view/contact-office';
+@use '../../view/_component/contact';
+@use '../../view/_component/footer';
+@use '../../view/_component/office';
 @use '../../view/admin';
 @use '../../view/post';
 @use '../../view/join';

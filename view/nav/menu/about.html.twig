@@ -4,17 +4,16 @@
     <div class="row">
         <div class="d-none d-md-block col-md">
             <h3>{{ _(_self, 'contact') }}</h3>
-            {% include 'contact-office/contact-phone.html.twig' with {
-                number: _('contact-office', 'London.phone'),
-                description: _('contact-office', 'London.phoneDesc'),
+            {% include '_component/office/contact-phone.html.twig' with {
+                number: _('office', 'London.phone'),
+                description: _('office', 'London.phoneDesc'),
                 linkColor: 'text-dark',
-            } %}
+            } only %}
             <div class="d-flex">
                 <i class="fas fa-envelope-open fa-fw mx-3 my-1"></i>
                 <div>
                     {{ _e(_self, 'contactCta.main', {
-                        cta:
-                            '<a href="/#contact">' ~ _(_self, 'contactCta.cta') ~ '</a>',
+                        cta: '<a href="/#contact">' ~ _(_self, 'contactCta.cta') ~ '</a>',
                     }) }}
                 </div>
             </div>

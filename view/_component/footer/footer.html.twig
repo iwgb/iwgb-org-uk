@@ -16,11 +16,29 @@
     </a>
 {% endmacro %}
 
+{{
+    props({
+        columns: t.arrayOf(
+            t.arrayOf(
+                t.exact({
+                    tag: t.instanceOf('Guym4c.GhostApiPhp.Model.Tag'),
+                    pages: t.arrayOf(
+                        t.instanceOf('Iwgb.OrgUk.Intl.IntlCmsResource')
+                    )
+                })
+            )
+        ).isRequired(),
+        showMapCredit: t.bool().isNullable(),
+    })
+}}
+
+{% set showMapCredit = showMapCredit ?? false %}
+
 <div class="footer container my-5">
 
     <div class="row">
 
-        {% for column, subcategory in data %}
+        {% for column, subcategory in columns %}
             <div class="col-12 col-md footer__column">
                 <div class="footer__column__header d-flex align-items-center my-3">
                     <span>{{ _(_self, subcategory['subcategory-' ~ column].tag.description) }}</span>

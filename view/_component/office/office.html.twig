@@ -1,0 +1,41 @@
+{{
+    props({
+        office: t.string().isRequired(),
+    })
+}}
+
+<div class="row">
+    {% include '_component/office/office-details.html.twig' with {
+        office: office
+    } only %}
+    <div class="d-none d-md-block col-md-6">
+        <div id="contact-map-{{ office }}"
+             class="office__map w-100 h-100"
+             data-coord-lat="{{ _(_self, office ~ '.lat') }}"
+             data-coord-long="{{ _(_self, office ~ '.long') }}"
+             data-map-zoom="{{ _(_self, office ~ '.mapZoom') }}"
+        ></div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        const mapContainer = $('#contact-map-{{ office }}');
+
+        const coords = [
+            mapContainer.attr('data-coord-lat'),
+            mapContainer.attr('data-coord-long'),
+        ];
+        const map = L.map('contact-map-{{ office }}', {
+            zoomControl: false,
+            scrollWheelZoom: false,
+            doubleClickZoom: false,
+            attributionControl: false,
+        }).setView(coords, mapContainer.attr('data-map-zoom'));
+        L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ3V5bTRjIiwiYSI6ImNqM2Fpcml3NjAwNjczM3FrbjltMXkzbXMifQ.U-vGBUwZjmjfWu8pV8punw', {
+            maxZoom: 18,
+        }).addTo(map);
+        L.marker(coords).addTo(map);
+    });
+</script>

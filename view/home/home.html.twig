@@ -84,12 +84,13 @@
     {% endif %}
 
     {% include 'story/story-grid.html.twig' with {
-        'featured': featured,
-        'stories': posts,
+        featured: featured,
+        stories: posts,
+        title: _('global', 'latestStories'),
     } only %}
     <div class="container">
         <div class="row d-flex justify-content-center">
-            <a href="/maintenance" class="text-dark link-span-only d-flex align-items-center">
+            <a href="/feed/all" class="text-dark link-span-only d-flex align-items-center">
                 <span class="pr-2 moreStories">{{ _('global', 'readMore') }}</span>
                 <i class="fas fa-chevron-right fa-lg"></i>
             </a>
@@ -154,7 +155,7 @@
         </div>
     </div>
 
-    {% include 'contact/contact.html.twig' %}
+    {% include '_component/contact/contact.html.twig' %}
 
 {% endblock %}
 
