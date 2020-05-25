@@ -1,66 +1,72 @@
 <?php
 
+use Iwgb\OrgUk\Handler;
+use Iwgb\OrgUk\Intl\IntlMiddleware;
+use Iwgb\OrgUk\Psr7Utils as Psr7;
+use Middlewares\TrailingSlash;
+use Slim\Factory\AppFactory;
+use Slim\Middleware\ContentLengthMiddleware;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
+use Slim\Routing\RouteCollectorProxy;
+use Teapot\StatusCode;
+
 $c = require '../bootstrap.php';
 
-use Iwgb\OrgUk\Handler;
-use Pimple\Container;
-use Siler\Container as Router;
-use Siler\Http\Response;
-use Siler\Route as http;
-use Iwgb\OrgUk\Intl\IntlUtility;
+$app = AppFactory::createFromContainer($c);
 
-try {
-    dispatch($c);
-} catch (Exception $e) {
-    _catch($e);
-    throw $e;
-//    Response\redirect('/error');
-}
+$app->add(new TrailingSlash(false));
+$app->add(new ContentLengthMiddleware());
 
-function dispatch(Container $c) {
+$app->group('', function (RouteCollectorProxy $app): void {
 
-    http\get("/assets/{type}/(?'file'[A-z0-9\/_-]+)\.{ext}", new Handler\AssetProxy($c));
+    $app->get("/assets/{type}/{file:[A-z0-9\/_-]+}.{ext}", Handler\AssetProxy::class);
 
-    http\get(__($c, ''), new Handler\Home($c));
+    $app->post('/callback/ghost/rebuild', Handler\PurgeCmsCache::class);
 
-    http\get(__($c, '/page/covid-19'), fn(array $params) => Response\redirect('/covid-19'));
+    $app->get('/page/covid-19', fn(Request $request, Response $response, array $args) =>
+        Psr7::redirect($response, '/covid-19', StatusCode::MOVED_PERMANENTLY));
+    $app->get('/page/info/coronavirus', fn(Request $request, Response $response, array $args) =>
+        Psr7::redirect($response, '/covid-19', StatusCode::MOVED_PERMANENTLY));
+    $app->get('/donate', fn(Request $request, Response $response, array $args) =>
+        Psr7::redirect($response, '/page/donate', StatusCode::MOVED_PERMANENTLY));
+    $app->get('/page/{subcategory}/{page}', fn(Request $request, Response $response, array $args) =>
+        Psr7::redirect($response, "/page/{$args['page']}", StatusCode::FOUND));
+});
 
-    http\get(__($c, "/post/{id}/{slug}"), new Handler\LegacyPost($c));
-    http\get(__($c, '/post/{slug}'), new Handler\Post($c));
-    http\get(__($c, '/page/{slug}'), new Handler\Page($c));
+$app->group('', function (RouteCollectorProxy $app): void {
+    $app->get('/', Handler\Home::class);
 
-    http\get(__($c, '/feed/{tag}/{page}'), new Handler\Feed($c));
-    http\get(__($c, '/feed/{tag}'), new Handler\Feed($c));
+    $app->group('/post', function (RouteCollectorProxy $app): void {
 
-    http\get(__($c, '/join'), new Handler\Join($c));
-    http\get(__($c, '/join/{jobType}'), new Handler\RedirectToJobType($c));
+        $app->get('/{id}/{slug}', Handler\LegacyPost::class);
+        $app->get('/{slug}', Handler\Post::class);
+    });
 
-//    http\get('/admin', new Handler\Admin\EditLocales($c));
+    $app->get('/page/{slug}', Handler\Page::class);
 
-    http\post('/callback/ghost/rebuild', new Handler\PurgeCmsCache($c));
+    $app->group('/feed', function (RouteCollectorProxy $app): void {
 
-    http\get(__($c, '/error'), new Handler\Error($c));
-    http\get(__($c, '/maintenance'), new Handler\Maintenance($c));
+        $app->get('/{tag}/{page}', Handler\Feed::class);
+        $app->get('/{tag}', Handler\Feed::class);
+    });
 
-    http\post(__($c, '/contact'), new Handler\Contact($c));
+    $app->group('/join', function (RouteCollectorProxy $app): void {
 
-    http\get(__($c, '/covid-19'), new Handler\CovidPage($c));
-    http\get(__($c, '/covid-19/{page}'), new Handler\CovidPage($c));
+        $app->get( '', Handler\Join::class);
+        $app->get('/{jobType}', Handler\RedirectToJobType::class);
+    });
 
-    http\get(__($c, '/page/info/coronavirus'), fn(array $params) => Response\redirect('/covid-19'));
-    http\get(__($c, '/donate'), fn(array $params) => Response\redirect('/page/donate'));
+    $app->get('/error', Handler\Error::class);
 
-    http\get(__($c, '/page/{subcategory}/{page}'), fn(array $params) => Response\redirect("/page/{$params['page']}"));
-}
+    $app->post('/contact', Handler\Contact::class);
 
-function __(Container $c, string $uri): string {
-    return IntlUtility::getRoute($c, $uri);
-}
+    $app->get('/covid-19[/{page}]', Handler\CovidPage::class);
 
-function _catch(Exception $e): void {
-    // do something
-}
+})->add(new IntlMiddleware(
+    $c->get('intl'),
+    $c->get('settings')['languages'],
+    $c->get('session'))
+);
 
-if (!Router\get(http\DID_MATCH, false)) {
-    Handler\RootHandler::notFound();
-}
+$app->run();

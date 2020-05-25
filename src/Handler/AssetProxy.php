@@ -3,11 +3,13 @@
 namespace Iwgb\OrgUk\Handler;
 
 use Mimey\MimeTypes;
-use Siler\Http\Request;
-use Siler\Http\Response;
+use Psr\Http\Message\ResponseInterface;
+use Slim\Psr7;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
 use Teapot\StatusCode;
 
-class AssetProxy extends RootHandler {
+class AssetProxy extends AbstractHandler {
 
     private const TYPE_TO_DIR_MAP = [
         'icons'  => '/vendor/fortawesome/font-awesome',
@@ -17,26 +19,34 @@ class AssetProxy extends RootHandler {
     /**
      * {@inheritDoc}
      */
-    public function __invoke(array $routeParams): void {
-        if (Request\header('X-Pull') === $this->settings['cdn']['assetKey']
-            || $this->settings['dev']) {
-            self::output(self::TYPE_TO_DIR_MAP[$routeParams['type']], $routeParams['file'], $routeParams['ext']);
+    public function __invoke(Request $request, Response $response, array $args): ResponseInterface {
+        if (
+            $request->getHeaderLine('X-Pull') === $this->settings['cdn']['assetKey']
+            || in_array($this->settings['environment'], ['dev', 'qa'])
+        ) {
+            return self::output(
+                $response,
+                self::TYPE_TO_DIR_MAP[$args['type'] ?? ''] ?? '',
+                $args['file'] ?? '',
+                $args['ext'] ?? '',
+            );
         } else {
-            Response\output('', StatusCode::FORBIDDEN);
+            return $response->withStatus(StatusCode::FORBIDDEN);
         }
     }
 
 
-    private static function output(string $path, string $file, string $extension): void {
+    private static function output(Response $response, string $path, string $file, string $extension): ResponseInterface {
         $path = APP_ROOT . "{$path}/{$file}.{$extension}";
+
         if (!file_exists($path)) {
-            Response\output('', StatusCode::NOT_FOUND);
+            return $response->withStatus(StatusCode::NOT_FOUND);
         }
 
-        Response\output(
-            file_get_contents($path),
-            StatusCode::OK,
-            (new MimeTypes())->getMimeType($extension) ?? 'application/json'
-        );
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $response
+            ->withHeader('Content-Type', (new MimeTypes())->getMimeType($extension) ?? 'application/json')
+            ->withHeader('Content-Length', (string) filesize($path))
+            ->withBody(new Psr7\Stream(fopen($path, 'r')));
     }
 }

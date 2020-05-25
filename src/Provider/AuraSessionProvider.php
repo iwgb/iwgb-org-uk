@@ -1,22 +1,15 @@
 <?php
 
-
 namespace Iwgb\OrgUk\Provider;
-
 
 use Aura\Session\Session;
 use Aura\Session\SessionFactory;
-use Pimple\Container;
-use Pimple\ServiceProviderInterface;
 
-class AuraSessionProvider implements ServiceProviderInterface {
+class AuraSessionProvider implements Injectable {
 
-    /**
-     * @inheritDoc
-     */
-    public function register(Container $c) {
+    public function register(): array {
         session_name('IwgbSession');
         session_set_cookie_params(60 * 60 * 24 * 30 /* 30 days */);
-        $c['session'] = fn(): Session => (new SessionFactory())->newInstance($_COOKIE);
+        return ['session' => fn(): Session => (new SessionFactory())->newInstance($_COOKIE)];
     }
 }

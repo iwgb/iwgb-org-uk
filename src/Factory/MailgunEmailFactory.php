@@ -29,6 +29,4 @@ class MailgunEmailFactory {
             'h:Reply-To'=> $replyTo,
         ]);
     }
-
-
 }

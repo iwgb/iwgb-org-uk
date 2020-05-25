@@ -2,18 +2,21 @@
 
 namespace Iwgb\OrgUk\Handler;
 
-use Siler\Http\Response;
+use Psr\Http\Message\ResponseInterface;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
+use Teapot\StatusCode;
 
-class PurgeCmsCache extends RootHandler {
+class PurgeCmsCache extends ViewHandler {
 
     /**
      * {@inheritDoc}
      */
-    public function __invoke(array $routeParams): void {
+    public function __invoke(Request $request, Response $response, array $routeParams): ResponseInterface {
         $this->cache->purge();
         $this->branches->flushCache();
         $this->membership->flushCache();
         $this->cms->flushCache();
-        Response\no_content();
+        return $response->withStatus(StatusCode::NO_CONTENT);
     }
 }

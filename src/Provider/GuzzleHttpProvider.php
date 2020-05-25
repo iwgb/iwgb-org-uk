@@ -3,15 +3,10 @@
 namespace Iwgb\OrgUk\Provider;
 
 use GuzzleHttp;
-use Pimple\Container;
-use Pimple\ServiceProviderInterface;
 
-class GuzzleHttpProvider implements ServiceProviderInterface {
+class GuzzleHttpProvider implements Injectable {
 
-    /**
-     * {@inheritdoc}
-     */
-    public function register(Container $c) {
-        $c['http'] = fn (): GuzzleHttp\Client => new GuzzleHttp\Client();
+    public function register(): array {
+        return ['http' => fn (): GuzzleHttp\Client => new GuzzleHttp\Client()];
     }
 }

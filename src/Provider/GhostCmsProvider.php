@@ -4,17 +4,19 @@ namespace Iwgb\OrgUk\Provider;
 
 use Doctrine\Common\Cache\FilesystemCache;
 use Guym4c\GhostApiPhp\Ghost;
-use Pimple\ServiceProviderInterface;
-use Pimple\Container;
+use Psr\Container\ContainerInterface;
 
-class GhostCmsProvider implements ServiceProviderInterface {
+class GhostCmsProvider implements Injectable {
 
-    /**
-     * @inheritDoc
-     */
-    public function register(Container $c) {
-        $ghost = $c['settings']['cms'];
-        $c['cms'] = fn (): Ghost => new Ghost($ghost['baseUrl'], $ghost['key'],
-        new FilesystemCache(APP_ROOT . '/var/cache/ghost'));
+    public function register(): array {
+
+        return ['cms' => function (ContainerInterface $c): Ghost {
+            $ghost = $c->get('settings')['cms'];
+            return new Ghost(
+                $ghost['baseUrl'],
+                $ghost['key'],
+                new FilesystemCache(APP_ROOT . '/var/cache/ghost')
+            );
+        }];
     }
 }

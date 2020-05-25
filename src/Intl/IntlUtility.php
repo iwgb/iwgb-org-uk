@@ -2,13 +2,7 @@
 
 namespace Iwgb\OrgUk\Intl;
 
-use Aura\Session\Segment as Session;
-use Aura\Session\Session as SessionManager;
 use Guym4c\GhostApiPhp\Filter;
-use Negotiation\LanguageNegotiator as Negotiator;
-use Pimple\Container;
-use Psr\Http\Message\RequestInterface;
-use Siler\Http\Request;
 use stdClass;
 use voku\helper\UTF8;
 
@@ -16,55 +10,13 @@ class IntlUtility {
 
     private const LANGUAGE_IN_URI_REGEX = "/^\/(?<language>[a-z]{2})\//";
 
-    private string $language;
+    private ?string $language = null;
     private array $languages;
     private string $fallback;
 
-    public function __construct(array $languages, RequestInterface $request, SessionManager $sm, callable $redirect, ?string $fallback = null) {
+    public function __construct(array $languages, ?string $fallback = null) {
         $this->languages = $languages;
         $this->fallback = $fallback ?? $languages[0];
-        $this->language = $this->processLanguage($request, $sm, $redirect);
-    }
-
-    private function processLanguage(RequestInterface $request, SessionManager $sm, callable $redirect): string {
-        $session = $sm->getSegment(self::class);
-        $uri = $request->getUri()->getPath();
-        $uriLanguage = self::getLanguageFromUri($request->getUri()->getPath());
-        $language = $this->validateLanguage($this->negotiateLanguage($request, $session));
-
-        if ($language != $uriLanguage && $language != $this->fallback) {
-            $redirect(self::addToUri($language, $uri));
-        }
-
-        $session->set('language', $language);
-        return $language;
-    }
-
-    private function negotiateLanguage(RequestInterface $request, Session $session): string {
-
-        // uri
-        $language = self::getLanguageFromUri($request->getUri()->getPath());
-        if (!empty($language)) {
-            return $language;
-        }
-
-        // cookie
-        $cookieValue = $session->get('language');
-        if (!empty($cookieValue)) {
-            return $cookieValue;
-        }
-
-        // header
-        $acceptHeader = $request->getHeaderLine('Accept');
-        if (!empty($acceptHeader)) {
-            $negotiatedLanguage = (new Negotiator())->getBest($acceptHeader, $this->languages);
-
-            if (!empty($negotiatedLanguage)) {
-                return $negotiatedLanguage;
-            }
-        }
-
-        return $this->fallback;
     }
 
     public function getText(string $template, string $key, array $values = []): string {
@@ -185,6 +137,13 @@ class IntlUtility {
         }
     }
 
+    /**
+     * Retrieve the language from the URI
+     * Returns null if no language is in the URI
+     *
+     * @param string $uri
+     * @return string|null
+     */
     public static function getLanguageFromUri(string $uri): ?string {
         $uri = self::formatUri($uri);
         $matches = [];
@@ -197,24 +156,9 @@ class IntlUtility {
     }
 
     private static function formatUri(string $uri): string {
-        if (UTF8::char_at($uri, 0) !== '/') {
-            $uri = "/{$uri}";
-        }
-        return $uri;
-    }
-
-    private function validateLanguage(string $language): string {
-        return in_array($language, $this->languages)
-            ? $language
-            : $this->fallback;
-    }
-
-    public function generateRoute(string $uri): string {
-        return "/({$this->language}/)?{$uri}";
-    }
-
-    public static function getRoute(Container $c, string $uri): string {
-        return "(/{$c['intl']->getLanguage()})?${uri}";
+        return UTF8::char_at($uri, 0) !== '/'
+            ? "/{$uri}"
+            : $uri;
     }
 
     public function ghostFilterFactory(): Filter {
@@ -222,7 +166,7 @@ class IntlUtility {
     }
 
     public function isFallback(): bool {
-        return $this->language == $this->fallback;
+        return $this->language === $this->fallback;
     }
 
     /**
@@ -230,6 +174,10 @@ class IntlUtility {
      */
     public function getLanguage(): string {
         return $this->language;
+    }
+
+    public function setLanguage(string $language): void {
+        $this->language = $language;
     }
 
     /**

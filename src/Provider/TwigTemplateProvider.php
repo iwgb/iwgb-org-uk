@@ -3,21 +3,23 @@
 
 namespace Iwgb\OrgUk\Provider;
 
-use Pimple\ServiceProviderInterface;
-use Pimple\Container;
-use Siler\Twig as Template;
+use Psr\Container\ContainerInterface;
 use Twig;
+use Twig\Loader\FilesystemLoader;
 
-class TwigTemplateProvider implements ServiceProviderInterface {
+class TwigTemplateProvider implements Injectable {
 
-    /**
-     * @inheritDoc
-     */
-    public function register(Container $c) {
-        $c['view'] = fn (): Twig\Environment => Template\init(
-            APP_ROOT . '/view',
-            $c['settings']['dev'] ? false : APP_ROOT . '/var/twig',
-            $c['settings']['dev']
-        );
+    public function register(): array {
+        return [
+            'view' => fn (ContainerInterface $c): Twig\Environment => new Twig\Environment(
+                new FilesystemLoader(APP_ROOT . '/view'),
+                [
+                    'cache' => $c->get('settings')['dev']
+                        ? false
+                        : APP_ROOT . '/var/twig',
+                    'debug' => $c->get('settings')['dev'],
+                ],
+            ),
+        ];
     }
 }

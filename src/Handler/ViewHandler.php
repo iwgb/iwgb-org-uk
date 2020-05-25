@@ -6,7 +6,7 @@ use Aura\Session\Session as SessionManager;
 use Carbon;
 use DateTime;
 use Guym4c\Airtable\Airtable;
-use Guym4c\Airtable\AirtableApiException;
+use Guym4c\GhostApiPhp\Filter;
 use Guym4c\GhostApiPhp\Ghost;
 use Guym4c\GhostApiPhp\GhostApiException;
 use Guym4c\GhostApiPhp\Model as Cms;
@@ -18,11 +18,11 @@ use Iwgb\OrgUk\Intl\IntlCmsAccessTrait;
 use Iwgb\OrgUk\Intl\IntlCmsResource;
 use Iwgb\OrgUk\Intl\IntlUtility;
 use Iwgb\OrgUk\TwigEnvSetupTrait;
-use Pimple\Container;
-use Psr\Http\Message\ServerRequestInterface;
-use Siler\Http\Request;
-use Siler\Http\Response;
-use Siler\Twig as Template;
+use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
+use Slim\Exception\HttpNotFoundException;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
 use Twig;
 use voku\helper\UTF8;
 
@@ -30,17 +30,12 @@ use voku\helper\UTF8;
  * Class RootHandler
  * @package Iwgb\OrgUk\Handler
  */
-abstract class RootHandler {
+abstract class ViewHandler extends AbstractHandler {
 
     use TwigEnvSetupTrait;
-
     use IntlCmsAccessTrait;
 
     protected Twig\Environment $view;
-
-    protected array $settings;
-
-    protected ServerRequestInterface $request;
 
     protected Ghost $cms;
 
@@ -50,54 +45,65 @@ abstract class RootHandler {
 
     protected IntlUtility $intl;
 
-    private array $time;
-
     protected Cache $cache;
 
     private SessionManager $sm;
 
     private Carbon\Factory $datetime;
 
-    public function __construct(Container $c) {
-        $this->view = $c['view'];
-        $this->settings = $c['settings'];
-        $this->request = $c['request'];
-        $this->intl = $c['intl'];
-        $this->cms = $c['cms'];
-        $this->membership = $c['membership'];
-        $this->branches = $c['branches'];
-        $this->cache = $c['cache'];
-        $this->sm = $c['session'];
-        $this->datetime = $c['datetime'];
+    public function __construct(ContainerInterface $c) {
+        parent::__construct($c);
+
+        $this->view = $c->get('view');
+        $this->settings = $c->get('settings');
+        $this->cms = $c->get('cms');
+        $this->membership = $c->get('membership');
+        $this->branches = $c->get('branches');
+        $this->cache = $c->get('cache');
+        $this->sm = $c->get('session');
+        $this->datetime = $c->get('datetime');
+        $this->intl = $c->get('intl');
     }
 
     /**
-     * @param array $routeParams
+     * {@inheritDoc}
+     * @throws HttpNotFoundException
      * @throws Twig\Error\LoaderError
      * @throws Twig\Error\RuntimeError
      * @throws Twig\Error\SyntaxError
-     * @throws AirtableApiException
-     * @throws GhostApiException
      */
-    abstract public function __invoke(array $routeParams): void;
+    abstract public function __invoke(Request $request, Response $response, array $args): ResponseInterface;
 
     /**
+     * @param Request $request
+     * @param Response $response
      * @param string $template
      * @param string $title
-     * @param array  $data
+     * @param array $data
+     * @return ResponseInterface
      * @throws Twig\Error\LoaderError
      * @throws Twig\Error\RuntimeError
      * @throws Twig\Error\SyntaxError
      */
-    protected function render(string $template, string $title, array $data = []) {
+    protected function render(
+        Request $request,
+        Response $response,
+        string $template,
+        string $title,
+        array $data = []
+    ): ResponseInterface {
 
-        $this->populateTemplateEnvironment();
+        $this->populateTemplateEnvironment($request);
 
-        Response\html(Template\render($template, array_merge($data,
-            $this->getNavData(),
-            $this->getFooterData(),
-            ['title' => $title]
-        )));
+        $response->getBody()->write(
+            $this->view->render($template, array_merge($data,
+                $this->getNavData(),
+                $this->getFooterData(),
+                ['title' => $title],
+            ))
+        );
+
+        return $response;
     }
 
     /**
@@ -116,7 +122,6 @@ abstract class RootHandler {
                         'href'   => '/page/donate',
                         'mdHide' => true,
                     ],
-                    //TODO i18n
                     'News'      => [
                         'kind' => 'menu',
                         'id'   => 'news',
@@ -132,7 +137,7 @@ abstract class RootHandler {
                         'id'     => 'campaigns',
                         'data'   => Cms\Page::get($this->cms, null,
                             new Sort('published_at', SortOrder::DESC),
-                            $this->intl->ghostFilterFactory()
+                            (new Filter())->by('tag', '=', $this->intl->getLanguage())
                                 ->and('tag', '=', 'category-campaign')
                         )->getResources(),
                         'mdHide' => true,
@@ -169,7 +174,7 @@ abstract class RootHandler {
         ]]);
     }
 
-    private function populateTemplateEnvironment(): void {
+    private function populateTemplateEnvironment(Request $request): void {
 
         $this->view->addExtension(new PropTypesExtension($this->view, !$this->settings['dev'], 't'));
 
@@ -182,10 +187,10 @@ abstract class RootHandler {
             '_language'  => $this->intl->getLanguage(),
             '_languages' => $this->intl->getLanguages(),
             '_fallback'  => $this->intl->getFallback(),
-            '_uri'       => IntlUtility::removeFromUri($this->request->getUri()->getPath()),
-            '_url'       => (string)$this->request->getUri(),
+            '_uri'       => IntlUtility::removeFromUri($request->getUri()->getPath()),
+            '_url'       => (string) $request->getUri(),
             '_recaptcha' => $this->settings['recaptcha']['siteKey'],
-            '_q'         => Request\get(),
+            '_q'         => $request->getQueryParams(),
         ]);
 
         self::addFunctions($this->view, [
@@ -220,9 +225,5 @@ abstract class RootHandler {
      */
     private function getFallbackPages(string $tag): array {
         return self::getFallbackPagesByTag($this->cms, $this->intl, $tag);
-    }
-
-    public static function notFound(): void {
-        Response\redirect('/?notFound');
     }
 }

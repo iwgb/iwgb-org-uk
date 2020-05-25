@@ -4,8 +4,9 @@ use Dotenv\Dotenv;
 
 Dotenv::createImmutable(APP_ROOT)->load();
 
-return [
+return ['settings' => [
     'dev'          => $_ENV['ENVIRONMENT'] === 'dev',
+    'environment'  => $_ENV['ENVIRONMENT'],
     'cdn'          => [
         'baseUrl'      => $_ENV['CDN_BASE_URL'],
         'assetKey'     => $_ENV['ASSET_CDN_KEY'],
@@ -41,4 +42,4 @@ return [
     'membersApi'   => [
         'token' => $_ENV['IWGB_MEMBERS_API_KEY'],
     ],
-];
+]];

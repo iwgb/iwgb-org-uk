@@ -5,16 +5,13 @@ namespace Iwgb\OrgUk\Provider;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\FilesystemCache;
 use Iwgb\OrgUk\Intl\IntlCache;
-use Pimple\Container;
-use Pimple\ServiceProviderInterface;
+use Psr\Container\ContainerInterface;
 
-class DoctrineCacheProvider implements ServiceProviderInterface {
+class DoctrineCacheProvider implements Injectable {
 
-    /**
-     * @inheritDoc
-     */
-    public function register(Container $c) {
-        $c['cache'] = fn (): Cache =>
-            new IntlCache($c['intl'], new FilesystemCache(APP_ROOT . '/var/cache/cms'));
+    public function register(): array {
+        return ['cache' => fn (ContainerInterface $c): Cache =>
+            new IntlCache($c->get('intl'), new FilesystemCache(APP_ROOT . '/var/cache/cms'))
+        ];
     }
 }

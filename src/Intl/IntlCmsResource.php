@@ -24,20 +24,20 @@ class IntlCmsResource {
      * IntlCmsResource constructor.
      * @param Ghost       $cms
      * @param IntlUtility $intl
-     * @param       $resource
+     * @param       $fallbackResource
      * @throws GhostApiException
      */
-    public function __construct(Ghost $cms, IntlUtility $intl, $resource) {
+    public function __construct(Ghost $cms, IntlUtility $intl, Cms\AbstractContentResource $fallbackResource) {
         $this->cms = $cms;
         $this->intl = $intl;
-        $this->fallbackResource = $resource;
+        $this->fallbackResource = $fallbackResource;
 
-        if ($resource instanceof Cms\Page) {
+        if ($fallbackResource instanceof Cms\Page) {
             $this->type = 'page';
-            $this->intlResource = $this->getIntlPage($resource);
-        } elseif ($resource instanceof Cms\Post) {
+            $this->intlResource = $this->getIntlPage($fallbackResource);
+        } elseif ($fallbackResource instanceof Cms\Post) {
             $this->type = 'post';
-            $this->intlResource = $this->getIntlPost($resource);
+            $this->intlResource = $this->getIntlPost($fallbackResource);
         } else {
             throw new InvalidArgumentException("Invalid resource type provided");
         }
