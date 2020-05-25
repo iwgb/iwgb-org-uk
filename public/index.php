@@ -17,6 +17,11 @@ $app = AppFactory::createFromContainer($c);
 
 $app->add(new TrailingSlash(false));
 $app->add(new ContentLengthMiddleware());
+$app->add(new IntlMiddleware(
+    $c->get('intl'),
+    $c->get('settings')['languages'],
+    $c->get('session'))
+);
 
 $app->group('', function (RouteCollectorProxy $app): void {
 
@@ -62,11 +67,6 @@ $app->group('', function (RouteCollectorProxy $app): void {
     $app->post('/contact', Handler\Contact::class);
 
     $app->get('/covid-19[/{page}]', Handler\CovidPage::class);
-
-})->add(new IntlMiddleware(
-    $c->get('intl'),
-    $c->get('settings')['languages'],
-    $c->get('session'))
-);
+});
 
 $app->run();

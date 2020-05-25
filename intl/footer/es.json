@@ -1,1 +1,23 @@
-{"About":"Acerca de","About subcat: about":"","About subcat: legal":"","Legal":"Jur\u00eddico","Resources":"Recursos","Resources subcat: resources":"","credit":"Dise\u00f1ado y construido en la IWGB con amor, cuidado y caf\u00e9. Hasta la victoria siempre.","icons":"Algunos iconos","legal.constitution":"","legal.cookies":"","legal.gdpr":"","legal.header":"","legal.privacy":"","legal.rulebook":"","links.casework":"","links.contact":"","links.header":"","maps.1":"Datos del mapa","maps.2":"colaboradores de OpenStreetMap","maps.3":"im\u00e1genes","social.facebook":"","social.header":"","social.twitter":"","social.youtube":""}
+{
+  "credit": "Dise\u00f1ado y construido en la IWGB con amor, cuidado y caf\u00e9. Hasta la victoria siempre.",
+  "icons": "Algunos iconos",
+  "legal.constitution": "",
+  "legal.cookies": "",
+  "legal.gdpr": "",
+  "legal.header": "",
+  "legal.privacy": "",
+  "legal.rulebook": "",
+  "links.casework": "",
+  "links.contact": "",
+  "links.header": "",
+  "maps.1": "Datos del mapa",
+  "maps.2": "colaboradores de OpenStreetMap",
+  "maps.3": "im\u00e1genes",
+  "social.facebook": "",
+  "social.header": "",
+  "social.twitter": "",
+  "social.youtube": "",
+  "subcategory-about": "Acerca de",
+  "subcategory-legal": "Jurídico",
+  "subcategory-resources": "Recursos"
+}
