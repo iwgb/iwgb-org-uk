@@ -5,7 +5,7 @@ use Dotenv\Dotenv;
 Dotenv::createImmutable(APP_ROOT)->load();
 
 return [
-    'dev'          => true,
+    'dev'          => $_ENV['ENVIRONMENT'] === 'dev',
     'cdn'          => [
         'baseUrl'      => $_ENV['CDN_BASE_URL'],
         'assetKey'     => $_ENV['ASSET_CDN_KEY'],
