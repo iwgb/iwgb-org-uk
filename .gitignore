@@ -33,12 +33,10 @@ $RECYCLE.BIN/
 *.css
 *.css.map
 
-# keys
-keys.php
-
 # Composer
 composer.phar
 /vendor/
+.env
 
 # app caches
 /cache/

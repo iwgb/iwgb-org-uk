@@ -1,47 +1,44 @@
 <?php
 
-$keys = require APP_ROOT . '/keys.php';
+use Dotenv\Dotenv;
+
+Dotenv::createImmutable(APP_ROOT)->load();
 
 return [
     'dev'          => true,
-    'db'           => [
-        'dbname'   => '',
-        'user'     => '',
-        'password' => '',
-    ],
     'cdn'          => [
-        'baseUrl'      => 'https://cdn.iwgb.org.uk',
-        'assetKey'     => $keys['assetCdn'],
-        'assetBaseUrl' => 'https://iwgbassets-f208.kxcdn.com',
+        'baseUrl'      => $_ENV['CDN_BASE_URL'],
+        'assetKey'     => $_ENV['ASSET_CDN_KEY'],
+        'assetBaseUrl' => $_ENV['ASSET_CDN_BASE_URL'],
     ],
-    'languages'    => ['en', 'es'],
+    'languages'    => explode(',', $_ENV['AVAILABLE_LANGUAGES']),
     'cms'          => [
-        'baseUrl' => 'https://cms.iwgb.org.uk',
-        'key'     => $keys['ghost'],
+        'baseUrl' => $_ENV['GHOST_BASE_URL'],
+        'key'     => $_ENV['GHOST_API_KEY'],
     ],
     'recaptcha'    => [
-        'siteKey' => '6Lf-ps0UAAAAAEmNpP9nWUeR2MaAfn7FjX9U3s_X',
-        'secret'  => $keys['recaptcha'],
+        'siteKey' => $_ENV['RECAPTCHA_SITE_KEY'],
+        'secret'  => $_ENV['RECAPTCHA_SECRET'],
     ],
     'airtable'     => [
-        'key'            => $keys['airtable'],
-        'membershipBase' => 'app8RK2AsBtnIcezs',
-        'branchesBase'   => 'apprFq13GweQpFk0x',
-        'proxyKey'       => $keys['airtableProxy'],
+        'key'            => $_ENV['AIRTABLE_API_KEY'],
+        'membershipBase' => $_ENV['AIRTABLE_MEMBERSHIP_BASE'],
+        'branchesBase'   => $_ENV['AIRTABLE_BRANCHES_BASE'],
+        'proxyKey'       => $_ENV['AIRTABLE_PROXY_KEY'],
     ],
     'mailgun'      => [
-        'key'    => $keys['mailgun'],
-        'domain' => 'mx.iwgb.org.uk',
-        'from'   => 'IWGB Activist Robot <activist-robot-noreply@iwgb.org.uk>'
+        'key'    => $_ENV['MAILGUN_API_KEY'],
+        'domain' => $_ENV['MAILGUN_DOMAIN'],
+        'from'   => $_ENV['MAILGUN_FROM_ADDR']
     ],
     'contacts'     => [
-        'enquiries'      => 'office@iwgb.org.uk',
-        'memberships'    => 'membership@iwgb.co.uk',
-        'dataProtection' => 'dataprotection@iwgb.co.uk',
-        'press'          => 'press@iwgb.co.uk',
+        'enquiries'      => $_ENV['CONTACT_ENQUIRIES'],
+        'memberships'    => $_ENV['CONTACT_MEMBERSHIPS'],
+        'dataProtection' => $_ENV['CONTACT_DATAPROTECTION'],
+        'press'          => $_ENV['CONTACT_PRESS'],
     ],
-    'defaultImage' => 'https://cdn.iwgb.org.uk/bucket/home/header5.jpg',
+    'defaultImage' => $_ENV['DEFAULT_SOCIAL_IMAGE'],
     'membersApi'   => [
-        'token' => $keys['membersApi'],
+        'token' => $_ENV['IWGB_MEMBERS_API_KEY'],
     ],
 ];
