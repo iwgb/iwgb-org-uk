@@ -53,7 +53,11 @@ class IntlMiddleware implements MiddlewareInterface {
         $session->set('language', $language);
         $this->intl->setLanguage($language);
 
-        return $handler->handle($request);
+        return $handler->handle($request->withUri(
+            $request->getUri()->withPath(
+                IntlUtility::removeFromUri($uri),
+            ),
+        ));
     }
 
     /**
