@@ -7,7 +7,7 @@ define('APP_ROOT', __DIR__);
 require APP_ROOT . '/vendor/autoload.php';
 
 return (new \Pimple\Container([
-    'settings' => require APP_ROOT . '/settings.php',
+    'settings' => require APP_ROOT . '/src/settings.php',
 ]))->register(new Provider\TwigTemplateProvider())
     ->register(new Provider\IntlProvider())
     ->register(new Provider\GhostCmsProvider())
