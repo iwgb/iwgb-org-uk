@@ -41,7 +41,9 @@ class Home extends ViewHandler {
 
                 'posts'     => IntlCmsResource::getIntlResources($this->cms, $this->intl, Cms\Post::get($this->cms, 3,
                     new Sort('published_at', SortOrder::DESC),
-                    (new Filter())->by('comment_id', '-', $featured->commentId)
+                    $this->intl->ghostFilterFactory()
+                        ->and('comment_id', '-', $featured->commentId)
+                        ->and('tag', '=', 'press-release')
                 )->getResources()),
 
                 'campaigns' => Cms\Page::get($this->cms, null, null,
