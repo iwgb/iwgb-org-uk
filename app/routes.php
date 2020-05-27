@@ -24,6 +24,8 @@ return function (App $app): void {
             Psr7::redirect($response, '/page/donate', StatusCode::MOVED_PERMANENTLY));
         $app->get('/page/{subcategory}/{page}', fn(Request $request, Response $response, array $args) =>
             Psr7::redirect($response, "/page/{$args['page']}", StatusCode::FOUND));
+        $app->get('/post/iwgb-charity-workers-branch-statement-on-covid-19', fn(Request $request, Response $response, array $args) =>
+            Psr7::redirect($response, '/page/iwgb-charity-workers-branch-covid-19-statement', StatusCode::MOVED_PERMANENTLY));
     });
 
     $app->group('', function (Group $app): void {
