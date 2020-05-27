@@ -6,7 +6,9 @@
     } only %}
 {% endblock %}
 
-{% set post = postGroup.getIntl() ?? postGroup.getFallback() %}
+{% if post is not defined %}
+    {% set post = postGroup.getIntl() ?? postGroup.getFallback() %}
+{% endif %}
 
 {% block body %}
     <div class="container">
