@@ -4,12 +4,14 @@ namespace Iwgb\OrgUk\Handler;
 
 use Exception;
 use Iwgb\OrgUk\Factory\MailgunEmailFactory;
+use Iwgb\OrgUk\Psr7Utils as Psr7;
+use Psr\Http\Message\ResponseInterface;
 use ReCaptcha\ReCaptcha;
-use Siler\Http\Request;
-use Siler\Http\Response;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
 use voku\helper\UTF8;
 
-class Contact extends RootHandler {
+class Contact extends ViewHandler {
 
     private const EMAIL_HEADER = "New website contact from {name} {email}.\nReply to this email to contact them.\n\nMessage:\n\n";
 
@@ -25,17 +27,18 @@ class Contact extends RootHandler {
      * @inheritDoc
      * @throws Exception
      */
-    public function __invoke(array $routeParams): void {
+    public function __invoke(Request $request, Response $response, array $args): ResponseInterface {
 
-        $data = Request\post();
+        $data = $request->getParsedBody();
 
         if (
-            !(new ReCaptcha($this->settings['recaptcha']['secret']))
-            ->verify($data['g-recaptcha-response'], $_SERVER['REMOTE_ADDR'])
-            ->isSuccess()
+            !(
+                (new ReCaptcha($this->settings['recaptcha']['secret']))
+                ->verify($data['g-recaptcha-response'], $_SERVER['REMOTE_ADDR'])
+                ->isSuccess()
+            )
         ) {
-            Response\redirect('/?contactFormSent=no');
-            return;
+            return Psr7::redirect($response, '/?' . http_build_query(['contactFormSent' => 'no']));
         }
 
         $name = htmlspecialchars($data['name'] ?? self::NAME_DEFAULT);
@@ -47,13 +50,14 @@ class Contact extends RootHandler {
         $header = UTF8::str_replace('{name}', $name, self::EMAIL_HEADER);
         $header = UTF8::str_replace('{email}', $email, $header);
 
-        (new MailgunEmailFactory($this->settings['mailgun']))->send(
-            $target,
-            self::MESSAGE_SUBJECT,
-            $header . $message,
-            $email
-        );
+        (new MailgunEmailFactory($this->settings['mailgun']))
+            ->send(
+                $target,
+                self::MESSAGE_SUBJECT,
+                $header . $message,
+                $email,
+            );
 
-        Response\redirect('/?contactFormSent=yes');
+        return Psr7::redirect($response, '/?' . http_build_query(['contactFormSent' => 'yes']));
     }
 }

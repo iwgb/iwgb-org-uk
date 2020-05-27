@@ -1,19 +1,30 @@
 <?php
 
+use Dotenv\Dotenv;
 use Iwgb\OrgUk\Provider;
+use Iwgb\OrgUk\Provider\Inject;
 
 define('APP_ROOT', __DIR__);
 
 require APP_ROOT . '/vendor/autoload.php';
 
-return (new \Pimple\Container([
-    'settings' => require APP_ROOT . '/src/settings.php',
-]))->register(new Provider\TwigTemplateProvider())
-    ->register(new Provider\IntlProvider())
-    ->register(new Provider\GhostCmsProvider())
-    ->register(new Provider\AirtableProvider())
-    ->register(new Provider\AuraSessionProvider())
-    ->register(new Provider\DoctrineCacheProvider())
-    ->register(new Provider\CarbonDateTimeProvider())
-    ->register(new Provider\DiactorosPsr7Provider())
-    ->register(new Provider\GuzzleHttpProvider());
+Dotenv::createImmutable(APP_ROOT)->load();
+
+Sentry\init(['dsn' => $_ENV['SENTRY_DSN']]);
+
+return (new DI\ContainerBuilder())
+    ->useAutowiring(false)
+    ->addDefinitions(array_merge(
+        require APP_ROOT . '/app/settings.php',
+        Inject::providers([
+            new Provider\TwigTemplateProvider(),
+            new Provider\GhostCmsProvider(),
+            new Provider\AirtableProvider(),
+            new Provider\AuraSessionProvider(),
+            new Provider\DoctrineCacheProvider(),
+            new Provider\CarbonDateTimeProvider(),
+            new Provider\GuzzleHttpProvider(),
+            new Provider\IntlProvider(),
+        ])
+    ))
+    ->build();

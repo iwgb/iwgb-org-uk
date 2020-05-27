@@ -3,18 +3,23 @@
 namespace Iwgb\OrgUk\Handler;
 
 use Guym4c\GhostApiPhp\Filter;
+use Guym4c\GhostApiPhp\GhostApiException;
 use Guym4c\GhostApiPhp\Model as Cms;
 use Guym4c\GhostApiPhp\Sort;
 use Guym4c\GhostApiPhp\SortOrder;
 use Iwgb\OrgUk\Intl\IntlCache;
 use Iwgb\OrgUk\Intl\IntlCmsResource;
+use Psr\Http\Message\ResponseInterface;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
 
-class Home extends RootHandler {
+class Home extends ViewHandler {
 
     /**
      * {@inheritDoc}
+     * @throws GhostApiException
      */
-    public function __invoke(array $routeParams): void {
+    public function __invoke(Request $request, Response $response, array $args): ResponseInterface {
 
         $featured = $this->cache->get(IntlCache::FEATURED_POST, fn(): Cms\Post =>
             Cms\Post::get($this->cms, 1,
@@ -23,7 +28,8 @@ class Home extends RootHandler {
             )->getResources()[0]
         );
 
-        $this->render('home/home.html.twig',
+        return $this->render($request, $response,
+            'home/home.html.twig',
             $this->intl->getText('home', 'slogan'),
             [
                 'slideshow' => [
@@ -35,7 +41,9 @@ class Home extends RootHandler {
 
                 'posts'     => IntlCmsResource::getIntlResources($this->cms, $this->intl, Cms\Post::get($this->cms, 3,
                     new Sort('published_at', SortOrder::DESC),
-                    (new Filter())->by('comment_id', '-', $featured->commentId)
+                    $this->intl->ghostFilterFactory()
+                        ->and('comment_id', '-', $featured->commentId)
+                        ->and('tag', '=', 'press-release')
                 )->getResources()),
 
                 'campaigns' => Cms\Page::get($this->cms, null, null,

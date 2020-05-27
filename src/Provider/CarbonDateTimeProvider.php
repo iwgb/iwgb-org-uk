@@ -3,15 +3,13 @@
 namespace Iwgb\OrgUk\Provider;
 
 use Carbon;
-use Pimple\Container;
-use Pimple\ServiceProviderInterface;
+use Psr\Container\ContainerInterface;
 
-class CarbonDateTimeProvider implements ServiceProviderInterface {
+class CarbonDateTimeProvider implements Injectable {
 
-    /**
-     * @inheritDoc
-     */
-    public function register(Container $c) {
-        $c['datetime'] = fn(): Carbon\Factory => new Carbon\Factory(['locale' => $c['intl']->getLanguage()]);
+    public function register(): array {
+        return ['datetime' => fn(ContainerInterface $c): Carbon\Factory =>
+            new Carbon\Factory(['locale' => $c->get('intl')->getLanguage()])
+        ];
     }
 }

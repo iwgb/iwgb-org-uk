@@ -5,37 +5,47 @@ namespace Iwgb\OrgUk\Handler;
 use Exception;
 use GuzzleHttp;
 use Iwgb\OrgUk\MembersErrorDetail;
-use Pimple\Container;
-use Siler\http\Request;
+use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
 
-class Error extends RootHandler {
+class Error extends ViewHandler {
+
+    private const DEFAULT_ERROR_CODE = 99;
 
     private GuzzleHttp\Client $http;
 
-    public function __construct(Container $c) {
+    public function __construct(ContainerInterface $c) {
         parent::__construct($c);
 
-        $this->http = $c['http'];
+        $this->http = $c->get('http');
     }
 
     /**
      * @inheritDoc
      * @throws Exception
      */
-    public function __invoke(array $routeParams): void {
+    public function __invoke(Request $request, Response $response, array $args): ResponseInterface {
 
-        $code = Request\get('code');
-        $aid = Request\get('aid');
+        $data = $request->getQueryParams();
+
+        $code = $data['code'] ?? self::DEFAULT_ERROR_CODE;
+        $aid = $data['aid'] ?? null;
 
         $details = [
             'error' => 'Unknown',
-            'aid' => $aid ?? null,
+            'aid' => $aid,
         ];
 
         if (!empty($code)) {
              $details['error'] = (new MembersErrorDetail($this->http, $code, $this->settings))->error;
         }
 
-        $this->render('error/error.html.twig', $this->intl->getText('error', 'title'), $details);
+        return $this->render($request, $response,
+            'error/error.html.twig',
+            $this->intl->getText('error', 'title'),
+            $details
+        );
     }
 }

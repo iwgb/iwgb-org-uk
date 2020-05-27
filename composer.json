@@ -1,7 +1,5 @@
 {
     "require": {
-        "leocavalcante/siler": "^1.7.2",
-        "doctrine/orm": "^2.6",
         "ext-json": "*",
         "ext-fileinfo": "*",
         "guym4c/ghost-api-php": "^1.1",
@@ -10,21 +8,24 @@
         "fortawesome/font-awesome": "^5.12",
         "shrikeh/teapot": "^2.3",
         "ralouphie/mimey": "^2.1",
-        "pimple/pimple": "^3.2",
         "guym4c/airtable-client": "^2.3.0",
         "voku/portable-utf8": "^5.4",
         "willdurand/negotiation": "^2.0",
         "aura/session": "^2.1.0",
         "nesbot/carbon": "^2.29",
         "erusev/parsedown": "^1.7",
-        "laminas/laminas-diactoros": "^2.2",
         "mailgun/mailgun-php": "^3.0",
         "php-http/curl-client": "^2.1",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^6.5",
         "twig/twig": "^3.0",
         "guym4c/twig-prop-types": "^2.0.0",
-        "vlucas/phpdotenv": "^4.1"
+        "vlucas/phpdotenv": "^4.1",
+        "slim/slim": "~4.0",
+        "slim/psr7": "^1.1",
+        "middlewares/trailing-slash": "^2.0",
+        "php-di/php-di": "^6.1",
+        "sentry/sdk": "^2.1"
     },
     "autoload": {
         "psr-4": {

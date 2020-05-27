@@ -2,10 +2,10 @@
 
 namespace Iwgb\OrgUk\Handler\Admin;
 
-use Iwgb\OrgUk\Handler\RootHandler;
+use Iwgb\OrgUk\Handler\ViewHandler;
 use Iwgb\OrgUk\Intl\IntlUtility;
 
-class EditLocales extends RootHandler {
+class EditLocales extends ViewHandler {
 
     /**
      * {@inheritDoc}

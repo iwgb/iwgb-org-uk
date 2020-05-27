@@ -3,12 +3,17 @@
 namespace Iwgb\OrgUk\Handler;
 
 use Guym4c\GhostApiPhp\Filter;
+use Guym4c\GhostApiPhp\GhostApiException;
 use Guym4c\GhostApiPhp\Model as Cms;
 use Guym4c\GhostApiPhp\Sort;
 use Guym4c\GhostApiPhp\SortOrder;
 use Iwgb\OrgUk\Intl\IntlCmsResource;
+use Psr\Http\Message\ResponseInterface;
+use Slim\Exception\HttpNotFoundException;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
 
-class Feed extends RootHandler {
+class Feed extends ViewHandler {
 
     private const ALLOWED_TAGS = [
         'press-releases' => 'press-release',
@@ -16,20 +21,23 @@ class Feed extends RootHandler {
         'all'           => 'all',
     ];
 
-    public function __invoke(array $routeParams): void {
+    /**
+     * {@inheritDoc}
+     * @throws GhostApiException
+     */
+    public function __invoke(Request $request, Response $response, array $args): ResponseInterface {
 
-        if (!in_array($routeParams['tag'], array_keys(self::ALLOWED_TAGS), true)) {
-            self::notFound();
-            return;
+        if (!in_array($args['tag'], array_keys(self::ALLOWED_TAGS), true)) {
+            throw new HttpNotFoundException($request);
         }
 
-        $filter = $routeParams['tag'] !== 'all'
-            ? (new Filter())->by('tag', '=', self::ALLOWED_TAGS[$routeParams['tag']])
+        $filter = $args['tag'] !== 'all'
+            ? (new Filter())->by('tag', '=', self::ALLOWED_TAGS[$args['tag']])
             : null;
 
-        $page = empty($routeParams['page']) || !is_numeric($routeParams['page'])
+        $page = empty($args['page']) || !is_numeric($args['page'])
             ? 1
-            : round($routeParams['page']);
+            : round($args['page']);
 
         $stories = IntlCmsResource::getIntlResources($this->cms, $this->intl, Cms\Post::get($this->cms, 9,
             new Sort('published_at', SortOrder::DESC),
@@ -37,11 +45,15 @@ class Feed extends RootHandler {
             $page
         )->getResources());
 
-        $this->render('feed.html.twig', $this->intl->getText('feed', $routeParams['tag']), [
-            'stories' => $stories,
-            'page'    => $page,
-            'tag'     => $routeParams['tag'],
-            'showNext'=> count($stories) === 9,
-        ]);
+        return $this->render($request, $response,
+            'feed.html.twig',
+            $this->intl->getText('feed', $args['tag']),
+            [
+                'stories' => $stories,
+                'page'    => $page,
+                'tag'     => $args['tag'],
+                'showNext'=> count($stories) === 9,
+            ],
+        );
     }
 }
