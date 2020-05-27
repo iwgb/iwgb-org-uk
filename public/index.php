@@ -49,6 +49,9 @@ function dispatch(Container $c) {
 
     http\get(__($c, '/page/info/coronavirus'), fn(array $params) => Response\redirect('/covid-19'));
     http\get(__($c, '/donate'), fn(array $params) => Response\redirect('/page/donate'));
+    http\get(__($c, '/post/iwgb-charity-workers-branch-statement-on-covid-19'),
+        fn(array $params) => Response\redirect('/page/iwgb-charity-workers-branch-covid-19-statement')
+    );
 
     http\get(__($c, '/page/{subcategory}/{page}'), fn(array $params) => Response\redirect("/page/{$params['page']}"));
 }
