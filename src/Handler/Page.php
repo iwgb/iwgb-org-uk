@@ -25,11 +25,28 @@ class Page extends ViewHandler {
 
         $pageGroup = new IntlCmsResource($this->cms, $this->intl, $fallbackPage);
 
+        $relatedContent = [];
+        $relatedTitleKey = 'related';
+        foreach ($fallbackPage->tags as $tag) {
+            if ($tag->slug === 'special-careers') {
+                $relatedContent = IntlCmsResource::getIntlResources($this->cms, $this->intl,
+                    Cms\Post::get($this->cms, null, null,
+                        $this->intl->ghostFilterFactory()
+                            ->and('tag', '=', 'category-job'),
+                    )->getResources());
+                $relatedTitleKey = 'careers';
+            }
+        }
+
         return $this->render($request, $response,
             'page/page.html.twig',
             $pageGroup->getIntl()->title ??
             $pageGroup->getFallback()->title,
-            ['pageGroup' => $pageGroup]
+            [
+                'pageGroup' => $pageGroup,
+                'relatedContent' => $relatedContent,
+                'relatedTitleKey' => $relatedTitleKey,
+            ],
         );
     }
 }

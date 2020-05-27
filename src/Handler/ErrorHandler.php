@@ -21,7 +21,9 @@ class ErrorHandler extends SlimErrorHandler {
                 return $response;
             }
         } else {
-            Sentry\captureException($this->exception);
+            if (!in_array($_ENV['ENVIRONMENT'], ['dev', 'qa'])) {
+                Sentry\captureException($this->exception);
+            }
         }
 
         return parent::respond();

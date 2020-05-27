@@ -18,6 +18,13 @@
                         {{ page.html }}
                     {% endautoescape %}
                 </div>
+                {% if relatedContent|length > 0 %}
+                    {% include 'story/story-grid.html.twig' with {
+                        stories: relatedContent,
+                        title: _(_self, relatedTitleKey),
+                    } only %}
+                {% endif %}
+
             </div>
         </div>
     </div>
