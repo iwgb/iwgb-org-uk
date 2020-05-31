@@ -39,18 +39,25 @@ class IntlMiddleware implements MiddlewareInterface {
             $this->negotiateLanguage($request, $session)
         );
 
-        if (
-            $language != $uriLanguage
-            && $language != $this->fallback
-        ) {
-            return Psr7::redirect(
-                new Response(),
-                IntlUtility::addToUri($language, $uri),
-                StatusCode::FOUND
-            );
+        $session->set('language', $language);
+
+        if ($uriLanguage !== null) {
+
+            if ($language !== $uriLanguage) {
+                return Psr7::redirect(
+                    new Response(),
+                    IntlUtility::addToUri($language, $uri),
+                    StatusCode::FOUND
+                );
+            } else {
+                return Psr7::redirect(
+                    new Response(),
+                    IntlUtility::removeFromUri($uri),
+                    StatusCode::FOUND
+                );
+            }
         }
 
-        $session->set('language', $language);
         $this->intl->setLanguage($language);
 
         return $handler->handle($request->withUri(

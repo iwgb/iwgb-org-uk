@@ -133,7 +133,11 @@ class IntlUtility {
         if (empty($language)) {
             return $uri;
         } else {
-            return str_replace("/{$language}/", '/', $uri);
+            if (UTF8::strlen($uri) === 3) {
+                return '/';
+            } else {
+                return str_replace("/{$language}/", '/', $uri);
+            }
         }
     }
 
@@ -147,13 +151,13 @@ class IntlUtility {
     public static function getLanguageFromUri(string $uri): ?string {
         $uri = self::formatUri($uri);
 
-        if (!UTF8::str_contains($uri, '.')) {
-            $uri = "{$uri}/";
+        if (UTF8::strlen($uri) !== 3) {
+            $matches = [];
+            preg_match(self::LANGUAGE_IN_URI_REGEX, $uri, $matches);
+            return $matches['language'] ?? null;
+        } else {
+            return UTF8::substr($uri, 1);
         }
-
-        $matches = [];
-        preg_match(self::LANGUAGE_IN_URI_REGEX, $uri, $matches);
-        return $matches[1] ?? null;
     }
 
     public static function uriHasLanguage(string $uri): bool {
