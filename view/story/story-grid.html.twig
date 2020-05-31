@@ -3,7 +3,7 @@
     {% if featured is defined %}
         {% set featuredPost = featured.getIntl() ?? featured.getFallback() %}
         <div class="row">
-            <a href="{{ _a('/post/' ~ featuredPost.slug) }}"
+            <a href="/post/{{ featuredPost.slug }}"
                class="link-unstyled col-12"
             >
                 <div class="w-100 story story--pinned bg-image d-flex flex-column justify-content-end lazyload"

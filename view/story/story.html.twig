@@ -21,7 +21,7 @@
 
 {% set type = type ?? 'post' %}
 
-<a href="{{ _a('/' ~ type ~ '/' ~ story.slug) }}"
+<a href="/{{ type }}/{{ story.slug }}"
    class="link-unstyled mb-3 mb-sm-0 d-flex flex-grow-1 h-100"
 >
     <div class="story story--regular d-flex flex-column w-100">
