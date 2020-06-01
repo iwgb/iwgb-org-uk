@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "226b00cd0271f23ad96eefbbd7b02e64",
+    "content-hash": "b12c39d1389a9a7ea142704eba86b113",
     "packages": [
         {
             "name": "aura/session",
@@ -579,16 +579,16 @@
         },
         {
             "name": "guym4c/ghost-api-php",
-            "version": "v1.2",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guym4c/ghost-api-php.git",
-                "reference": "751e40a436ef4834fccad128360a692c5dd05de0"
+                "reference": "3a23b9f32302081e13830bdae958d4bc3c94bcd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guym4c/ghost-api-php/zipball/751e40a436ef4834fccad128360a692c5dd05de0",
-                "reference": "751e40a436ef4834fccad128360a692c5dd05de0",
+                "url": "https://api.github.com/repos/guym4c/ghost-api-php/zipball/3a23b9f32302081e13830bdae958d4bc3c94bcd1",
+                "reference": "3a23b9f32302081e13830bdae958d4bc3c94bcd1",
                 "shasum": ""
             },
             "require": {
@@ -626,7 +626,7 @@
                 "api",
                 "php"
             ],
-            "time": "2020-05-03T23:49:48+00:00"
+            "time": "2020-06-01T22:39:16+00:00"
         },
         {
             "name": "guym4c/prop-types",
