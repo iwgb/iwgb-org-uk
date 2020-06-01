@@ -110,12 +110,15 @@
             secondLinkHref: '/page/donate',
         } only %}
 
-        {% for campaign in campaigns %}
+        {% for campaignGroup in campaigns %}
             {% if loop.index is divisible by(2) %}
                 {% set direction = 'left' %}
             {% else %}
                 {% set direction = 'right' %}
             {% endif %}
+
+            {% set campaign = campaignGroup.getIntl() ?? campaignGroup.getFallback() %}
+
             {% set headerArray = campaign.title|split(' ', 3) %}
 
             {% include 'home/photo-tile.html.twig' with {
