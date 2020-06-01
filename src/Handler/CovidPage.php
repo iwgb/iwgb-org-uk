@@ -3,8 +3,6 @@
 namespace Iwgb\OrgUk\Handler;
 
 use Guym4c\GhostApiPhp\GhostApiException;
-use Guym4c\GhostApiPhp\Model as Cms;
-use Iwgb\OrgUk\Intl\IntlCmsResource;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
@@ -20,22 +18,20 @@ class CovidPage extends ViewHandler {
 
         $isLanding = empty($args['page']);
 
-        $fallbackPage = Cms\Page::bySlug($this->cms, $args['page'] ?? 'covid-19');
+        $page = $this->cms->pageBySlug($args['page'] ?? 'covid-19');
+
         if (
-            empty($fallbackPage)
-            || $fallbackPage->primaryTag->slug !== 'covid-19'
+            $page === null
+            || $page->getFallback()->primaryTag->slug !== 'covid-19'
         ) {
             throw new HttpNotFoundException($request);
         }
 
-        $pageGroup = new IntlCmsResource($this->cms, $this->intl, $fallbackPage);
-
         return $this->render($request, $response,
             'covid/covid.html.twig',
-            $pageGroup->getIntl()->title ??
-            $pageGroup->getFallback()->title,
+            $page->getIntl()->title ?? $page->getFallback()->title,
             [
-                'pageGroup' => $pageGroup,
+                'pageGroup' => $page,
                 'jason' => $isLanding,
             ],
         );

@@ -10,7 +10,9 @@ require APP_ROOT . '/vendor/autoload.php';
 
 Dotenv::createImmutable(APP_ROOT)->load();
 
-Sentry\init(['dsn' => $_ENV['SENTRY_DSN']]);
+if (!in_array($_ENV['ENVIRONMENT'], ['dev', 'qa'])) {
+    Sentry\init(['dsn' => $_ENV['SENTRY_DSN']]);
+}
 
 return (new DI\ContainerBuilder())
     ->useAutowiring(false)

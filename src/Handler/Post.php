@@ -3,8 +3,6 @@
 namespace Iwgb\OrgUk\Handler;
 
 use Guym4c\GhostApiPhp\GhostApiException;
-use Guym4c\GhostApiPhp\Model as Cms;
-use Iwgb\OrgUk\Intl\IntlCmsResource;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
@@ -18,12 +16,11 @@ class Post extends ViewHandler {
      */
     public function __invoke(Request $request, Response $response, array $args): ResponseInterface {
 
-        $fallbackPost = Cms\Post::bySlug($this->cms, $args['slug']);
-        if (empty($fallbackPost)) {
+        $postGroup = $this->cms->postBySlug($args['slug']);
+
+        if (empty($postGroup)) {
             throw new HttpNotFoundException($request);
         }
-
-        $postGroup = new IntlCmsResource($this->cms, $this->intl, $fallbackPost);
 
         return $this->render($request, $response,
             'post/post.html.twig',

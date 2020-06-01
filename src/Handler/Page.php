@@ -3,8 +3,6 @@
 namespace Iwgb\OrgUk\Handler;
 
 use Guym4c\GhostApiPhp\GhostApiException;
-use Guym4c\GhostApiPhp\Model as Cms;
-use Iwgb\OrgUk\Intl\IntlCmsResource;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
@@ -18,22 +16,23 @@ class Page extends ViewHandler {
      */
     public function __invoke(Request $request, Response $response, array $args): ResponseInterface {
 
-        $fallbackPage = Cms\Page::bySlug($this->cms, $args['slug']);
-        if (empty($fallbackPage)) {
+
+        $pageGroup = $this->cms->pageBySlug($args['slug']);
+
+        if (empty($pageGroup)) {
             throw new HttpNotFoundException($request);
         }
 
-        $pageGroup = new IntlCmsResource($this->cms, $this->intl, $fallbackPage);
-
         $relatedContent = [];
         $relatedTitleKey = 'related';
-        foreach ($fallbackPage->tags as $tag) {
+        foreach ($pageGroup->getFallback()->tags as $tag) {
             if ($tag->slug === 'special-careers') {
-                $relatedContent = IntlCmsResource::getIntlResources($this->cms, $this->intl,
-                    Cms\Post::get($this->cms, null, null,
-                        $this->intl->ghostFilterFactory()
-                            ->and('tag', '=', 'category-job'),
-                    )->getResources());
+                $relatedContent = $this->cms->listPosts(
+                    'available-jobs',
+                    null,
+                    $this->cms->withLanguage()
+                        ->and('tag', '=', 'category-job')
+                );
                 $relatedTitleKey = 'careers';
             }
         }

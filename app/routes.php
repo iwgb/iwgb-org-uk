@@ -39,11 +39,7 @@ return function (App $app): void {
 
         $app->get('/page/{slug}', Handler\Page::class);
 
-        $app->group('/feed', function (Group $app): void {
-
-            $app->get('/{tag}/{page}', Handler\Feed::class);
-            $app->get('/{tag}', Handler\Feed::class);
-        });
+        $app->get('/feed/press-releases[/{page}]', Handler\PressReleases::class);
 
         $app->group('/join', function (Group $app): void {
 

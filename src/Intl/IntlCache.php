@@ -38,9 +38,12 @@ class IntlCache implements Cache {
         return $this->cache->fetch($this->getIntlKey($id));
     }
 
-    public function get(string $id, callable $retrieve) {
+    public function get(string $id, ?callable $retrieve = null) {
         $data = $this->fetch($id);
-        if (!empty($data)) {
+        if (
+            !empty($data)
+            || empty($retrieve)
+        ) {
             return $data;
         }
 

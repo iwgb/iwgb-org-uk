@@ -12,8 +12,6 @@ use Slim\Psr7\Response;
 
 class Error extends ViewHandler {
 
-    private const DEFAULT_ERROR_CODE = 99;
-
     private GuzzleHttp\Client $http;
 
     public function __construct(ContainerInterface $c) {
@@ -30,7 +28,7 @@ class Error extends ViewHandler {
 
         $data = $request->getQueryParams();
 
-        $code = $data['code'] ?? self::DEFAULT_ERROR_CODE;
+        $code = $data['code'];
         $aid = $data['aid'] ?? null;
 
         $details = [

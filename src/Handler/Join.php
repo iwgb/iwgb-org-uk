@@ -4,9 +4,7 @@ namespace Iwgb\OrgUk\Handler;
 
 use Guym4c\Airtable\AirtableApiException;
 use Guym4c\GhostApiPhp\GhostApiException;
-use Guym4c\GhostApiPhp\Model as Cms;
 use GuzzleHttp;
-use Iwgb\OrgUk\Intl\IntlCmsResource;
 use Iwgb\OrgUk\MembersErrorDetail;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -43,11 +41,12 @@ class Join extends ViewHandler {
                 'aid'     => $data['aid'] ?? '',
             ];
         }
+
         return $this->render($request, $response,
             'join/join.html.twig',
             $this->intl->getText('join', 'title'),
             [
-                'contentGroup' => new IntlCmsResource($this->cms, $this->intl, Cms\Page::bySlug($this->cms, 'join')),
+                'contentGroup' => $this->cms->pageBySlug('join'),
                 'jobTypes'     => $jobTypes,
                 'meta'         => [
                     'title' => "{$this->intl->getText('join', 'title')} - IWGB",

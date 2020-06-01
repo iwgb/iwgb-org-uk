@@ -3,12 +3,6 @@
 namespace Iwgb\OrgUk\Handler;
 
 use Guym4c\GhostApiPhp\Filter;
-use Guym4c\GhostApiPhp\GhostApiException;
-use Guym4c\GhostApiPhp\Model as Cms;
-use Guym4c\GhostApiPhp\Sort;
-use Guym4c\GhostApiPhp\SortOrder;
-use Iwgb\OrgUk\Intl\IntlCache;
-use Iwgb\OrgUk\Intl\IntlCmsResource;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -17,16 +11,22 @@ class Home extends ViewHandler {
 
     /**
      * {@inheritDoc}
-     * @throws GhostApiException
      */
     public function __invoke(Request $request, Response $response, array $args): ResponseInterface {
 
-        $featured = $this->cache->get(IntlCache::FEATURED_POST, fn(): Cms\Post =>
-            Cms\Post::get($this->cms, 1,
-                new Sort('published_at', SortOrder::DESC),
-                (new Filter())->by('featured', '=', 'true', true)
-            )->getResources()[0]
-        );
+        $featured = $this->cms->listPosts(
+            'home-featured',
+            1,
+            $this->cms->withLanguage()
+                ->and('featured', '=', 'true', true),
+        )[0];
+
+        $noMainFeaturePosts = (new Filter())
+            ->by('comment_id', '-', $featured->getFallback()->commentId);
+
+        if (!empty($featured->getIntl())) {
+            $noMainFeaturePosts->and('comment_id', '-', $featured->getIntl()->commentId);
+        }
 
         return $this->render($request, $response,
             'home/home.html.twig',
@@ -37,21 +37,24 @@ class Home extends ViewHandler {
                     'https://cdn.iwgb.org.uk/bucket/home/header2.jpg',
                 ],
                 'mapFooter' => true,
-                'featured'  => new IntlCmsResource($this->cms, $this->intl, $featured),
+                'featured'  => $featured,
 
-                'posts'     => IntlCmsResource::getIntlResources($this->cms, $this->intl, Cms\Post::get($this->cms, 3,
-                    new Sort('published_at', SortOrder::DESC),
-                    $this->intl->ghostFilterFactory()
-                        ->and('comment_id', '-', $featured->commentId)
-                        ->and('tag', '=', 'press-release')
-                )->getResources()),
+                'posts' => $this->cms->listPosts(
+                    'home-feed',
+                    3,
+                    $this->cms->withLanguage()
+                        ->and('featured', '=', 'true', true)
+                        ->with($noMainFeaturePosts)
+                ),
 
-                'campaigns' => Cms\Page::get($this->cms, null, null,
+                'campaigns' => $this->cms->listPages(
+                    'home-campaigns',
+                    null,
                     (new Filter())
                         ->by('tag', '=', $this->intl->getLanguage())
                         ->and('tag', '=', 'category-campaign')
                         ->and('featured', '=', 'true', true)
-                )->getResources(),
+                ),
 
                 'contacts' => $this->settings['contacts'],
                 'meta' => [

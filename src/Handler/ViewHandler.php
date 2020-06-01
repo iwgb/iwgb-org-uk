@@ -6,18 +6,15 @@ use Aura\Session\Session as SessionManager;
 use Carbon;
 use DateTime;
 use Guym4c\Airtable\Airtable;
-use Guym4c\GhostApiPhp\Filter;
 use Guym4c\GhostApiPhp\Ghost;
 use Guym4c\GhostApiPhp\GhostApiException;
 use Guym4c\GhostApiPhp\Model as Cms;
-use Guym4c\GhostApiPhp\Sort;
-use Guym4c\GhostApiPhp\SortOrder;
 use Guym4c\TwigProps\PropTypesExtension;
 use Iwgb\OrgUk\Intl\IntlCache as Cache;
 use Iwgb\OrgUk\Intl\IntlCmsAccessTrait;
-use Iwgb\OrgUk\Intl\IntlCmsResource;
 use Iwgb\OrgUk\Intl\IntlUtility;
 use Iwgb\OrgUk\TwigEnvSetupTrait;
+use Iwgb\OrgUk\Service\Cms as CmsService;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpNotFoundException;
@@ -37,7 +34,7 @@ abstract class ViewHandler extends AbstractHandler {
 
     protected Twig\Environment $view;
 
-    protected Ghost $cms;
+    private Ghost $ghost;
 
     protected Airtable $membership;
 
@@ -51,18 +48,22 @@ abstract class ViewHandler extends AbstractHandler {
 
     private Carbon\Factory $datetime;
 
+    protected CmsService $cms;
+
     public function __construct(ContainerInterface $c) {
         parent::__construct($c);
 
         $this->view = $c->get('view');
         $this->settings = $c->get('settings');
-        $this->cms = $c->get('cms');
+        $this->ghost = $c->get('cms');
         $this->membership = $c->get('membership');
         $this->branches = $c->get('branches');
         $this->cache = $c->get('cache');
         $this->sm = $c->get('session');
         $this->datetime = $c->get('datetime');
         $this->intl = $c->get('intl');
+
+        $this->cms = new CmsService($this->ghost, $this->intl, $this->cache);
     }
 
     /**
@@ -125,22 +126,23 @@ abstract class ViewHandler extends AbstractHandler {
                     'News'      => [
                         'kind' => 'menu',
                         'id'   => 'news',
-                        'data' => IntlCmsResource::getIntlResources($this->cms, $this->intl,
-                            Cms\Post::get($this->cms, 2,
-                                new Sort('published_at', SortOrder::DESC),
-                                $this->intl->ghostFilterFactory()
-                            )->getResources()
+                        'data' => $this->cms->listPosts(
+                            'nav-news',
+                            2,
+                            $this->cms->withLanguage(),
                         ),
                     ],
                     'Campaigns' => [
                         'kind'   => 'menu',
                         'id'     => 'campaigns',
-                        'data'   => Cms\Page::get($this->cms, null,
-                            new Sort('published_at', SortOrder::DESC),
-                            (new Filter())->by('tag', '=', $this->intl->getLanguage())
-                                ->and('tag', '=', 'category-campaign')
-                        )->getResources(),
                         'mdHide' => true,
+                        'data' => $this->cms->listPages(
+                            'nav-campaigns',
+                            null,
+                            $this->cms->withLanguage()
+                                ->by('tag', '=', $this->intl->getLanguage())
+                                ->and('tag', '=', 'category-campaign')
+                        ),
                     ],
                     'Branches'  => [
                         'kind' => 'menu',
@@ -224,6 +226,6 @@ abstract class ViewHandler extends AbstractHandler {
      * @throws GhostApiException
      */
     private function getFallbackPages(string $tag): array {
-        return self::getFallbackPagesByTag($this->cms, $this->intl, $tag);
+        return self::getFallbackPagesByTag($this->ghost, $this->intl, $tag);
     }
 }

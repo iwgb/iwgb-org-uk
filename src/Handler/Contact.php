@@ -9,7 +9,6 @@ use Psr\Http\Message\ResponseInterface;
 use ReCaptcha\ReCaptcha;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
-use voku\helper\UTF8;
 
 class Contact extends ViewHandler {
 
@@ -47,8 +46,8 @@ class Contact extends ViewHandler {
         $target = $this->settings['contacts'][$data['target']]
             ?? $this->settings['contacts']['enquiries'];
 
-        $header = UTF8::str_replace('{name}', $name, self::EMAIL_HEADER);
-        $header = UTF8::str_replace('{email}', $email, $header);
+        $header = str_replace('{name}', $name, self::EMAIL_HEADER);
+        $header = str_replace('{email}', $email, $header);
 
         (new MailgunEmailFactory($this->settings['mailgun']))
             ->send(
