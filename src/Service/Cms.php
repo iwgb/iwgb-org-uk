@@ -11,6 +11,7 @@ use Guym4c\GhostApiPhp\SortOrder;
 use Iwgb\OrgUk\Intl\IntlCache;
 use Iwgb\OrgUk\Intl\IntlCmsResource;
 use Iwgb\OrgUk\Intl\IntlUtility;
+use voku\helper\UTF8;
 
 class Cms {
 
@@ -24,6 +25,7 @@ class Cms {
      * Cms constructor.
      * @param Ghost $ghost
      * @param IntlUtility $intl
+     * @param IntlCache $cache
      */
     public function __construct(Ghost $ghost, IntlUtility $intl, IntlCache $cache) {
         $this->ghost = $ghost;
@@ -49,6 +51,8 @@ class Cms {
     }
 
     /**
+     * Get a specific post, by slug
+     *
      * @param string $slug
      * @return IntlCmsResource|null
      * @throws GhostApiException
@@ -64,6 +68,8 @@ class Cms {
     }
 
     /**
+     * Query posts
+     *
      * @param string $id
      * @param int|null $limit
      * @param Filter|null $filter
@@ -83,6 +89,16 @@ class Cms {
         );
     }
 
+    /**
+     * Query pages
+     *
+     * @param string $id
+     * @param int|null $limit
+     * @param Filter|null $filter
+     * @param int $page
+     * @param Sort|null $sort
+     * @return IntlCmsResource[]
+     */
     public function listPages(
         string $id,
         ?int $limit = null,
@@ -93,6 +109,60 @@ class Cms {
         return $this->cache->get($id, fn(): array =>
             $this->listResources(Retrieve\Page::class, $id, $limit, $filter, $page, $sort)
         );
+    }
+
+    /**
+     * Clear the resource query cache
+     */
+    public function flushCache(): void {
+        $this->ghost->flushCache();
+    }
+
+    /**
+     * Filter on the fallback language
+     *
+     * @return Filter
+     */
+    public function withLanguage(): Filter {
+        return (new Filter())
+            ->by('tag', '=', $this->intl->getFallback());
+    }
+
+    public function pagesByTag(string $category): array {
+        return $this->listPages(
+            "nav-{$category}",
+            null,
+            $this->withLanguage()
+                ->and('tag', '=', $category)
+        );
+    }
+
+    /**
+     * @param IntlCmsResource[] $resources
+     * @return array
+     */
+    public static function groupBySubcategory(array $resources): array {
+        $subcategories = [];
+        // go through pages in category
+        foreach ($resources as $resource) {
+            // iterate over tags
+            foreach ($resource->getFallback()->tags as $tag) {
+                // if tag is a subcategory
+                if (
+                    UTF8::str_contains($tag->name, ':')
+                    && explode(':', $tag->name)[0] === 'subcategory'
+                ) {
+                    // fill tag
+                    $subcategories[$tag->slug]['tag'] = $tag;
+
+                    // check for intl page
+                    $subcategories[$tag->slug]['pages'][] = $resource;
+                    continue;
+                }
+            }
+        }
+        ksort($subcategories);
+        return $subcategories;
     }
 
     /**
@@ -125,13 +195,6 @@ class Cms {
         );
     }
 
-    public function flushCache(): void {
-        $this->ghost->flushCache();
-    }
 
-    public function withLanguage(): Filter {
-        return (new Filter())
-            ->by('tag', '=', $this->intl->getFallback());
-    }
 
 }

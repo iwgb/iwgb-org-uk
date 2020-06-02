@@ -2,6 +2,7 @@
 
 return ['settings' => [
     'dev' => $_ENV['ENVIRONMENT'] === 'dev',
+    'is_prod' => !in_array($_ENV['ENVIRONMENT'], ['dev', 'qa']),
     'environment' => $_ENV['ENVIRONMENT'],
     'cdn' => [
         'baseUrl' => $_ENV['CDN_BASE_URL'],

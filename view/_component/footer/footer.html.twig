@@ -20,12 +20,7 @@
     props({
         columns: t.arrayOf(
             t.arrayOf(
-                t.exact({
-                    tag: t.instanceOf('Guym4c.GhostApiPhp.Model.Tag'),
-                    pages: t.arrayOf(
-                        t.instanceOf('Iwgb.OrgUk.Intl.IntlCmsResource')
-                    )
-                })
+                t.instanceOf('Iwgb.OrgUk.Intl.IntlCmsResource')
             )
         ).isRequired(),
         showMapCredit: t.bool().isNullable(),
@@ -37,13 +32,12 @@
 <div class="footer container my-5">
 
     <div class="row">
-
-        {% for column, subcategory in columns %}
+        {% for subcategory, pageGroups in columns %}
             <div class="col-12 col-md footer__column">
                 <div class="footer__column__header d-flex align-items-center my-3">
-                    <span>{{ _(_self, subcategory['subcategory-' ~ column].tag.slug) }}</span>
+                    <span>{{ _(_self, subcategory) }}</span>
                 </div>
-                {% for pageGroup in subcategory['subcategory-' ~ column].pages %}
+                {% for pageGroup in pageGroups %}
                     {% set page = pageGroup.getIntl() ?? pageGroup.getFallback() %}
                     <a href="/page/{{ pageGroup.getFallback().slug }}" class="d-block my-2">{{ page.title }}</a>
                 {% endfor %}

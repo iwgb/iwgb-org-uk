@@ -27,7 +27,7 @@ $app->add(new IntlMiddleware(
 $app->add(new TrailingSlash(false));
 
 $app->addErrorMiddleware(
-    in_array($c->get('settings')['environment'], ['dev', 'qa']),
+    !$c->get('settings')['is_prod'],
     true,
     false,
 )->setDefaultErrorHandler(new ErrorHandler(

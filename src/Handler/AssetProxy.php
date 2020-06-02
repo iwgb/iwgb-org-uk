@@ -22,7 +22,7 @@ class AssetProxy extends AbstractHandler {
     public function __invoke(Request $request, Response $response, array $args): ResponseInterface {
         if (
             $request->getHeaderLine('X-Pull') === $this->settings['cdn']['assetKey']
-            || in_array($this->settings['environment'], ['dev', 'qa'])
+            || !$this->settings['is_prod']
         ) {
             return self::output(
                 $response,

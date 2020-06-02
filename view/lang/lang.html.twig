@@ -4,11 +4,11 @@
     >
         <div class="lang__select">
             {% for language in _languages %}
-                <a href="/{{ language }}{{ _uri|stripLanguage }}"
+                <a href="/{{ language }}{{ _path }}"
                    class="link-unstyled"
-                   title="{{ localeInfo(language).getNativeName() }}"
+                   title="{{ language|nativeName }}"
                 >
-                    <img alt="{{ localeInfo(language).getNativeName() }}"
+                    <img alt="{{ language|nativeName }}"
                          src="{{ _i('/assets/' ~ language ~ '.png') }}"
                          class="m-2
                             {% if _language == language %}

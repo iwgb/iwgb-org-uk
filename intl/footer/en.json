@@ -1,15 +1,14 @@
 {
-  "Resources subcat: resources": "",
+  "about": "About",
   "credit": "Designed and built at the IWGB with love, care and coffee. Hasta la victoria siempre.",
   "icons": "Some icons",
+  "legal": "Legal",
   "maps.1": "Map data",
   "maps.2": "OpenStreetMap contributors",
   "maps.3": "imagery",
+  "resources": "Resources",
   "social.facebook": "https:\/\/facebook.com\/IWGBunion",
   "social.header": "Social",
   "social.twitter": "https:\/\/twitter.com\/IWGBunion",
-  "social.youtube": "https:\/\/youtube.com\/channel\/UCYkcXSdgs8xDeTxLfU1rNtg",
-  "subcategory-about": "About",
-  "subcategory-legal": "Legal",
-  "subcategory-resources": "Resources"
+  "social.youtube": "https:\/\/youtube.com\/channel\/UCYkcXSdgs8xDeTxLfU1rNtg"
 }

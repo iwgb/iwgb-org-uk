@@ -22,7 +22,8 @@
                 {% endfor %}
             </div>
             <div class="d-block d-md-none nav__menu__items">
-                {% for campaign in data %}
+                {% for campaignGroup in data %}
+                    {% set campaign = campaignGroup.getIntl() ?? campaignGroup.getFallback() %}
                     <a href="/page/{{ campaign.slug }}"
                        class="d-block my-3"
                     >

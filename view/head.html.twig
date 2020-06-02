@@ -12,13 +12,13 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css,npm/cookieconsent@3.1.1/build/cookieconsent.min.css,npm/hamburgers@1.1.3/dist/hamburgers.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Sans:400,400i,700,700i&display=swap">
-<link rel="stylesheet" href="{{ _x('/static/css/style.css') }}">
-<link rel="stylesheet" href="{{ _x('/icons/css/all.css') }}">
+<link rel="stylesheet" href="{{ '/static/css/style.css'|assetUrl }}">
+<link rel="stylesheet" href="{{ '/icons/css/all.css'|assetUrl }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1/dist/leaflet.min.css">
 
 {% for language in _languages %}
     {% if language != _language %}
-        <link rel="alternate" hreflang="{{ language }}" href="/{{ language }}{{ _uri|stripLanguage }}">
+        <link rel="alternate" hreflang="{{ language }}" href="/{{ language }}{{ _path}}">
     {% endif %}
 {% endfor %}
 

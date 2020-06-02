@@ -5,7 +5,7 @@
 
 {# open graph, facebook #}
 <meta property="og:type" content="website">
-<meta property="og:url" content="{{ _url }}">
+<meta property="og:url" content="{{ _uri }}">
 <meta property="og:title" content="{{ resource.meta.ogTitle ?? resource.meta.title ?? resource.title }}">
 {% if description is not empty %}
     <meta property="og:description" content="{{ resource.meta.ogDescription ?? description }}">
@@ -21,7 +21,7 @@
 {% else %}
     <meta property="twitter:card" content="summary">
 {% endif %}
-<meta property="twitter:url" content="{{ _url }}">
+<meta property="twitter:url" content="{{ _uri }}">
 <meta property="twitter:title" content="{{ resource.meta.twitterTitle ?? resource.meta.title ?? resource.title }}">
 {% if description is not empty %}
     <meta property="twitter:description" content="{{ resource.meta.twitterDescription ?? description ?? '' }}">
