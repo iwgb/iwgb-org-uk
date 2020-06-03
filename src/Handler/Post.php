@@ -3,6 +3,7 @@
 namespace Iwgb\OrgUk\Handler;
 
 use Guym4c\GhostApiPhp\GhostApiException;
+use Iwgb\OrgUk\Service\Cms;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
@@ -24,8 +25,7 @@ class Post extends ViewHandler {
 
         return $this->render($request, $response,
             'post/post.html.twig',
-            $postGroup->getIntl()->title ??
-                $postGroup->getFallback()->title,
+            Cms::getTitle($postGroup),
             ['postGroup' => $postGroup]
         );
     }

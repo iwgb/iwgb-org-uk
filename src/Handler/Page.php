@@ -3,6 +3,7 @@
 namespace Iwgb\OrgUk\Handler;
 
 use Guym4c\GhostApiPhp\GhostApiException;
+use Iwgb\OrgUk\Service\Cms;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
@@ -39,8 +40,7 @@ class Page extends ViewHandler {
 
         return $this->render($request, $response,
             'page/page.html.twig',
-            $pageGroup->getIntl()->title ??
-            $pageGroup->getFallback()->title,
+            Cms::getTitle($pageGroup),
             [
                 'pageGroup' => $pageGroup,
                 'relatedContent' => $relatedContent,

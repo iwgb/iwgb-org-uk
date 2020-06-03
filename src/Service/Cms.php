@@ -166,6 +166,15 @@ class Cms {
     }
 
     /**
+     * @param IntlCmsResource $resource
+     * @return string
+     */
+    public static function getTitle(IntlCmsResource $resource): string {
+        return $resource->getIntl()->title ??
+            $resource->getFallback()->title;
+    }
+
+    /**
      * @noinspection PhpUndefinedMethodInspection
      *
      * @param string $resourceClass
