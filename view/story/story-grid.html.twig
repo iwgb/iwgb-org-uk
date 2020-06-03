@@ -1,34 +1,44 @@
-<div class="container mt-3 mb-5 my-md-5">
-    <h1 class="d-none d-md-block">{{ title }}</h1>
-    {% if featured is defined %}
-        {% set featuredPost = featured.getIntl() ?? featured.getFallback() %}
-        <div class="row">
-            <a href="/post/{{ featuredPost.slug }}"
-               class="link-unstyled col-12"
+
+{% set showMobileHeader = showMobileHeader ?? false %}
+
+<div class="{{ classnames({
+    'd-none': not showMobileHeader,
+    'd-block': showMobileHeader
+}) }} d-md-block">
+    {% include '_component/pageHeading.html.twig' with {
+        text: title,
+    } only %}
+</div>
+
+{% if featured is defined %}
+    {% set featuredPost = featured.getIntl() ?? featured.getFallback() %}
+    <div class="row">
+        <a href="/post/{{ featuredPost.slug }}"
+           class="link-unstyled col-12"
+        >
+            <div class="w-100 story story--pinned bg-image d-flex flex-column justify-content-end lazyload"
+                 data-bg="{{ featuredPost.featureImage }}"
             >
-                <div class="w-100 story story--pinned bg-image d-flex flex-column justify-content-end lazyload"
-                     data-bg="{{ featuredPost.featureImage }}"
-                >
-                    <div class="story__data px-3 py-2">
-                        <h2 class="story__data__title text-white m-0">{{ featuredPost.title }}</h2>
-                        <div class="story__data__meta story__data__meta--pinned">
-                            {% if featuredPost.primaryTag.name != 'category:press-release' %}
-                                <span>{{ featuredPost.primaryAuthor.name }}</span>
-                            {% endif %}
-                            <span>{{ featuredPost.publishedAt|timeAgo }}</span>
-                        </div>
+                <div class="story__data px-3 py-2">
+                    <h2 class="story__data__title text-white m-0">{{ featuredPost.title }}</h2>
+                    <div class="story__data__meta story__data__meta--pinned">
+                        {% if featuredPost.primaryTag.name != 'category:press-release' %}
+                            <span>{{ featuredPost.primaryAuthor.name }}</span>
+                        {% endif %}
+                        <span>{{ featuredPost.publishedAt|timeAgo }}</span>
                     </div>
                 </div>
-            </a>
-        </div>
-    {% endif %}
-    <div class="row my-3">
-        {% for story in stories %}
-            <div class="col-12 col-md-4 py-3">
-                {% include 'story/story.html.twig' with {
-                    story: story.getIntl() ?? story.getFallback(),
-                } only %}
             </div>
-        {% endfor %}
+        </a>
     </div>
+{% endif %}
+<div class="row my-3">
+    {% for story in stories %}
+        <div class="col-12 col-md-4 py-3">
+            {% include 'story/story.html.twig' with {
+                story: story.getIntl() ?? story.getFallback(),
+            } only %}
+        </div>
+    {% endfor %}
 </div>
+

@@ -128,12 +128,12 @@ class Cms {
             ->by('tag', '=', $this->intl->getFallback());
     }
 
-    public function pagesByTag(string $category): array {
+    public function pagesByTag(string $tag): array {
         return $this->listPages(
-            "nav-{$category}",
+            "nav-{$tag}",
             null,
             $this->withLanguage()
-                ->and('tag', '=', $category)
+                ->and('tag', '=', $tag)
         );
     }
 

@@ -4,7 +4,7 @@
         <div class="nav__menu__items">
             {% for pageGroup in subcategory.pages %}
                 {% set page =  pageGroup.getIntl() ?? pageGroup.getFallback() %}
-                <a href="'/page/{{ pageGroup.getFallback().slug }}"
+                <a href="/page/{{ pageGroup.getFallback().slug }}"
                    class="d-block my-3"
                 >
                     <span>{{ page.title }}</span>

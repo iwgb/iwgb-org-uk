@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b12c39d1389a9a7ea142704eba86b113",
+    "content-hash": "796d94a68e4bb44e5f87967d411cb790",
     "packages": [
         {
             "name": "aura/session",
@@ -668,6 +668,50 @@
             ],
             "description": "Complete PHP port of React PropTypes (fork of prezly/prop-types)",
             "time": "2020-04-26T23:35:52+00:00"
+        },
+        {
+            "name": "guym4c/twig-classnames",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guym4c/twig-classnames.git",
+                "reference": "79c6bcc46d0e35a506de7959f3b1b8f04bcb2ddb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guym4c/twig-classnames/zipball/79c6bcc46d0e35a506de7959f3b1b8f04bcb2ddb",
+                "reference": "79c6bcc46d0e35a506de7959f3b1b8f04bcb2ddb",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "^3.0",
+                "voku/portable-utf8": "^5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Guym4c\\TwigClassnames\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Guy Mac",
+                    "email": "hello@guymac.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "classnames() for Twig",
+            "homepage": "https://github.com/guym4c/twig-classnames",
+            "keywords": [
+                "classnames",
+                "clsx",
+                "twig"
+            ],
+            "time": "2020-06-02T23:21:41+00:00"
         },
         {
             "name": "guym4c/twig-prop-types",

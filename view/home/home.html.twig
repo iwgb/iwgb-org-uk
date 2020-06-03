@@ -83,11 +83,13 @@
         {% endif %}
     {% endif %}
 
-    {% include 'story/story-grid.html.twig' with {
-        featured: featured,
-        stories: posts,
-        title: _('global', 'latestStories'),
-    } only %}
+    <div class="container mt-3 mb-5 my-md-5">
+        {% include 'story/story-grid.html.twig' with {
+            featured: featured,
+            stories: posts,
+            title: _('global', 'latestStories'),
+        } only %}
+    </div>
     <div class="container">
         <div class="row d-flex justify-content-center">
             <a href="/feed/all" class="text-dark link-span-only d-flex align-items-center">

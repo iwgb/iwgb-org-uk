@@ -4,6 +4,7 @@ namespace Iwgb\OrgUk;
 
 use Carbon;
 use DateTime;
+use Guym4c\TwigClassnames\ClassnamesExtension;
 use Guym4c\TwigProps\PropTypesExtension;
 use Iwgb\OrgUk\Intl\IntlUtility;
 use Slim\Psr7\Request;
@@ -32,6 +33,7 @@ class RenderEnv {
     public function init(Request $request): void {
 
         $this->view->addExtension(new PropTypesExtension($this->view, !$this->settings['is_prod'], 't'));
+        $this->view->addExtension(new ClassnamesExtension());
 
         if ($this->settings['dev']) {
             $this->view->addExtension(new Twig\Extension\DebugExtension());
@@ -55,7 +57,6 @@ class RenderEnv {
 
             'toIntlKey'     => fn($branch, $key): string => UTF8::str_camelize($branch) . ".{$key}",
             'parseNewLines' => fn(string $s, string $replace = '<br>'): string => str_replace("\n", $replace, $s),
-
         ]);
 
         self::addFilters($this->view, [
