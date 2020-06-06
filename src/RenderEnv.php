@@ -32,7 +32,7 @@ class RenderEnv {
 
     public function init(Request $request): void {
 
-        $this->view->addExtension(new PropTypesExtension($this->view, !$this->settings['is_prod'], 't'));
+        $this->view->addExtension(new PropTypesExtension($this->view, $this->settings['is_prod'], 't'));
         $this->view->addExtension(new ClassnamesExtension());
 
         if ($this->settings['dev']) {
