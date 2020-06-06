@@ -29,7 +29,7 @@ $app->add(new TrailingSlash(false));
 $app->addErrorMiddleware(
     !$c->get('settings')['is_prod'],
     true,
-    false,
+    true,
 )->setDefaultErrorHandler(new ErrorHandler(
     $app->getCallableResolver(),
     $app->getResponseFactory(),
