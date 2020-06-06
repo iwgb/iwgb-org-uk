@@ -49,6 +49,7 @@ return function (App $app): void {
         });
 
         $app->get('/error', Handler\Error::class);
+        $app->get('/404', Handler\NotFound::class);
 
         $app->post('/contact', Handler\Contact::class);
 

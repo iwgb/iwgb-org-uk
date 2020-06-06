@@ -65,12 +65,6 @@
         </div>
     </div>
 
-    {% if _q.notFound is defined %}
-        <div class="alert alert-warning container mt-3" role="alert">
-            <span>{{ _('global', 'notFound') }}</span>
-        </div>
-    {% endif %}
-
     {% if _q.contactFormSent is defined %}
         {% if _q.contactFormSent == 'no' %}
             <div class="alert alert-danger container mt-3" role="alert">

@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Handlers\ErrorHandler as SlimErrorHandler;
+use Slim\Psr7;
 use Teapot\StatusCode;
 use Sentry;
 
@@ -16,9 +17,9 @@ class ErrorHandler extends SlimErrorHandler {
         $exception = $this->exception;
         if ($exception instanceof HttpException) {
             if ($exception instanceof HttpNotFoundException) {
-                $response = $this->responseFactory->createResponse(StatusCode::NOT_FOUND);
-                $response->getBody()->write('not found');
-                return $response;
+                return $this->responseFactory
+                    ->createResponse(StatusCode::NOT_FOUND)
+                    ->withBody(new Psr7\Stream(fopen(APP_ROOT . '/view/notFound.html', 'r')));
             }
         } else {
             if (!in_array($_ENV['ENVIRONMENT'], ['dev', 'qa'])) {

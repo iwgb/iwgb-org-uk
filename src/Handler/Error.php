@@ -43,7 +43,9 @@ class Error extends ViewHandler {
         return $this->render($request, $response,
             'error/error.html.twig',
             $this->intl->getText('error', 'title'),
-            $details
+            array_merge([
+                'type' => 'error',
+            ], $details)
         );
     }
 }

@@ -6,29 +6,30 @@
     >
         <div class="row">
             <div class="col-10 offset-1 py-5 px-0">
-                <span class="error__title">{{ _(_self, 'title') }}</span>
+                <span class="error__title">{{ _(type, 'title') }}</span>
             </div>
         </div>
         <div class="row">
             <div class="col-10 col-md-4 offset-1 offset-md-7 bg-light error__text px-3 py-2">
-                <h1>{{ _(_self, 'subtitle') }} 🤦</h1>
-                <p>{{ _(_self, 'body.1') }}</p>
-                <p>{{ _(_self, 'body.2') }}</p>
+                <h1>{{ _(type, 'subtitle') }} 🤦</h1>
+                <p>{{ _(type, 'body.1') }}</p>
+                <p>{{ _(type, 'body.2') }}</p>
 
                 {% if aid is not empty %}
-                    <p>{{ _(_self, 'body.aid') }}</p>
+                    <p>{{ _(type, 'body.aid') }}</p>
                     <p>
                         <span>{{ aid|split('-')[0] }}</span>
                         <span class="text-muted">-{{ aid|split('-', 2)[1] }}</span>
                     </p>
                 {% endif %}
 
-                <p>{{ _(_self, 'body.cause') }}</p>
-                <p class="text-muted">
-                    <span>{{ _(_self, 'body.4') }}<br></span>
-                    <small class="text-muted">{{ _(_self, 'cause') }}: {{ error }} / {{ _(_self, 'job') }}: {{ _job }}</small>
-                </p>
-
+                {% if type == 'error' %}
+                    <p>{{ _(type, 'body.cause') }}</p>
+                    <p class="text-muted">
+                        <span>{{ _(type, 'body.4') }}<br></span>
+                        <small class="text-muted">{{ _(_self, 'cause') }}: {{ error }} / {{ _(_self, 'job') }}: {{ _job }}</small>
+                    </p>
+                {% endif %}
             </div>
         </div>
 
