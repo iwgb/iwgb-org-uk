@@ -48,7 +48,7 @@ trait IntlCmsAccessTrait {
                     $subcategories[$tag->slug]['tag'] = $tag;
 
                     // check for intl page
-                    $subcategories[$tag->slug]['pages'][] = new IntlCmsResource($cms, $intl, $page);
+                    $subcategories[$tag->slug]['pages'][] = CmsResource::construct($cms, $intl, $page);
                     continue;
                 }
             }

@@ -25,7 +25,7 @@
    class="link-unstyled mb-3 mb-sm-0 d-flex flex-grow-1 h-100"
 >
     <div class="story story--regular d-flex flex-column w-100">
-        {% if story.featureImage is not empty %}
+        {% if story.featureImage is not empty and story.featureImage != '' %}
 
             <div data-bg="{{ story.featureImage }}"
                  class="story__image bg-image lazyload w-100 d-none d-md-block"

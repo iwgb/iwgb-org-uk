@@ -8,6 +8,8 @@ use Slim\Psr7\Response;
 
 class PressReleases extends ViewHandler {
 
+    private const PAGE_SIZE = 12;
+
     /**
      * {@inheritDoc}
      */
@@ -19,11 +21,13 @@ class PressReleases extends ViewHandler {
 
         $stories = $this->cms->listPosts(
             "press-releases-{$page}",
-            9,
+            self::PAGE_SIZE,
             $this->cms->withLanguage()
                 ->and('tag', '=', 'press-release'),
             $page,
         );
+
+        $showNext = count($stories) === self::PAGE_SIZE;
 
         return $this->render($request, $response,
             'feed.html.twig',
@@ -32,7 +36,8 @@ class PressReleases extends ViewHandler {
                 'stories' => $stories,
                 'page'    => $page,
                 'tag'     => 'press-releases',
-                'showNext'=> count($stories) === 9,
+                'showNext'=> $showNext,
+                'showArchives' => !$showNext,
             ],
         );
     }

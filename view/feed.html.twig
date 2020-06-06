@@ -7,22 +7,42 @@
             title: _(_self, tag),
             showMobileHeader: true,
         } only %}
-        <div class="row justify-content-between m-3">
-            <div>
-                {% if page > 1 %}
-                    <a href="/feed/{{ tag }}/{{ page - 1 }}" class="btn btn-iwgb">
-                        <i class="fas fa-angle-left"></i>
-                        <span class="ml-1">Previous</span>
-                    </a>
+        <div class="row">
+            <div class="col-12 my-3 d-flex align-items-center flex-column">
+                {% if showArchives %}
+                    <i class="fas fa-history fa-3x text-secondary mb-3"></i>
+                    <h3>There&rsquo;s more in the archives</h3>
+                    <p>Fire up the DeLorean</p>
+                    <div>
+                        <a href="/archives"
+                           class="btn btn-iwgb"
+                        >
+                            <span class="mr-1">Let&rsquo;s go back</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
                 {% endif %}
             </div>
-            <div>
-                {% if showNext %}
-                    <a href="/feed/{{ tag }}/{{ page + 1 }}" class="btn btn-iwgb">
-                        <span class="mr-1">Next</span>
-                        <i class="fas fa-angle-right"></i>
-                    </a>
-                {% endif %}
+
+        </div>
+        <div class="row">
+            <div class="col-12 my-3 d-flex justify-content-between">
+                <div>
+                    {% if page > 1 %}
+                        <a href="/{{ tag }}/{{ page - 1 }}" class="btn btn-iwgb">
+                            <i class="fas fa-arrow-left"></i>
+                            <span class="ml-1">Previous</span>
+                        </a>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if showNext %}
+                        <a href="/{{ tag }}/{{ page + 1 }}" class="btn btn-iwgb">
+                            <span class="mr-1">Next</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    {% endif %}
+                </div>
             </div>
 
         </div>

@@ -23,11 +23,15 @@ class LegacyPost extends ViewHandler {
         $post = json_decode(file_get_contents(APP_ROOT . '/var/archive.json'), true)[$args['id']] ?? null;
 
         if (empty($post)) {
+            $post = json_decode(file_get_contents(APP_ROOT . '/var/redirects.json'), true)[$args['id']] ?? null;
+        }
+
+        if (empty($post)) {
             throw new HttpNotFoundException($request);
         }
 
         if (!empty($post['redirect'])) {
-            Psr7::redirect($response, $post['redirect'], StatusCode::MOVED_PERMANENTLY);
+            return Psr7::redirect($response, $post['redirect'], StatusCode::MOVED_PERMANENTLY);
         }
 
         return $this->render($request, $response,

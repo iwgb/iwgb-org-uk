@@ -9,7 +9,7 @@ use Guym4c\GhostApiPhp\Model as Retrieve;
 use Guym4c\GhostApiPhp\Sort;
 use Guym4c\GhostApiPhp\SortOrder;
 use Iwgb\OrgUk\Intl\IntlCache;
-use Iwgb\OrgUk\Intl\IntlCmsResource;
+use Iwgb\OrgUk\Intl\CmsResource;
 use Iwgb\OrgUk\Intl\IntlUtility;
 use voku\helper\UTF8;
 
@@ -37,34 +37,40 @@ class Cms {
      * Get a specific page, by slug
      *
      * @param string $slug
-     * @return IntlCmsResource
+     * @return CmsResource
      * @throws GhostApiException
      */
-    public function pageBySlug(string $slug): ?IntlCmsResource {
-        $fallbackPage = Retrieve\Page::bySlug($this->ghost, $slug);
+    public function pageBySlug(string $slug): ?CmsResource {
+        $fallbackPage = CmsResource::bySlug(
+            fn(string $slugToFetch): Retrieve\Page => Retrieve\Page::bySlug($this->ghost, $slug),
+            $slug,
+        );
 
         if (empty($fallbackPage)) {
             return null;
         }
 
-        return new IntlCmsResource($this->ghost, $this->intl, $fallbackPage);
+        return CmsResource::construct($this->ghost, $this->intl, $fallbackPage);
     }
 
     /**
      * Get a specific post, by slug
      *
      * @param string $slug
-     * @return IntlCmsResource|null
+     * @return CmsResource|null
      * @throws GhostApiException
      */
-    public function postBySlug(string $slug): ?IntlCmsResource {
-        $fallbackPost = Retrieve\Post::bySlug($this->ghost, $slug);
+    public function postBySlug(string $slug): ?CmsResource {
+        $fallbackPost = CmsResource::bySlug(
+            fn(string $slugToFetch): Retrieve\Post => Retrieve\Post::bySlug($this->ghost, $slugToFetch),
+            $slug,
+        );
 
         if (empty($fallbackPost)) {
             return null;
         }
 
-        return new IntlCmsResource($this->ghost, $this->intl, $fallbackPost);
+        return CmsResource::construct($this->ghost, $this->intl, $fallbackPost);
     }
 
     /**
@@ -75,7 +81,7 @@ class Cms {
      * @param Filter|null $filter
      * @param int $page
      * @param Sort|null $sort
-     * @return IntlCmsResource[]
+     * @return CmsResource[]
      */
     public function listPosts(
         string $id,
@@ -97,7 +103,7 @@ class Cms {
      * @param Filter|null $filter
      * @param int $page
      * @param Sort|null $sort
-     * @return IntlCmsResource[]
+     * @return CmsResource[]
      */
     public function listPages(
         string $id,
@@ -138,7 +144,7 @@ class Cms {
     }
 
     /**
-     * @param IntlCmsResource[] $resources
+     * @param CmsResource[] $resources
      * @return array
      */
     public static function groupBySubcategory(array $resources): array {
@@ -166,10 +172,10 @@ class Cms {
     }
 
     /**
-     * @param IntlCmsResource $resource
+     * @param CmsResource $resource
      * @return string
      */
-    public static function getTitle(IntlCmsResource $resource): string {
+    public static function getTitle(CmsResource $resource): string {
         return $resource->getIntl()->title ??
             $resource->getFallback()->title;
     }
@@ -194,7 +200,7 @@ class Cms {
         ?Sort $sort = null
     ): array {
         return $this->cache->get($id, fn(): array =>
-            IntlCmsResource::getIntlResources($this->ghost, $this->intl,
+            CmsResource::getIntlResources($this->ghost, $this->intl,
                 $resourceClass::get($this->ghost, $limit,
                     $sort ?? new Sort('published_at', SortOrder::DESC),
                     $filter,

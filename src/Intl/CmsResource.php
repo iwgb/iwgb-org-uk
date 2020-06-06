@@ -8,7 +8,7 @@ use Guym4c\GhostApiPhp\Model as Cms;
 use InvalidArgumentException;
 use voku\helper\UTF8;
 
-class IntlCmsResource {
+class CmsResource {
 
     private Ghost $cms;
 
@@ -16,9 +16,11 @@ class IntlCmsResource {
 
     private string $type;
 
-    private ?object $intlResource;
+    private ?Cms\AbstractContentResource $intlResource = null;
 
-    private object $fallbackResource;
+    private ?Cms\AbstractContentResource $fallbackResource = null;
+
+    private array $legacyResource;
 
     /**
      * IntlCmsResource constructor.
@@ -27,20 +29,33 @@ class IntlCmsResource {
      * @param       $fallbackResource
      * @throws GhostApiException
      */
-    public function __construct(Ghost $cms, IntlUtility $intl, Cms\AbstractContentResource $fallbackResource) {
-        $this->cms = $cms;
-        $this->intl = $intl;
-        $this->fallbackResource = $fallbackResource;
+    public static function construct(Ghost $cms, IntlUtility $intl, Cms\AbstractContentResource $fallbackResource): self {
+        $resource = new self();
+        $resource->cms = $cms;
+        $resource->intl = $intl;
+        $resource->fallbackResource = $fallbackResource;
 
         if ($fallbackResource instanceof Cms\Page) {
-            $this->type = 'page';
-            $this->intlResource = $this->getIntlPage($fallbackResource);
+            $resource->type = 'page';
+            $resource->intlResource = $resource->getIntlPage($fallbackResource);
         } elseif ($fallbackResource instanceof Cms\Post) {
-            $this->type = 'post';
-            $this->intlResource = $this->getIntlPost($fallbackResource);
+            $resource->type = 'post';
+            $resource->intlResource = $resource->getIntlPost($fallbackResource);
         } else {
             throw new InvalidArgumentException("Invalid resource type provided");
         }
+
+        return $resource;
+    }
+
+    public static function fromLegacyResource(Ghost $cms, IntlUtility $intl, array $legacyResource): self {
+        $resource = new self();
+        $resource->cms = $cms;
+        $resource->intl = $intl;
+        $resource->type = 'post';
+        $resource->legacyResource = $legacyResource;
+
+        return $resource;
     }
 
     /**
@@ -79,19 +94,32 @@ class IntlCmsResource {
      * @param Cms\AbstractContentResource $resource
      * @return Cms\AbstractContentResource|null
      * @throws GhostApiException
-     * @noinspection PhpRedundantCatchClauseInspection
      */
-    private static function getIntlResource(callable $getResource, IntlUtility $intl, Cms\AbstractContentResource $resource) {
+    private static function getIntlResource(
+        callable $getResource,
+        IntlUtility $intl,
+        Cms\AbstractContentResource $resource
+    ): ?Cms\AbstractContentResource {
+        return self::bySlug($getResource, "{$resource->slug}-{$intl->getLanguage()}");
+    }
+
+    /**
+     * @param callable $getResource
+     * @param string $slug
+     * @return Cms\AbstractContentResource|null
+     * @throws GhostApiException
+     */
+    public static function bySlug(callable $getResource, string $slug): ?Cms\AbstractContentResource {
         try {
-            $intlPage = $getResource("{$resource->slug}-{$intl->getLanguage()}");
+            $resource = $getResource($slug);
         } catch (GhostApiException $e) {
             if (UTF8::str_contains($e->getMessage(), 'NotFoundError')) {
-                $intlPage = null;
+                $resource = null;
             } else {
                 throw $e;
             }
         }
-        return $intlPage;
+        return $resource;
     }
 
     /**
@@ -104,24 +132,22 @@ class IntlCmsResource {
     public static function getIntlResources(Ghost $cms, IntlUtility $intl, array $resources): array {
         $intlResources = [];
         foreach ($resources as $resource) {
-            $intlResources[] = new self($cms, $intl, $resource);
+            $intlResources[] = self::construct($cms, $intl, $resource);
         }
         return $intlResources;
     }
 
     /**
-     * @return Cms\Post|Cms\Page|null
+     * @return Cms\AbstractContentResource|null
      */
     public function getIntl() {
         return $this->intlResource;
     }
 
     /**
-     * @return Cms\Post|Cms\Page
+     * @return Cms\AbstractContentResource|array|null
      */
     public function getFallback() {
-        /** @var Cms\Post|Cms\Page $resource */
-        $resource = $this->fallbackResource;
-        return $resource;
+        return$this->fallbackResource ?? $this->legacyResource;
     }
 }

@@ -26,7 +26,7 @@ abstract class ViewHandler extends AbstractHandler {
 
     protected Twig\Environment $view;
 
-    private Ghost $ghost;
+    protected Ghost $ghost;
 
     protected Airtable $membership;
 
