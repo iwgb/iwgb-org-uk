@@ -17,16 +17,21 @@ class ErrorHandler extends SlimErrorHandler {
         $exception = $this->exception;
         if ($exception instanceof HttpException) {
             if ($exception instanceof HttpNotFoundException) {
-                return $this->responseFactory
-                    ->createResponse(StatusCode::NOT_FOUND)
-                    ->withBody(new Psr7\Stream(fopen(APP_ROOT . '/view/notFound.html', 'r')));
+                return $this->respondWithStaticView(StatusCode::NOT_FOUND, 'notFound.html');
             }
         } else {
             if (!in_array($_ENV['ENVIRONMENT'], ['dev', 'qa'])) {
                 Sentry\captureException($this->exception);
+                return $this->respondWithStaticView(StatusCode::INTERNAL_SERVER_ERROR, 'error.html');
             }
         }
 
         return parent::respond();
+    }
+
+    private function respondWithStaticView(int $status, string $htmlFilePath): ResponseInterface {
+        return $this->responseFactory
+            ->createResponse($status)
+            ->withBody(new Psr7\Stream(fopen(APP_ROOT . "/view/{$htmlFilePath}", 'r')));
     }
 }

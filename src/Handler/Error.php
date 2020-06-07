@@ -28,7 +28,7 @@ class Error extends ViewHandler {
 
         $data = $request->getQueryParams();
 
-        $code = $data['code'];
+        $code = $data['code'] ?? null;
         $aid = $data['aid'] ?? null;
 
         $details = [
