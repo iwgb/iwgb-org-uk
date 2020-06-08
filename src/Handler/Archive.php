@@ -58,6 +58,7 @@ class Archive extends ViewHandler {
                 'tag' => 'archives',
                 'data' => $posts,
                 'showNext' => count($posts) === self::PAGE_SIZE,
+                'showAuthors' => false,
             ],
         );
     }

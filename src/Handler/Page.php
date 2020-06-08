@@ -16,8 +16,6 @@ class Page extends ViewHandler {
      * @throws GhostApiException
      */
     public function __invoke(Request $request, Response $response, array $args): ResponseInterface {
-
-
         $pageGroup = $this->cms->pageBySlug($args['slug']);
 
         if (empty($pageGroup)) {
@@ -26,6 +24,7 @@ class Page extends ViewHandler {
 
         $relatedContent = [];
         $relatedTitleKey = 'related';
+        $showAuthors = true;
         foreach ($pageGroup->getFallback()->tags as $tag) {
             if ($tag->slug === 'special-careers') {
                 $relatedContent = $this->cms->listPosts(
@@ -35,6 +34,7 @@ class Page extends ViewHandler {
                         ->and('tag', '=', 'category-job')
                 );
                 $relatedTitleKey = 'careers';
+                $showAuthors = false;
             }
         }
 
@@ -45,6 +45,7 @@ class Page extends ViewHandler {
                 'pageGroup' => $pageGroup,
                 'relatedContent' => $relatedContent,
                 'relatedTitleKey' => $relatedTitleKey,
+                'showAuthors' => $showAuthors,
             ],
         );
     }

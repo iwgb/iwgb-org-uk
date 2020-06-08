@@ -19,6 +19,7 @@
                     <div class="col-6 d-flex">
                         {% include 'story/story.html.twig' with {
                             story: story.getIntl() ?? story.getFallback(),
+                            showAuthor: false,
                         } only %}
                     </div>
                 {% endfor %}

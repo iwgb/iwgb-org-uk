@@ -16,10 +16,16 @@
             }),
         ]).isRequired(),
         type: t.string(),
+        showMobileImage: t.bool().isNullable(),
+        showAuthor: t.bool().isNullable(),
+    })
+    ~
+    defaults({
+        type: 'post',
+        showMobileImages: false,
+        showAuthor: true,
     })
 }}
-
-{% set type = type ?? 'post' %}
 
 <a href="/{{ type }}/{{ story.slug }}"
    class="link-unstyled mb-3 mb-sm-0 d-flex flex-grow-1 h-100"
@@ -28,14 +34,16 @@
         {% if story.featureImage is not empty and story.featureImage != '' %}
 
             <div data-bg="{{ story.featureImage }}"
-                 class="story__image bg-image lazyload w-100 d-none d-md-block"
+                 class="{{ classNames('story__image bg-image lazyload w-100', {
+                     'd-none d-md-block': not showMobileImage,
+                 }) }}"
             ></div>
         {% endif %}
         <div class="story__data px-3 py-2 flex-grow-1 d-flex flex-column justify-content-between bg-grey">
             <h3 class="story__data__title m-0">{{ story.title }}</h3>
             {% if story.publishedAt is not null %}
                 <div class="story__data__meta">
-                    {% if story.primaryTag.name != 'category:press-release' %}
+                    {% if showAuthor %}
                         <span>{{ story.primaryAuthor.name }}</span>
                     {% endif %}
                     <span title="{{ story.publishedAt|dateFormat }}">{{ story.publishedAt|timeAgo }}</span>

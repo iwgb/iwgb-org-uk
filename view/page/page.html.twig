@@ -1,6 +1,7 @@
 {% extends 'root.html.twig' %}
 
 {% set page = pageGroup.getIntl() ?? pageGroup.getFallback() %}
+{% set showAuthors = showAuthors ?? true %}
 
 {% block head %}
     {% include 'content-meta.html.twig' with {
@@ -20,15 +21,16 @@
                         {{ page.html }}
                     {% endautoescape %}
                 </div>
-                {% if relatedContent|length > 0 %}
-                    {% include 'story/story-grid.html.twig' with {
-                        stories: relatedContent,
-                        title: _(_self, relatedTitleKey),
-                    } only %}
-                {% endif %}
-
             </div>
         </div>
+        {% if relatedContent|length > 0 %}
+            {% include 'story/story-grid.html.twig' with {
+                stories: relatedContent,
+                title: _(_self, relatedTitleKey),
+                showAuthors: showAuthors,
+                isSlim: true,
+            } only %}
+        {% endif %}
     </div>
 
 {% endblock %}
