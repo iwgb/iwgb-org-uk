@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "796d94a68e4bb44e5f87967d411cb790",
+    "content-hash": "107bd88f3439199c2feca9d5b11c201d",
     "packages": [
         {
             "name": "aura/session",
@@ -671,16 +671,16 @@
         },
         {
             "name": "guym4c/twig-classnames",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guym4c/twig-classnames.git",
-                "reference": "79c6bcc46d0e35a506de7959f3b1b8f04bcb2ddb"
+                "reference": "26f6773ea0cb6934e9ea513e577d33ba9657b1c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guym4c/twig-classnames/zipball/79c6bcc46d0e35a506de7959f3b1b8f04bcb2ddb",
-                "reference": "79c6bcc46d0e35a506de7959f3b1b8f04bcb2ddb",
+                "url": "https://api.github.com/repos/guym4c/twig-classnames/zipball/26f6773ea0cb6934e9ea513e577d33ba9657b1c7",
+                "reference": "26f6773ea0cb6934e9ea513e577d33ba9657b1c7",
                 "shasum": ""
             },
             "require": {
@@ -711,7 +711,7 @@
                 "clsx",
                 "twig"
             ],
-            "time": "2020-06-02T23:21:41+00:00"
+            "time": "2020-06-08T17:37:13+00:00"
         },
         {
             "name": "guym4c/twig-prop-types",
