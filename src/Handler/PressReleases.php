@@ -38,6 +38,7 @@ class PressReleases extends ViewHandler {
                 'tag'     => 'press-releases',
                 'showNext'=> $showNext,
                 'showArchives' => !$showNext,
+                'showAuthors' => false,
             ],
         );
     }

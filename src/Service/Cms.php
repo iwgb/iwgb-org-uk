@@ -42,7 +42,7 @@ class Cms {
      */
     public function pageBySlug(string $slug): ?CmsResource {
         $fallbackPage = CmsResource::bySlug(
-            fn(string $slugToFetch): Retrieve\Page => Retrieve\Page::bySlug($this->ghost, $slug),
+            fn(string $slugToFetch): ?Retrieve\Page => Retrieve\Page::bySlug($this->ghost, $slug),
             $slug,
         );
 
@@ -62,7 +62,7 @@ class Cms {
      */
     public function postBySlug(string $slug): ?CmsResource {
         $fallbackPost = CmsResource::bySlug(
-            fn(string $slugToFetch): Retrieve\Post => Retrieve\Post::bySlug($this->ghost, $slugToFetch),
+            fn(string $slugToFetch): ?Retrieve\Post => Retrieve\Post::bySlug($this->ghost, $slugToFetch),
             $slug,
         );
 
