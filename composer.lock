@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "107bd88f3439199c2feca9d5b11c201d",
+    "content-hash": "a7945cf32f9fbeab0f6d700e6cf68a5c",
     "packages": [
         {
             "name": "aura/session",
@@ -715,16 +715,16 @@
         },
         {
             "name": "guym4c/twig-prop-types",
-            "version": "v2.0.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guym4c/twig-prop-types.git",
-                "reference": "eac4ff905909df2e467afc3d9c5c82cb0cddea01"
+                "reference": "994363f94adc7aa249c8aa012c390c9d2cd9fdd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guym4c/twig-prop-types/zipball/eac4ff905909df2e467afc3d9c5c82cb0cddea01",
-                "reference": "eac4ff905909df2e467afc3d9c5c82cb0cddea01",
+                "url": "https://api.github.com/repos/guym4c/twig-prop-types/zipball/994363f94adc7aa249c8aa012c390c9d2cd9fdd5",
+                "reference": "994363f94adc7aa249c8aa012c390c9d2cd9fdd5",
                 "shasum": ""
             },
             "require": {
@@ -755,7 +755,7 @@
                 "proptypes",
                 "twig"
             ],
-            "time": "2020-05-03T15:40:53+00:00"
+            "time": "2020-06-07T00:01:35+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

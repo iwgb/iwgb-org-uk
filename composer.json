@@ -19,7 +19,7 @@
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^6.5",
         "twig/twig": "^3.0",
-        "guym4c/twig-prop-types": "^2.0.0",
+        "guym4c/twig-prop-types": "^2.1.0",
         "vlucas/phpdotenv": "^4.1",
         "slim/slim": "~4.0",
         "slim/psr7": "^1.1",
