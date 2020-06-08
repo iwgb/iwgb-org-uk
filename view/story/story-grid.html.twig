@@ -3,6 +3,7 @@
         showMobileHeader: false,
         showMobileImages: false,
         showAuthors: true,
+        isSlim: false,
     })
 }}
 
@@ -39,12 +40,13 @@
 {% endif %}
 <div class="row my-3">
     {% for story in stories %}
-        <div class="{{ classNames('col-12 col-md-6 col-lg-4 pb-3 pt-0-xs pt-3-md', {
+        <div class="{{ classNames('col-12 col-md-6 pb-3 pt-0-xs pt-3-md', {
+            'col-lg-4': not isSlim,
             'd-block d-md-none d-lg-block': loop.last and not loop.first,
         }) }}">
             {% include 'story/story.html.twig' with {
                 story: story.getIntl() ?? story.getFallback(),
-                showMobileImage: showMobileImage,
+                showMobileImage: showMobileImages,
                 showAuthor: showAuthors,
             } only %}
         </div>
