@@ -17,7 +17,7 @@ class ErrorHandler extends SlimErrorHandler {
         $exception = $this->exception;
         if ($exception instanceof HttpException) {
             if ($exception instanceof HttpNotFoundException) {
-                return $this->respondWithStaticView(StatusCode::NOT_FOUND, 'notFound.html');
+                return $this->respondWithStaticView(StatusCode::NOT_FOUND, 'notFound.html', true);
             }
         } else {
             if (!in_array($_ENV['ENVIRONMENT'], ['dev', 'qa'])) {
@@ -29,9 +29,19 @@ class ErrorHandler extends SlimErrorHandler {
         return parent::respond();
     }
 
-    private function respondWithStaticView(int $status, string $htmlFilePath): ResponseInterface {
-        return $this->responseFactory
-            ->createResponse($status)
-            ->withBody(new Psr7\Stream(fopen(APP_ROOT . "/view/{$htmlFilePath}", 'r')));
+    private function respondWithStaticView(int $status, string $htmlFilePath, bool $redirect = false): ResponseInterface {
+        if ($redirect) {
+            $response = $this->responseFactory->createResponse($status);
+            $response->getBody()->write(str_replace(
+                '%uri%',
+                $this->request->getUri()->getPath(),
+                file_get_contents(APP_ROOT . "/view/{$htmlFilePath}"),
+            ));
+            return $response;
+        } else {
+            return $this->responseFactory
+                ->createResponse($status)
+                ->withBody(new Psr7\Stream(fopen(APP_ROOT . "/view/{$htmlFilePath}", 'r')));
+        }
     }
 }
