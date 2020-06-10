@@ -22,6 +22,13 @@
     {% endif %}
 {% endfor %}
 
+{% for size in [32, 64, 96, 128] %}
+    <link rel="icon"
+          href="{{ _i('/assets/favicon-' ~ size ~ '.png') }}"
+          sizes="{{ size }}x{{ size }}"
+    >
+{% endfor %}
+
 <script>
     function onContactSubmit() {
         document.getElementById('contactForm').submit();
