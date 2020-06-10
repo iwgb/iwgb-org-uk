@@ -4,7 +4,7 @@ namespace Iwgb\OrgUk\Intl;
 
 use Aura\Session\Segment as Session;
 use Aura\Session\Session as SessionManager;
-use Negotiation\LanguageNegotiator as Negotiator;
+//use Negotiation\LanguageNegotiator as Negotiator;
 use Iwgb\OrgUk\Psr7Utils as Psr7;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -93,14 +93,14 @@ class IntlMiddleware implements MiddlewareInterface {
         }
 
         // header
-        $acceptHeader = $request->getHeaderLine('Accept');
-        if (!empty($acceptHeader)) {
-            $negotiatedLanguage = (new Negotiator())->getBest($acceptHeader, $this->languages);
-
-            if (!empty($negotiatedLanguage)) {
-                return $negotiatedLanguage;
-            }
-        }
+//        $acceptHeader = $request->getHeaderLine('Accept');
+//        if (!empty($acceptHeader)) {
+//            $negotiatedLanguage = (new Negotiator())->getBest($acceptHeader, $this->languages);
+//
+//            if (!empty($negotiatedLanguage)) {
+//                return $negotiatedLanguage;
+//            }
+//        }
 
         return $this->fallback;
     }
