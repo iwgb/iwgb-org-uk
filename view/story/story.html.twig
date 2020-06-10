@@ -2,9 +2,10 @@
     props({
         story: t.oneOfType([
             t.instanceOf('Guym4c.GhostApiPhp.Model.Post'),
+            t.instanceOf('Guym4c.GhostApiPhp.Model.Page'),
             t.shape({
                 slug: t.string().isRequired(),
-                featureImage: t.string(),
+                featureImage: t.string().isNullable(),
                 title: t.string().isRequired(),
                 publishedAt: t.instanceOf('DateTime'),
                 primaryTag: t.shape({

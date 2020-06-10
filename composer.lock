@@ -579,16 +579,16 @@
         },
         {
             "name": "guym4c/ghost-api-php",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guym4c/ghost-api-php.git",
-                "reference": "3a23b9f32302081e13830bdae958d4bc3c94bcd1"
+                "reference": "75d5ce311fc02bfbe3e9bd1a6102aa042f72b8a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guym4c/ghost-api-php/zipball/3a23b9f32302081e13830bdae958d4bc3c94bcd1",
-                "reference": "3a23b9f32302081e13830bdae958d4bc3c94bcd1",
+                "url": "https://api.github.com/repos/guym4c/ghost-api-php/zipball/75d5ce311fc02bfbe3e9bd1a6102aa042f72b8a4",
+                "reference": "75d5ce311fc02bfbe3e9bd1a6102aa042f72b8a4",
                 "shasum": ""
             },
             "require": {
@@ -626,7 +626,7 @@
                 "api",
                 "php"
             ],
-            "time": "2020-06-01T22:39:16+00:00"
+            "time": "2020-06-09T23:10:21+00:00"
         },
         {
             "name": "guym4c/prop-types",

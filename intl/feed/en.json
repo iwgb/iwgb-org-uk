@@ -1,1 +1,10 @@
-{"all":"All stories","archive":"","archives":"","blog":"Blog posts","press-releases":"Press releases"}
+{
+  "all": "All stories",
+  "endCtaTitle": "That's all, folks",
+  "endCtaText": "You've made it this far. Have you considered joining?",
+  "endCtaButton": "Sign me up",
+  "blog": "Blog posts",
+  "newer": "Newer",
+  "older": "Older",
+  "press-releases": "Press releases"
+}

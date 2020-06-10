@@ -2,7 +2,7 @@
     "require": {
         "ext-json": "*",
         "ext-fileinfo": "*",
-        "guym4c/ghost-api-php": "^2.0.0",
+        "guym4c/ghost-api-php": "^2.0.1",
         "jimmiw/php-time-ago": "^3.1",
         "twbs/bootstrap": "^4.4",
         "fortawesome/font-awesome": "^5.12",

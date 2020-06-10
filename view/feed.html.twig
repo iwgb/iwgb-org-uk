@@ -11,15 +11,15 @@
         } only %}
         <div class="row">
             <div class="col-12 my-3 d-flex align-items-center flex-column">
-                {% if showArchives %}
-                    <i class="fas fa-history fa-3x text-secondary mb-3"></i>
-                    <h3>There&rsquo;s more in the archives</h3>
-                    <p>Click below to keep browsing</p>
+                {% if showEnd %}
+                    <i class="far fa-newspaper fa-3x text-secondary mb-3"></i>
+                    <h3>{{ _(_self, 'endCtaTitle') }}</h3>
+                    <p>{{ _(_self, 'endCtaText') }}</p>
                     <div>
-                        <a href="/archives"
+                        <a href="/join"
                            class="btn btn-iwgb"
                         >
-                            <span class="mr-1">Let&rsquo;s go back</span>
+                            <span class="mr-1">{{ _(_self, 'endCtaButton') }}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -33,14 +33,14 @@
                     {% if page > 1 %}
                         <a href="/{{ tag }}/{{ page - 1 }}" class="btn btn-iwgb">
                             <i class="fas fa-arrow-left"></i>
-                            <span class="ml-1">Previous</span>
+                            <span class="ml-1">{{ _(_self, 'newer') }}</span>
                         </a>
                     {% endif %}
                 </div>
                 <div>
                     {% if showNext %}
                         <a href="/{{ tag }}/{{ page + 1 }}" class="btn btn-iwgb">
-                            <span class="mr-1">Next</span>
+                            <span class="mr-1">{{ _(_self, 'older') }}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     {% endif %}

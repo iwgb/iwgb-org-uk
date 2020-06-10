@@ -1,5 +1,10 @@
 {
     "all": "Todas las historias",
     "blog": "Entradas del blog",
+    "endCtaTitle": "Eso es todo, amigos",
+    "endCtaText": "Has llegado hasta aquí. ¿Has considerado unirte?",
+    "endCtaButton": "¡Inscríbeme!",
+    "newer": "Más reciente",
+    "older": "Más antiguo",
     "press-releases": "Comunicados de prensa"
 }

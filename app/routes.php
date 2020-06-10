@@ -40,7 +40,6 @@ return function (App $app): void {
         $app->get('/page/{slug}', Handler\Page::class);
 
         $app->get('/press-releases[/{page}]', Handler\PressReleases::class);
-        $app->get('/archives[/{page}]', Handler\Archive::class);
 
         $app->group('/join', function (Group $app): void {
 
