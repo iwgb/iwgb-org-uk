@@ -1,0 +1,27 @@
+{{
+    props({
+        href: t.string().isRequired(),
+        className: t.string().isNullable(),
+        text: t.string().isNullable(),
+    })
+    ~
+    defaults({
+        className: '',
+        text: null,
+    })
+}}
+
+<a href="{{ href }}"
+   class="{{ className }}"
+        {% if href[0:19] != 'https://iwgb.org.uk' %}
+            target="_blank"
+        {% endif %}
+>
+    {% if text is not null %}
+        <span>{{ text }}</span>
+    {% elseif href[0:19] == 'https://iwgb.org.uk' %}
+        <span>{{ _('branches', 'moreInfo') }}</span>
+    {% else %}
+        <span>{{ _('branches', 'viewWebsite') }}</span>
+    {% endif %}
+</a>
