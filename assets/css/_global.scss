@@ -1,27 +1,7 @@
 @import '../../view/util';
 
-body:not([data-admin=yes]), .cc-window {
+body {
     font-family: 'Fira Sans', Helvetica Neue, Arial, sans-serif !important;
-}
-
-.cc- {
-    &message, &btn {
-        font-size: 1rem !important;
-        display: flex !important;
-        align-items: center !important;
-    }
-
-    &window {
-        align-items: stretch !important;
-    }
-}
-
-@include media-breakpoint-up(md) {
-    .cc-window {
-        bottom: auto !important;
-        top: 0 !important;
-        position: absolute !important;
-    }
 }
 
 a {

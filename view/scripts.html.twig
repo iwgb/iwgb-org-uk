@@ -1,25 +1,3 @@
-<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
-<script>
-    window.cookieconsent.initialise({
-        "palette": {
-            "popup": {
-                "background": "#000"
-            },
-            "button": {
-                "background": "#c0392b"
-            }
-        },
-        "position": "bottom",
-        "theme": "edgeless",
-        "content": {
-            "message": "{{ _('global', 'cookies.message') }}",
-            "dismiss": "{{ _('global', 'cookies.dismiss') }}",
-            "link": "{{ _('global', 'cookies.link') }}",
-            "href": "#"
-        }
-    });
-</script>
-
 <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', e => {
@@ -39,8 +17,8 @@
         icon.removeClass('fa-copy')
             .addClass('fa-check');
         window.setTimeout(() => {
-                icon.removeClass('fa-check');
-                icon.addClass('fa-copy');
+                icon.removeClass('fa-check')
+                    .addClass('fa-copy');
             }, 2000/*ms*/);
     });
 </script>
