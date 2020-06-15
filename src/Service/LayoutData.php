@@ -38,6 +38,15 @@ class LayoutData {
             $branches = $this->branches->list('Branches')->getRecords();
             shuffle($branches);
 
+            foreach ($branches as $i => $branch) {
+                if ($branch->Name === 'Central Union') {
+                    $centralUnion = $branch;
+                    unset($branches[$i]);
+                    $branches[] = $centralUnion;
+                    break;
+                }
+            }
+
             return ['nav' => [
                 'Donate'    => [
                     'kind'   => 'internal',

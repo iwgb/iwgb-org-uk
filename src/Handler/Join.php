@@ -33,6 +33,15 @@ class Join extends ViewHandler {
         $jobTypes = $this->membership->list('Job types')->getRecords();
         shuffle($jobTypes);
 
+        foreach ($jobTypes as $i => $jobType) {
+            if ($jobType->Slug === 'other') {
+                $other = $jobType;
+                unset($jobTypes[$i]);
+                $jobTypes[] = $other;
+                break;
+            }
+        }
+
         $code = $data['code'] ?? null;
         $error = null;
         if (!empty($code)) {
