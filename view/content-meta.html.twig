@@ -3,6 +3,8 @@
 
 {% set description = resource.meta.description ?? resource.excerpt|default('') %}
 
+{% set image = resource.featureImage ?? 'https://cdn.iwgb.org.uk/bucket/home/header5.jpg' %}
+
 {# open graph, facebook #}
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ _uri }}">
@@ -11,13 +13,13 @@
     <meta property="og:description" content="{{ resource.meta.ogDescription ?? description }}">
 {% endif %}
 {% if resource.featureImage is defined or resource.meta.ogImage is defined %}
-    <meta property="og:image" content="{{ resource.meta.ogImage ?? resource.featureImage }}">
+    <meta property="og:image" content="{{ resource.meta.ogImage ?? image }}">
 {% endif %}
 
 {# twitter #}
 {% if resource.meta.twitterImage is defined or resource.featureImage is defined %}
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:image" content="{{ resource.meta.twitterImage ?? resource.featureImage }}">
+    <meta property="twitter:image" content="{{ resource.meta.twitterImage ?? image }}">
 {% else %}
     <meta property="twitter:card" content="summary">
 {% endif %}
