@@ -62,6 +62,7 @@ class Home extends ViewHandler {
                 'meta' => [
                     'title' => "IWGB: {$this->intl->getText('home', 'slogan')}",
                     'image' => $this->settings['defaultImage'],
+                    'description' => $this->intl->getText('home', 'seoDescription'),
                 ],
             ],
         );
