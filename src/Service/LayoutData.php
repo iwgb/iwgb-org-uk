@@ -59,7 +59,8 @@ class LayoutData {
                     'data' => $this->cms->listPosts(
                         'nav-news',
                         2,
-                        $this->cms->withLanguage(),
+                        $this->cms->withLanguage()
+                            ->and('tag', '=', 'press-release'),
                     ),
                 ],
                 'Campaigns' => [

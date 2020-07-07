@@ -18,7 +18,8 @@ class Home extends ViewHandler {
             'home-featured',
             1,
             $this->cms->withLanguage()
-                ->and('featured', '=', 'true', true),
+                ->and('featured', '=', 'true', true)
+                ->and('tag', '=', 'press-release'),
         )[0];
 
         $noMainFeaturePosts = (new Filter())
@@ -44,6 +45,7 @@ class Home extends ViewHandler {
                     3,
                     $this->cms->withLanguage()
                         ->and('featured', '=', 'true', true)
+                        ->and('tag', '=', 'press-release')
                         ->with($noMainFeaturePosts)
                 ),
 
