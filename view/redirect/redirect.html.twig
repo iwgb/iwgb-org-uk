@@ -11,9 +11,19 @@
 
 {% block body %}
     <div class="container d-flex align-items-center justify-content-center">
-        <div class="text-center m-5 redirect__pad">
-            <i class="fas fa-spinner fa-spin fa-2x"></i>
-            <h3 class="m-2">{{ _('join', 'loading') }}</h3>
+        <div class="text-center m-5 redirect__pad d-flex flex-column align-items-center">
+            <div class="my-2">
+                <img src="{{ _i('/assets/iwgb-spinner-top.png') }}"
+                     class="d-block redirect__spinner__top"
+                     alt="{{ _('join', 'loading') }}"
+                />
+                <img src="{{ _i('/assets/iwgb-spinner-bottom.png') }}"
+                     class="d-block redirect__spinner__bottom"
+                     alt="{{ _('join', 'loading') }}"
+                />
+            </div>
+            <h4 class="m-2">{{ _('join', 'loading') }}</h4>
+            <p>{{ _('join', 'loadingDescription') }}</p>
         </div>
 
     </div>

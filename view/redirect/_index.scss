@@ -3,4 +3,27 @@
     &__pad {
         padding-bottom: 25vh;
     }
+
+    &__spinner {
+
+        &__top {
+            animation: spin 1.5s linear infinite;
+            width: 1.25rem;
+            margin-left: 1.25rem;
+            margin-bottom: .15rem;
+        }
+
+        &__bottom {
+            width: 4rem;
+        }
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
 }
