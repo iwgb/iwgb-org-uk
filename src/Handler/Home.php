@@ -44,7 +44,6 @@ class Home extends ViewHandler {
                     'home-feed',
                     3,
                     $this->cms->withLanguage()
-                        ->and('featured', '=', 'true', true)
                         ->and('tag', '=', 'press-release')
                         ->with($noMainFeaturePosts)
                 ),
