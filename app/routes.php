@@ -12,6 +12,19 @@ use Tuupola\Middleware\CorsMiddleware;
 $cors = new CorsMiddleware([
     'origin' => ['*'],
     'methods' => ['POST', 'OPTIONS'],
+    'headers.allow' => [
+        'Content-Type',
+        'DNT',
+        'User-Agent',
+        'X-Requested-With',
+        'If-Modified-Since',
+        'Cache-Control',
+        'Range',
+    ],
+    'headers.expose' => [
+        'Content-Length',
+        'Content-Range',
+    ],
 ]);
 
 return function (App $app) use ($cors): void {
