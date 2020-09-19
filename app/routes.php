@@ -7,14 +7,24 @@ use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use Slim\Routing\RouteCollectorProxy as Group;
 use Teapot\StatusCode;
+use Tuupola\Middleware\CorsMiddleware;
 
-return function (App $app): void {
+$cors = new CorsMiddleware([
+    'origin' => ['*'],
+    'methods' => ['POST', 'OPTIONS'],
+]);
 
-    $app->group('', function (Group $app): void {
+return function (App $app) use ($cors): void {
+
+    $app->group('', function (Group $app) use ($cors): void {
 
         $app->get("/assets/{type}/{file:[A-z0-9\/_-]+}.{ext}", Handler\AssetProxy::class);
 
-        $app->post('/callback/ghost/rebuild', Handler\PurgeCmsCache::class);
+        $app->group('/callback/ghost/rebuild', function (Group $app) use ($cors): void {
+            $app->post('', Handler\PurgeCmsCache::class);
+            $app->options('', fn (Request $request, Response $response, array $args) =>
+                $response->withStatus(StatusCode::NO_CONTENT));
+        })->add($cors);
 
         $app->get('/page/covid-19', fn(Request $request, Response $response, array $args) =>
             Psr7::redirect($response, '/covid-19', StatusCode::MOVED_PERMANENTLY));
