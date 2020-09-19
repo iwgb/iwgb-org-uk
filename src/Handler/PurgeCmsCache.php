@@ -13,6 +13,10 @@ class PurgeCmsCache extends ViewHandler {
      * {@inheritDoc}
      */
     public function __invoke(Request $request, Response $response, array $routeParams): ResponseInterface {
+        if ($request->getQueryParams()['key'] !== $this->settings['cms']['purgeKey']) {
+            return $response->withStatus(StatusCode::UNAUTHORIZED);
+        }
+
         $this->cache->purge();
         $this->branches->flushCache();
         $this->membership->flushCache();

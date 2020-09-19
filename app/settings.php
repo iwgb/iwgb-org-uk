@@ -13,6 +13,7 @@ return ['settings' => [
     'cms' => [
         'baseUrl' => $_ENV['GHOST_BASE_URL'],
         'key' => $_ENV['GHOST_API_KEY'],
+        'purgeKey' => $_ENV['ASSET_CDN_KEY'],
     ],
     'recaptcha' => [
         'siteKey' => $_ENV['RECAPTCHA_SITE_KEY'],
