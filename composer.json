@@ -2,36 +2,43 @@
     "require": {
         "ext-json": "*",
         "ext-fileinfo": "*",
-        "guym4c/ghost-api-php": "^2.0.1",
+        "guym4c/ghost-api-php": "^2.0",
         "jimmiw/php-time-ago": "^3.1",
-        "twbs/bootstrap": "^4.4",
-        "fortawesome/font-awesome": "^5.12",
+        "twbs/bootstrap": "^4.5",
+        "fortawesome/font-awesome": "^5.15",
         "shrikeh/teapot": "^2.3",
         "ralouphie/mimey": "^2.1",
-        "guym4c/airtable-client": "^2.3.0",
+        "guym4c/airtable-client": "^2.4",
         "voku/portable-utf8": "^5.4",
-        "willdurand/negotiation": "^2.0",
+        "willdurand/negotiation": "^2.3",
         "aura/session": "^2.1.0",
-        "nesbot/carbon": "^2.29",
+        "nesbot/carbon": "^2.41",
         "erusev/parsedown": "^1.7",
-        "mailgun/mailgun-php": "^3.0",
+        "mailgun/mailgun-php": "^3.1",
         "php-http/curl-client": "^2.1",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^6.5",
         "twig/twig": "^3.0",
-        "guym4c/twig-prop-types": "^2.1.0",
+        "guym4c/twig-prop-types": "^2.1",
         "vlucas/phpdotenv": "^4.1",
-        "slim/slim": "~4.0",
-        "slim/psr7": "^1.1",
+        "slim/slim": "~4.5",
+        "slim/psr7": "^1.2",
         "middlewares/trailing-slash": "^2.0",
-        "php-di/php-di": "^6.1",
-        "sentry/sdk": "^2.1",
-        "guym4c/twig-classnames": "^1.0.1",
-        "tuupola/cors-middleware": "^1.2"
+        "php-di/php-di": "^6.3",
+        "sentry/sdk": "^2.2",
+        "guym4c/twig-classnames": "^1.0",
+        "tuupola/cors-middleware": "^1.2",
+        "guym4c/php-s3-intl": "dev-master"
     },
     "autoload": {
         "psr-4": {
             "Iwgb\\OrgUk\\": "src/"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../php/php-s3-intl"
+        }
+    ]
 }
