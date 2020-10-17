@@ -5,9 +5,11 @@ namespace Iwgb\OrgUk\Handler;
 use Aura\Session\Session as SessionManager;
 use Carbon;
 use Guym4c\Airtable\Airtable;
+use Guym4c\Airtable\AirtableApiException;
 use Guym4c\GhostApiPhp\Ghost;
+use Guym4c\GhostApiPhp\GhostApiException;
 use Iwgb\OrgUk\Intl\IntlCache;
-use Iwgb\OrgUk\Intl\IntlUtility;
+use Iwgb\OrgUk\Provider\Provider;
 use Iwgb\OrgUk\RenderEnv;
 use Iwgb\OrgUk\Service\LayoutData;
 use Iwgb\OrgUk\Service\Cms;
@@ -22,40 +24,29 @@ use Twig;
  * Class RootHandler
  * @package Iwgb\OrgUk\Handler
  */
-abstract class ViewHandler extends AbstractHandler {
+abstract class ViewHandler extends AbstractIntlHandler {
 
     protected Twig\Environment $view;
-
     protected Ghost $ghost;
-
     protected Airtable $membership;
-
     protected Airtable $branches;
-
-    protected IntlUtility $intl;
-
     protected IntlCache $cache;
-
     private SessionManager $sm;
-
     private Carbon\Factory $datetime;
-
     protected Cms $cms;
-
     protected LayoutData $layoutData;
 
     public function __construct(ContainerInterface $c) {
         parent::__construct($c);
 
-        $this->view = $c->get('view');
-        $this->settings = $c->get('settings');
-        $this->ghost = $c->get('cms');
-        $this->membership = $c->get('membership');
-        $this->branches = $c->get('branches');
-        $this->cache = $c->get('cache');
-        $this->sm = $c->get('session');
-        $this->datetime = $c->get('datetime');
-        $this->intl = $c->get('intl');
+        $this->view = $c->get(Provider::TWIG);
+        $this->settings = $c->get(Provider::SETTINGS);
+        $this->ghost = $c->get(Provider::CMS);
+        $this->membership = $c->get(Provider::MEMBERSHIPS_AIRTABLE);
+        $this->branches = $c->get(Provider::BRANCHES_AIRTABLE);
+        $this->cache = $c->get(Provider::CACHE);
+        $this->sm = $c->get(Provider::SESSION);
+        $this->datetime = $c->get(Provider::DATETIME);
 
         $this->cms = new Cms($this->ghost, $this->intl, $this->cache);
         $this->layoutData = new LayoutData($this->cms, $this->branches, $this->cache, $this->intl);
@@ -80,6 +71,8 @@ abstract class ViewHandler extends AbstractHandler {
      * @throws Twig\Error\LoaderError
      * @throws Twig\Error\RuntimeError
      * @throws Twig\Error\SyntaxError
+     * @throws AirtableApiException
+     * @throws GhostApiException
      */
     protected function render(
         Request $request,

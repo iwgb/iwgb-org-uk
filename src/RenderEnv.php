@@ -4,9 +4,10 @@ namespace Iwgb\OrgUk;
 
 use Carbon;
 use DateTime;
+use Guym4c\PhpS3Intl\IntlController;
 use Guym4c\TwigClassnames\ClassnamesExtension;
 use Guym4c\TwigProps\PropTypesExtension;
-use Iwgb\OrgUk\Intl\IntlUtility;
+use Iwgb\OrgUk\Intl\IntlTwigExtension;
 use Slim\Psr7\Request;
 use Twig;
 use Twig\TwigFilter;
@@ -19,11 +20,11 @@ class RenderEnv {
 
     private Twig\Environment $view;
 
-    private IntlUtility $intl;
+    private IntlController $intl;
 
     private Carbon\Factory $datetime;
 
-    public function __construct(Twig\Environment $view, array $settings, IntlUtility $intl, Carbon\Factory $datetime) {
+    public function __construct(Twig\Environment $view, array $settings, IntlController $intl, Carbon\Factory $datetime) {
         $this->view = $view;
         $this->settings = $settings;
         $this->intl = $intl;
@@ -31,7 +32,7 @@ class RenderEnv {
     }
 
     public function init(Request $request): void {
-
+        $this->view->addExtension(new IntlTwigExtension($this->intl, !$this->settings['is_prod']));
         $this->view->addExtension(new PropTypesExtension($this->view, $this->settings['is_prod'], 't'));
         $this->view->addExtension(new ClassnamesExtension());
 
@@ -40,10 +41,10 @@ class RenderEnv {
         }
 
         self::addGlobals($this->view, [
-            '_job'       => uniqid(),
             '_language'  => $this->intl->getLanguage(),
             '_languages' => $this->intl->getLanguages(),
             '_fallback'  => $this->intl->getFallback(),
+            '_job'       => uniqid(),
             '_path'      => $request->getUri()->getPath(),
             '_uri'       => (string) $request->getUri(),
             '_recaptcha' => $this->settings['recaptcha']['siteKey'],
@@ -51,18 +52,16 @@ class RenderEnv {
         ]);
 
         self::addFunctions($this->view, [
-
-            '_'  => fn(string $page, string $key, array $values = []): string => $this->intl->getText(explode('.', $page)[0], $key, $values),
             '_i' => fn(string $imageUri): string => "{$this->settings['cdn']['baseUrl']}{$imageUri}",
-
             'toIntlKey'     => fn($branch, $key): string => UTF8::str_camelize($branch) . ".{$key}",
             'parseNewLines' => fn(string $s, string $replace = '<br>'): string => str_replace("\n", $replace, $s),
         ]);
 
         self::addFilters($this->view, [
-            'stripLanguage' => fn(string $uri): string => IntlUtility::removeFromUri($uri),
-            'timeAgo'       => fn(DateTime $datetime): string => $this->datetime->instance($datetime)->diffForHumans(),
-            'dateFormat'    => fn(DateTime $datetime): string => $this->datetime->instance($datetime)->format('Y-m-d H:i'),
+            'timeAgo'       => fn(DateTime $datetime): string => $this->datetime->instance($datetime)
+                ->diffForHumans(),
+            'dateFormat'    => fn(DateTime $datetime): string => $this->datetime->instance($datetime)
+                ->format('Y-m-d H:i'),
             'nativeName'    => fn(string $language): string => Carbon\Carbon::getAvailableLocalesInfo()[$language]
                 ->getNativeName(),
             'assetUrl'      => function (string $s): string {
@@ -74,7 +73,6 @@ class RenderEnv {
             },
         ]);
     }
-
 
     /**
      * @param Twig\Environment $twig
@@ -96,6 +94,10 @@ class RenderEnv {
         }
     }
 
+    /**
+     * @param Twig\Environment $twig
+     * @param callable[] $filters
+     */
     public static function addFilters(Twig\Environment $twig, array $filters) {
         foreach ($filters as $name => $filter) {
             $twig->addFilter(new TwigFilter($name, $filter));

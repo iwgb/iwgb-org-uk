@@ -10,14 +10,14 @@ class AirtableProvider implements Injectable {
 
     public function register(): array {
         return [
-            'membership' => fn (ContainerInterface $c): Airtable =>
+            Provider::MEMBERSHIPS_AIRTABLE => fn (ContainerInterface $c): Airtable =>
                 AirtableClientFactory::build(
                     $c->get('settings')['airtable']['key'],
                     $c->get('settings')['airtable']['membershipBase'],
                     $c->get('settings')['airtable']['proxyKey'],
                     ['Job types'],
                 ),
-            'branches' => fn (ContainerInterface $c): Airtable =>
+            Provider::BRANCHES_AIRTABLE => fn (ContainerInterface $c): Airtable =>
             AirtableClientFactory::build(
                 $c->get('settings')['airtable']['key'],
                 $c->get('settings')['airtable']['branchesBase'],

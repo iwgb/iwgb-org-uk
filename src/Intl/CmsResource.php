@@ -5,6 +5,7 @@ namespace Iwgb\OrgUk\Intl;
 use Guym4c\GhostApiPhp\Ghost;
 use Guym4c\GhostApiPhp\GhostApiException;
 use Guym4c\GhostApiPhp\Model as Cms;
+use Guym4c\PhpS3Intl\IntlController;
 use InvalidArgumentException;
 use voku\helper\UTF8;
 
@@ -12,7 +13,7 @@ class CmsResource {
 
     private Ghost $cms;
 
-    private IntlUtility $intl;
+    private IntlController $intl;
 
     private string $type;
 
@@ -20,16 +21,17 @@ class CmsResource {
 
     private ?Cms\AbstractContentResource $fallbackResource = null;
 
-    private array $legacyResource;
+    private array $legacyResource = [];
 
     /**
      * IntlCmsResource constructor.
-     * @param Ghost       $cms
-     * @param IntlUtility $intl
+     * @param Ghost $cms
+     * @param IntlController $intl
      * @param       $fallbackResource
+     * @return CmsResource
      * @throws GhostApiException
      */
-    public static function construct(Ghost $cms, IntlUtility $intl, Cms\AbstractContentResource $fallbackResource): self {
+    public static function construct(Ghost $cms, IntlController $intl, Cms\AbstractContentResource $fallbackResource): self {
         $resource = new self();
         $resource->cms = $cms;
         $resource->intl = $intl;
@@ -48,7 +50,7 @@ class CmsResource {
         return $resource;
     }
 
-    public static function fromLegacyResource(Ghost $cms, IntlUtility $intl, array $legacyResource): self {
+    public static function fromLegacyResource(Ghost $cms, IntlController $intl, array $legacyResource): self {
         $resource = new self();
         $resource->cms = $cms;
         $resource->intl = $intl;
@@ -90,14 +92,14 @@ class CmsResource {
 
     /**
      * @param callable                    $getResource
-     * @param IntlUtility                 $intl
+     * @param IntlController                 $intl
      * @param Cms\AbstractContentResource $resource
      * @return Cms\AbstractContentResource|null
      * @throws GhostApiException
      */
     private static function getIntlResource(
         callable $getResource,
-        IntlUtility $intl,
+        IntlController $intl,
         Cms\AbstractContentResource $resource
     ): ?Cms\AbstractContentResource {
         return self::bySlug($getResource, "{$resource->slug}-{$intl->getLanguage()}");
@@ -124,17 +126,67 @@ class CmsResource {
 
     /**
      * @param Ghost       $cms
-     * @param IntlUtility $intl
+     * @param IntlController $intl
      * @param array       $resources
      * @return array
      * @throws GhostApiException
      */
-    public static function getIntlResources(Ghost $cms, IntlUtility $intl, array $resources): array {
+    public static function getIntlResources(Ghost $cms, IntlController $intl, array $resources): array {
         $intlResources = [];
         foreach ($resources as $resource) {
             $intlResources[] = self::construct($cms, $intl, $resource);
         }
         return $intlResources;
+    }
+
+    public function getCacheableObject(): array {
+        return [
+            'fallback' => $this->fallbackResource,
+            'intl' => $this->intlResource,
+            'type' => $this->type,
+            'legacyResource' => $this->legacyResource,
+        ];
+    }
+
+    /**
+     * @param self[] $resources
+     * @return array
+     */
+    public static function getCacheableFromAll(array $resources): array {
+        $cacheable = [];
+        foreach ($resources as $resource) {
+            $cacheable[] = $resource->getCacheableObject();
+        }
+        return $cacheable;
+    }
+
+    public static function buildFromCachedObject(Ghost $cms, IntlController $intl, array $cached): self {
+        return (new self())
+            ->hydrateFromCache($cms, $intl, $cached);
+    }
+
+    /**
+     * @param Ghost $cms
+     * @param IntlController $intl
+     * @param array $objects
+     * @return self[]
+     */
+    public static function buildAllFromCachedObjects(Ghost $cms, IntlController $intl, array $objects): array {
+         $resources = [];
+         foreach ($objects as $resource) {
+             $resources[] = self::buildFromCachedObject($cms, $intl, $resource);
+         }
+         return $resources;
+    }
+
+    private function hydrateFromCache(Ghost $cms, IntlController $intl, array $cached): self {
+        $this->cms = $cms;
+        $this->intl = $intl;
+        $this->fallbackResource = $cached['fallback'];
+        $this->intlResource = $cached['intl'];
+        $this->type = $cached['type'];
+        $this->legacyResource = $cached['legacyResource'];
+        return $this;
     }
 
     /**

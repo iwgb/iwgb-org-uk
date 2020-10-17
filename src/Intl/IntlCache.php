@@ -4,12 +4,13 @@ namespace Iwgb\OrgUk\Intl;
 
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\FlushableCache;
+use Guym4c\PhpS3Intl\IntlController;
 
 class IntlCache implements Cache {
 
     private FlushableCache $cache;
 
-    private IntlUtility $intl;
+    private IntlController $intl;
 
     public const NAV_DATA = 'nav-data';
     public const FOOTER_DATA = 'footer-data';
@@ -17,10 +18,10 @@ class IntlCache implements Cache {
 
     /**
      * IntlCache constructor.
-     * @param IntlUtility    $intl
+     * @param IntlController    $intl
      * @param FlushableCache $cache
      */
-    public function __construct(IntlUtility $intl, FlushableCache $cache) {
+    public function __construct(IntlController $intl, FlushableCache $cache) {
         $this->intl = $intl;
         $this->cache = $cache;
     }
@@ -38,18 +39,30 @@ class IntlCache implements Cache {
         return $this->cache->fetch($this->getIntlKey($id));
     }
 
-    public function get(string $id, ?callable $retrieve = null) {
+    public function get(
+        string $id,
+        ?callable $retrieve = null,
+        ?callable $inCacheTransform = null,
+        ?callable $outCacheTransform = null
+    ) {
         $data = $this->fetch($id);
         if (
             !empty($data)
             || empty($retrieve)
         ) {
+            if ($outCacheTransform !== null) {
+                $data = $outCacheTransform($data);
+            }
             return $data;
         }
 
         $data = $retrieve();
 
-        $this->save($id, $data);
+        $cacheableData = $inCacheTransform !== null
+            ? $inCacheTransform($data)
+            : $data;
+
+        $this->save($id, $cacheableData);
         return $data;
     }
 

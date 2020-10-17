@@ -2,6 +2,7 @@
 
 namespace Iwgb\OrgUk\Handler;
 
+use Iwgb\OrgUk\Provider\Provider;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Request;
@@ -12,7 +13,7 @@ abstract class AbstractHandler {
     protected array $settings;
 
     public function __construct(ContainerInterface $c) {
-        $this->settings = $c->get('settings');
+        $this->settings = $c->get(Provider::SETTINGS);
     }
 
     /**

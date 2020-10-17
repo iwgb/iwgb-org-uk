@@ -1,33 +1,20 @@
 <?php
 
+use DI\Container;
+use Iwgb\OrgUk\CorsMiddleware;
 use Iwgb\OrgUk\Handler;
+use Iwgb\OrgUk\Intl\IntlApiAuthMiddleware;
+use Iwgb\OrgUk\Provider\Provider;
 use Iwgb\OrgUk\Psr7Utils as Psr7;
 use Slim\App;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use Slim\Routing\RouteCollectorProxy as Group;
 use Teapot\StatusCode;
-use Tuupola\Middleware\CorsMiddleware;
 
-$cors = new CorsMiddleware([
-    'origin' => ['*'],
-    'methods' => ['POST', 'OPTIONS'],
-    'headers.allow' => [
-        'Content-Type',
-        'DNT',
-        'User-Agent',
-        'X-Requested-With',
-        'If-Modified-Since',
-        'Cache-Control',
-        'Range',
-    ],
-    'headers.expose' => [
-        'Content-Length',
-        'Content-Range',
-    ],
-]);
-
-return function (App $app) use ($cors): void {
+return function (App $app, Container $c): void {
+    $cors = CorsMiddleware::withOptions();
+    $intlApiAuth = new IntlApiAuthMiddleware($c->get(Provider::SETTINGS)['intlApiKey']);
 
     $app->group('', function (Group $app) use ($cors): void {
 
@@ -77,4 +64,11 @@ return function (App $app) use ($cors): void {
 
         $app->get('/covid-19[/{page}]', Handler\CovidPage::class);
     });
+
+    $app->group('/intl-api', function (Group $app) use ($cors): void {
+        $app->get('/all', Handler\Intl\AllLangpacks::class);
+        $app->get('/{langpack}/{language}/get', Handler\Intl\GetLangpack::class);
+        $app->get('/{langpack}/{language}/put', Handler\Intl\PutLangpack::class);
+    })->add($intlApiAuth)
+        ->add($cors);
 };

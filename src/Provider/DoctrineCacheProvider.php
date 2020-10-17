@@ -10,7 +10,7 @@ use Psr\Container\ContainerInterface;
 class DoctrineCacheProvider implements Injectable {
 
     public function register(): array {
-        return ['cache' => fn (ContainerInterface $c): Cache =>
+        return [Provider::CACHE => fn (ContainerInterface $c): Cache =>
             new IntlCache($c->get('intl'), new FilesystemCache(APP_ROOT . '/var/cache/cms'))
         ];
     }

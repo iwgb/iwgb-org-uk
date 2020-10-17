@@ -11,7 +11,7 @@ class TwigTemplateProvider implements Injectable {
 
     public function register(): array {
         return [
-            'view' => fn (ContainerInterface $c): Twig\Environment => new Twig\Environment(
+            Provider::TWIG => fn (ContainerInterface $c): Twig\Environment => new Twig\Environment(
                 new FilesystemLoader(APP_ROOT . '/view'),
                 [
                     'cache' => $c->get('settings')['dev']

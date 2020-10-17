@@ -7,6 +7,6 @@ use GuzzleHttp;
 class GuzzleHttpProvider implements Injectable {
 
     public function register(): array {
-        return ['http' => fn (): GuzzleHttp\Client => new GuzzleHttp\Client()];
+        return [Provider::HTTP => fn (): GuzzleHttp\Client => new GuzzleHttp\Client()];
     }
 }

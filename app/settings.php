@@ -10,6 +10,7 @@ return ['settings' => [
         'assetBaseUrl' => $_ENV['ASSET_CDN_BASE_URL'],
     ],
     'languages' => explode(',', $_ENV['AVAILABLE_LANGUAGES']),
+    'intlApiKey' => $_ENV['INTL_API_KEY'],
     'cms' => [
         'baseUrl' => $_ENV['GHOST_BASE_URL'],
         'key' => $_ENV['GHOST_API_KEY'],
@@ -42,5 +43,13 @@ return ['settings' => [
     ],
     'sentry' => [
         'dsn' => $_ENV['SENTRY_DSN'],
+    ],
+    's3' => [
+        'key' => $_ENV['S3_KEY'],
+        'secret' => $_ENV['S3_SECRET'],
+        'region' => $_ENV['S3_REGION'],
+        'endpoint' => $_ENV['S3_ENDPOINT'],
+        'bucket' => $_ENV['S3_BUCKET'],
+        'cdnUrl' => $_ENV['S3_CDN_URL'],
     ],
 ]];

@@ -8,26 +8,26 @@ use Guym4c\GhostApiPhp\GhostApiException;
 use Guym4c\GhostApiPhp\Model as Retrieve;
 use Guym4c\GhostApiPhp\Sort;
 use Guym4c\GhostApiPhp\SortOrder;
+use Guym4c\PhpS3Intl\IntlController;
 use Iwgb\OrgUk\Intl\IntlCache;
 use Iwgb\OrgUk\Intl\CmsResource;
-use Iwgb\OrgUk\Intl\IntlUtility;
 use voku\helper\UTF8;
 
 class Cms {
 
-    private Ghost $ghost;
+    public Ghost $ghost;
 
-    private IntlUtility $intl;
+    private IntlController $intl;
 
     private IntlCache $cache;
 
     /**
      * Cms constructor.
      * @param Ghost $ghost
-     * @param IntlUtility $intl
+     * @param IntlController $intl
      * @param IntlCache $cache
      */
-    public function __construct(Ghost $ghost, IntlUtility $intl, IntlCache $cache) {
+    public function __construct(Ghost $ghost, IntlController $intl, IntlCache $cache) {
         $this->ghost = $ghost;
         $this->intl = $intl;
         $this->cache = $cache;
@@ -82,6 +82,7 @@ class Cms {
      * @param int $page
      * @param Sort|null $sort
      * @return CmsResource[]
+     * @throws GhostApiException
      */
     public function listPosts(
         string $id,
@@ -90,9 +91,7 @@ class Cms {
         int $page = 1,
         ?Sort $sort = null
     ): array {
-        return $this->cache->get($id, fn(): array =>
-            $this->listResources(Retrieve\Post::class, $id, $limit, $filter, $page, $sort)
-        );
+        return $this->listResources(Retrieve\Post::class, $id, $limit, $filter, $page, $sort);
     }
 
     /**
@@ -104,6 +103,7 @@ class Cms {
      * @param int $page
      * @param Sort|null $sort
      * @return CmsResource[]
+     * @throws GhostApiException
      */
     public function listPages(
         string $id,
@@ -112,9 +112,7 @@ class Cms {
         int $page = 1,
         ?Sort $sort = null
     ): array {
-        return $this->cache->get($id, fn(): array =>
-            $this->listResources(Retrieve\Page::class, $id, $limit, $filter, $page, $sort)
-        );
+        return $this->listResources(Retrieve\Page::class, $id, $limit, $filter, $page, $sort);
     }
 
     /**
@@ -134,6 +132,11 @@ class Cms {
             ->by('tag', '=', $this->intl->getFallback());
     }
 
+    /**
+     * @param string $tag
+     * @return CmsResource[]
+     * @throws GhostApiException
+     */
     public function pagesByTag(string $tag): array {
         return $this->listPages(
             "nav-{$tag}",
@@ -190,6 +193,7 @@ class Cms {
      * @param int $page
      * @param Sort|null $sort
      * @return Retrieve\AbstractContentResource[]
+     * @throws GhostApiException
      */
     private function listResources(
         string $resourceClass,
@@ -199,17 +203,17 @@ class Cms {
         int $page = 1,
         ?Sort $sort = null
     ): array {
-        return $this->cache->get($id, fn(): array =>
-            CmsResource::getIntlResources($this->ghost, $this->intl,
-                $resourceClass::get($this->ghost, $limit,
-                    $sort ?? new Sort('published_at', SortOrder::DESC),
-                    $filter,
-                    $page,
-                )->getResources(),
-            )
+        return $this->cache->get($id,
+            fn(): array =>
+                CmsResource::getIntlResources($this->ghost, $this->intl,
+                    $resourceClass::get($this->ghost, $limit,
+                        $sort ?? new Sort('published_at', SortOrder::DESC),
+                        $filter,
+                        $page,
+                    )->getResources(),
+                ),
+            fn(array $resources): array => CmsResource::getCacheableFromAll($resources),
+            fn(array $resources): array => CmsResource::buildAllFromCachedObjects($this->ghost, $this->intl, $resources),
         );
     }
-
-
-
 }

@@ -7,9 +7,11 @@ use Aura\Session\SessionFactory;
 
 class AuraSessionProvider implements Injectable {
 
+    private const COOKIE_LIFETIME = 2592000; // 30 days
+
     public function register(): array {
         session_name('IwgbSession');
-        session_set_cookie_params(60 * 60 * 24 * 30 /* 30 days */);
-        return ['session' => fn(): Session => (new SessionFactory())->newInstance($_COOKIE)];
+        session_set_cookie_params(self::COOKIE_LIFETIME);
+        return [Provider::SESSION => fn(): Session => (new SessionFactory())->newInstance($_COOKIE)];
     }
 }
