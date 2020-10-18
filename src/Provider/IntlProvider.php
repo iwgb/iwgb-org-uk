@@ -16,19 +16,19 @@ class IntlProvider implements Injectable {
                 new CachingS3JsonClient(
                     new S3Client([
                         'version'    => 'latest',
-                        'region'     => $c->get('settings')['s3']['region'],
-                        'endpoint'   => $c->get('settings')['s3']['endpoint'],
+                        'region'     => $c->get(Provider::SETTINGS)['s3']['region'],
+                        'endpoint'   => $c->get(Provider::SETTINGS)['s3']['endpoint'],
                         'credentials'=> [
-                            'key' => $c->get('settings')['s3']['key'],
-                            'secret' => $c->get('settings')['s3']['secret'],
+                            'key' => $c->get(Provider::SETTINGS)['s3']['key'],
+                            'secret' => $c->get(Provider::SETTINGS)['s3']['secret'],
                         ],
                     ]),
-                    $c->get('settings')['s3']['bucket'],
+                    $c->get(Provider::SETTINGS)['s3']['bucket'],
                     new FilesystemCache(APP_ROOT . '/var/cache/intl'),
-                    'intl/',
-                    $c->get('settings')['s3']['cdnUrl'],
+                    "intl/{$c->get(Provider::SETTINGS)['environment']}/",
+                    $c->get(Provider::SETTINGS)['s3']['cdnUrl'],
                 ),
-                $c->get('settings')['languages'],
+                $c->get(Provider::SETTINGS)['languages'],
             )
         ];
     }

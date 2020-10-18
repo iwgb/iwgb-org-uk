@@ -2,7 +2,9 @@
 
 namespace Iwgb\OrgUk\Handler;
 
+use Guym4c\Airtable\AirtableApiException;
 use Guym4c\GhostApiPhp\Filter;
+use Guym4c\GhostApiPhp\GhostApiException;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -11,6 +13,8 @@ class Home extends ViewHandler {
 
     /**
      * {@inheritDoc}
+     * @throws GhostApiException
+     * @throws AirtableApiException
      */
     public function __invoke(Request $request, Response $response, array $args): ResponseInterface {
 

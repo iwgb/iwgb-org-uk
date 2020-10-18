@@ -12,16 +12,16 @@ class AirtableProvider implements Injectable {
         return [
             Provider::MEMBERSHIPS_AIRTABLE => fn (ContainerInterface $c): Airtable =>
                 AirtableClientFactory::build(
-                    $c->get('settings')['airtable']['key'],
-                    $c->get('settings')['airtable']['membershipBase'],
-                    $c->get('settings')['airtable']['proxyKey'],
+                    $c->get(Provider::SETTINGS)['airtable']['key'],
+                    $c->get(Provider::SETTINGS)['airtable']['membershipBase'],
+                    $c->get(Provider::SETTINGS)['airtable']['proxyKey'],
                     ['Job types'],
                 ),
             Provider::BRANCHES_AIRTABLE => fn (ContainerInterface $c): Airtable =>
             AirtableClientFactory::build(
-                $c->get('settings')['airtable']['key'],
-                $c->get('settings')['airtable']['branchesBase'],
-                $c->get('settings')['airtable']['proxyKey'],
+                $c->get(Provider::SETTINGS)['airtable']['key'],
+                $c->get(Provider::SETTINGS)['airtable']['branchesBase'],
+                $c->get(Provider::SETTINGS)['airtable']['proxyKey'],
                 ['Branches'],
             ),
         ];

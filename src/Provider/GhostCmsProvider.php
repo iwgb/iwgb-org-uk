@@ -11,7 +11,7 @@ class GhostCmsProvider implements Injectable {
     public function register(): array {
 
         return [Provider::CMS => function (ContainerInterface $c): Ghost {
-            $ghost = $c->get('settings')['cms'];
+            $ghost = $c->get(Provider::SETTINGS)['cms'];
             return new Ghost(
                 $ghost['baseUrl'],
                 $ghost['key'],

@@ -9,7 +9,7 @@ class CarbonDateTimeProvider implements Injectable {
 
     public function register(): array {
         return [Provider::DATETIME => fn(ContainerInterface $c): Carbon\Factory =>
-            new Carbon\Factory(['locale' => $c->get('intl')->getLanguage()])
+            new Carbon\Factory(['locale' => $c->get(Provider::INTL)->getLanguage()])
         ];
     }
 }

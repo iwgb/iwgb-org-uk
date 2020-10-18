@@ -11,7 +11,7 @@ class DoctrineCacheProvider implements Injectable {
 
     public function register(): array {
         return [Provider::CACHE => fn (ContainerInterface $c): Cache =>
-            new IntlCache($c->get('intl'), new FilesystemCache(APP_ROOT . '/var/cache/cms'))
+            new IntlCache($c->get(Provider::INTL), new FilesystemCache(APP_ROOT . '/var/cache/cms'))
         ];
     }
 }

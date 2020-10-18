@@ -6,6 +6,7 @@ use Guym4c\Airtable\AirtableApiException;
 use Guym4c\GhostApiPhp\GhostApiException;
 use GuzzleHttp;
 use Iwgb\OrgUk\MembersErrorDetail;
+use Iwgb\OrgUk\Provider\Provider;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Request;
@@ -18,7 +19,7 @@ class Join extends ViewHandler {
     public function __construct(ContainerInterface $c) {
         parent::__construct($c);
 
-        $this->http = $c->get('http');
+        $this->http = $c->get(Provider::HTTP);
     }
 
     /**

@@ -14,10 +14,10 @@ class TwigTemplateProvider implements Injectable {
             Provider::TWIG => fn (ContainerInterface $c): Twig\Environment => new Twig\Environment(
                 new FilesystemLoader(APP_ROOT . '/view'),
                 [
-                    'cache' => $c->get('settings')['dev']
+                    'cache' => $c->get(Provider::SETTINGS)['dev']
                         ? false
                         : APP_ROOT . '/var/twig',
-                    'debug' => $c->get('settings')['dev'],
+                    'debug' => $c->get(Provider::SETTINGS)['dev'],
                 ],
             ),
         ];
