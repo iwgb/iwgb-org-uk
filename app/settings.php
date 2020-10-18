@@ -8,6 +8,8 @@ return ['settings' => [
         'baseUrl' => $_ENV['CDN_BASE_URL'],
         'assetKey' => $_ENV['ASSET_CDN_KEY'],
         'assetBaseUrl' => $_ENV['ASSET_CDN_BASE_URL'],
+        'apiKey' => $_ENV['KEYCDN_API_KEY'],
+        'zoneId' => $_ENV['KEYCDN_CDN_ZONE_ID'],
     ],
     'languages' => explode(',', $_ENV['AVAILABLE_LANGUAGES']),
     'intlApiKey' => $_ENV['INTL_API_KEY'],
