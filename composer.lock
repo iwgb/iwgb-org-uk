@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "219a6a6d4c1236c619805070d61de209",
+    "content-hash": "63041e14d82349a5a72312aa8864b7b7",
     "packages": [
         {
             "name": "aura/session",
@@ -743,11 +743,17 @@
         },
         {
             "name": "guym4c/php-s3-intl",
-            "version": "dev-master",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guym4c/php-s3-intl.git",
+                "reference": "b495483e29e7fd0537135ed929886d3c6a5bbf37"
+            },
             "dist": {
-                "type": "path",
-                "url": "../../php/php-s3-intl",
-                "reference": "d6799d4ae23bcfa1db210671d31becc8d48815f6"
+                "type": "zip",
+                "url": "https://api.github.com/repos/guym4c/php-s3-intl/zipball/b495483e29e7fd0537135ed929886d3c6a5bbf37",
+                "reference": "b495483e29e7fd0537135ed929886d3c6a5bbf37",
+                "shasum": ""
             },
             "require": {
                 "aws/aws-sdk-php": "^3.158",
@@ -756,6 +762,7 @@
                 "guzzlehttp/guzzle": "^6.3",
                 "psr/http-message": "^1.0",
                 "shrikeh/teapot": "^2.3",
+                "twig/twig": "^3.0",
                 "voku/portable-utf8": "^5.4"
             },
             "type": "library",
@@ -764,6 +771,7 @@
                     "Guym4c\\PhpS3Intl\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -782,9 +790,7 @@
                 "php",
                 "s3"
             ],
-            "transport-options": {
-                "relative": true
-            }
+            "time": "2020-10-18T01:17:30+00:00"
         },
         {
             "name": "guym4c/prop-types",
@@ -5445,9 +5451,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "guym4c/php-s3-intl": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

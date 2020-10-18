@@ -28,17 +28,11 @@
         "sentry/sdk": "^2.2",
         "guym4c/twig-classnames": "^1.0",
         "tuupola/cors-middleware": "^1.2",
-        "guym4c/php-s3-intl": "dev-master"
+        "guym4c/php-s3-intl": "^1.0"
     },
     "autoload": {
         "psr-4": {
             "Iwgb\\OrgUk\\": "src/"
         }
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../php/php-s3-intl"
-        }
-    ]
+    }
 }
