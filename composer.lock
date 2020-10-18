@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "63041e14d82349a5a72312aa8864b7b7",
+    "content-hash": "5a2d841aa1175074c064a92690a6eb14",
     "packages": [
         {
             "name": "aura/session",
@@ -743,16 +743,16 @@
         },
         {
             "name": "guym4c/php-s3-intl",
-            "version": "v1.0.0",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guym4c/php-s3-intl.git",
-                "reference": "b495483e29e7fd0537135ed929886d3c6a5bbf37"
+                "reference": "1869e588a7c89490741d8a3a1500bc7305e005d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guym4c/php-s3-intl/zipball/b495483e29e7fd0537135ed929886d3c6a5bbf37",
-                "reference": "b495483e29e7fd0537135ed929886d3c6a5bbf37",
+                "url": "https://api.github.com/repos/guym4c/php-s3-intl/zipball/1869e588a7c89490741d8a3a1500bc7305e005d2",
+                "reference": "1869e588a7c89490741d8a3a1500bc7305e005d2",
                 "shasum": ""
             },
             "require": {
@@ -790,7 +790,7 @@
                 "php",
                 "s3"
             ],
-            "time": "2020-10-18T01:17:30+00:00"
+            "time": "2020-10-18T17:44:05+00:00"
         },
         {
             "name": "guym4c/prop-types",

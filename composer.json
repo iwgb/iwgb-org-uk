@@ -28,7 +28,7 @@
         "sentry/sdk": "^2.2",
         "guym4c/twig-classnames": "^1.0",
         "tuupola/cors-middleware": "^1.2",
-        "guym4c/php-s3-intl": "^1.0"
+        "guym4c/php-s3-intl": "^1.0.2"
     },
     "autoload": {
         "psr-4": {
