@@ -14,7 +14,7 @@ class AllLangpacks extends AbstractIntlStoreHandler {
 
         $downloadUrls = [];
         foreach ($files as $file) {
-            $downloadUrls[] = $this->intlStore->getDownloadUrl($file);
+            $downloadUrls[] = $this->intlStore->getDownloadUrl($file, true);
         }
 
         return Psr7::withJson($response, ['files' => $downloadUrls]);
