@@ -25,9 +25,11 @@
         ).isRequired(),
         showMapCredit: t.bool().isNullable(),
     })
+    ~
+    defaults({
+        showMapCredit: false,
+    })
 }}
-
-{% set showMapCredit = showMapCredit ?? false %}
 
 <div class="footer container my-5">
 
@@ -49,6 +51,7 @@
                 {{ _self.socialIcon('twitter', _(_self, 'social.twitter')) }}
                 {{ _self.socialIcon('facebook', _(_self, 'social.facebook')) }}
                 {{ _self.socialIcon('youtube', _(_self, 'social.youtube')) }}
+                {{ _self.socialIcon('instagram', _(_self, 'social.instagram')) }}
             </div>
         </div>
         <div class="footer__roundel col-12 col-md">
@@ -63,7 +66,7 @@
     <div>
         <small class="text-muted d-block">© {{ _('global', 'iwgb') }} {{ "now"|date('Y') }}</small>
         <small class="text-muted d-block">{{ _(_self, 'credit') }}</small>
-        {% if mapFooter is defined and mapFooter %}
+        {% if showMapCredit %}
             <small class="text-muted d-block d-flex justify-content-center">
                 <span>{{ _(_self, 'maps.1') }} ©&nbsp;</span>
                 {{ _self.externalLink(_(_self, 'maps.2'), 'https://openstreetmap.org') }}
