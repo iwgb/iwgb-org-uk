@@ -13,18 +13,15 @@ use Slim\Routing\RouteCollectorProxy as Group;
 use Teapot\StatusCode;
 
 return function (App $app, Container $c): void {
-    $cors = CorsMiddleware::withOptions();
-    $intlApiAuth = new IntlApiAuthMiddleware($c->get(Provider::SETTINGS)['intlApiKey']);
-
-    $app->group('', function (Group $app) use ($cors): void {
+    $app->group('', function (Group $app): void {
 
         $app->get("/assets/{type}/{file:[A-z0-9\/_-]+}.{ext}", Handler\AssetProxy::class);
 
-        $app->group('/callback/ghost/rebuild', function (Group $app) use ($cors): void {
+        $app->group('/callback/ghost/rebuild', function (Group $app): void {
             $app->post('', Handler\PurgeCmsCache::class);
             $app->options('', fn (Request $request, Response $response, array $args) =>
                 $response->withStatus(StatusCode::NO_CONTENT));
-        })->add($cors);
+        })->add(CorsMiddleware::withOptions());
 
         $app->get('/page/covid-19', fn(Request $request, Response $response, array $args) =>
             Psr7::redirect($response, '/covid-19', StatusCode::MOVED_PERMANENTLY));
@@ -65,10 +62,14 @@ return function (App $app, Container $c): void {
         $app->get('/covid-19[/{page}]', Handler\CovidPage::class);
     });
 
-    $app->group('/intl-api', function (Group $app) use ($cors): void {
+    $app->options('/intl-api/{langpack}[/{language}/{method}]', fn (Request $request, Response $response, array $args) =>
+        $response->withStatus(StatusCode::NO_CONTENT)
+    )->add(CorsMiddleware::withOptions(['credentials' => true]));
+
+    $app->group('/intl-api', function (Group $app): void {
         $app->get('/all', Handler\Intl\AllLangpacks::class);
         $app->get('/{langpack}/{language}/get', Handler\Intl\GetLangpack::class);
         $app->get('/{langpack}/{language}/put', Handler\Intl\PutLangpack::class);
-    })->add($intlApiAuth)
-        ->add($cors);
+    })->add(new IntlApiAuthMiddleware($c->get(Provider::SETTINGS)['intlApiKey']))
+        ->add(CorsMiddleware::withOptions(['credentials' => true]));
 };

@@ -6,11 +6,12 @@ use Tuupola\Middleware\CorsMiddleware as Cors;
 
 class CorsMiddleware {
 
-    public static function withOptions(): Cors {
-        return new Cors([
+    public static function withOptions(array $options = []): Cors {
+        return new Cors(array_merge([
             'origin' => ['*'],
-            'methods' => ['POST', 'OPTIONS'],
+            'methods' => ['GET', 'POST', 'OPTIONS'],
             'headers.allow' => [
+                'Authorization',
                 'Content-Type',
                 'DNT',
                 'User-Agent',
@@ -23,6 +24,6 @@ class CorsMiddleware {
                 'Content-Length',
                 'Content-Range',
             ],
-        ]);
+        ], $options));
     }
 }
