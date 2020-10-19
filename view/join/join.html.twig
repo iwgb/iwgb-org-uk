@@ -28,7 +28,9 @@
         </div>
     {% endif %}
 
-    <div class="container-fluid lazyload bg-image" data-bg="{{ content.featureImage }}">
+    <div class="container-fluid lazyload bg-image"
+         style="background-image:url('{{ content.featureImage }}')"
+    >
         <div class="container join">
             <div class="row pt-5">
                 <span class="join__heading">{{ _(_self, 'heading') }}</span>

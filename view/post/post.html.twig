@@ -16,7 +16,7 @@
             <div class="col-12 col-md-8">
                 {% if post.featureImage is not empty %}
                     <div class="bg-image lazyload row align-items-end post__featured__image"
-                         data-bg="{{ post.featureImage }}"
+                         style="background-image:url('{{ post.featureImage }}')"
                     >
                         <h1 class="post__featured__title col-12 col-md-9 offset-md-3 my-0">{{ post.title }}</h1>
                     </div>
