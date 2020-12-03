@@ -57,8 +57,6 @@ return function (App $app, Container $c): void {
         $app->get('/error', Handler\Error::class);
         $app->get('/404', Handler\NotFound::class);
 
-        $app->post('/contact', Handler\Contact::class);
-
         $app->get('/covid-19[/{page}]', Handler\CovidPage::class);
     });
 

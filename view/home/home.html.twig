@@ -66,18 +66,6 @@
         </div>
     </div>
 
-    {% if _q.contactFormSent is defined %}
-        {% if _q.contactFormSent == 'no' %}
-            <div class="alert alert-danger container mt-3" role="alert">
-                <span>{{ _('global', 'contactForm.error') }}</span>
-            </div>
-        {% elseif _q.contactFormSent == 'yes' %}
-            <div class="alert alert-success container mt-3" role="alert">
-                <span>{{ _('global', 'contactForm.success') }}</span>
-            </div>
-        {% endif %}
-    {% endif %}
-
     <div class="container mt-3 mb-5 my-md-5">
         {% include 'story/story-grid.html.twig' with {
             featured: featured,

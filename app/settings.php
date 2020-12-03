@@ -18,10 +18,6 @@ return ['settings' => [
         'key' => $_ENV['GHOST_API_KEY'],
         'purgeKey' => $_ENV['ASSET_CDN_KEY'],
     ],
-    'recaptcha' => [
-        'siteKey' => $_ENV['RECAPTCHA_SITE_KEY'],
-        'secret' => $_ENV['RECAPTCHA_SECRET'],
-    ],
     'airtable' => [
         'key' => $_ENV['AIRTABLE_API_KEY'],
         'membershipBase' => $_ENV['AIRTABLE_MEMBERSHIP_BASE'],

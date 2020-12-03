@@ -47,7 +47,6 @@ class RenderEnv {
             '_job'       => uniqid(),
             '_path'      => $request->getUri()->getPath(),
             '_uri'       => (string) $request->getUri(),
-            '_recaptcha' => $this->settings['recaptcha']['siteKey'],
             '_q'         => $request->getQueryParams(),
         ]);
 

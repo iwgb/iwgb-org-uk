@@ -5,105 +5,10 @@
 >
     <div class="container">
         <div class="row mb-5">
-            <div class="col-12 col-md-6 pt-5">
+            <div class="col-12 pt-5">
                 <h1 class="contact__header">{{ _(_self, 'heading') }}</h1>
                 <p>{{ _(_self, 'text') }}</p>
                 <p><a href="{{ _(_self, 'cta.href') }}" class="btn btn-iwgb">{{ _(_self, 'cta.text') }}</a></p>
-            </div>
-            <div class="col-12 col-md-6 pt-5">
-                <!--
-                <form id="contactForm"
-                      method="post"
-                      action="/contact"
-                >
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label for="contact__name">{{ _(_self, 'form.name') }}</label>
-                                <input id="contact__name"
-                                       class="form-control"
-                                       name="name"
-                                       required
-                                >
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label for="contact__email">{{ _(_self, 'form.email') }}</label>
-                                <input id="contact__email"
-                                       class="form-control"
-                                       name="email"
-                                       required
-                                >
-                                <small class="form-text text-muted">{{ _(_self, 'form.email.desc') }}</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="contact__message">{{ _(_self, 'form.message') }}</label>
-                                <textarea id="contact__message"
-                                          class="form-control contact__message"
-                                          rows="3"
-                                          name="message"
-                                          required
-                                >
-                                </textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 d-flex justify-content-start align-items-center">
-                            <input id="contact__submit"
-                                    type="submit"
-                                    class="btn btn-iwgb contact__submit g-recaptcha"
-                                    data-sitekey="{{ _recaptcha }}"
-                                    data-callback="onContactSubmit"
-                                    value="{{ _(_self, 'form.submit') }}"
-                            >
-                            <span class="mx-2">{{ _(_self, 'to') }}</span>
-                            <label for="target" class="sr-only">{{ _(_self, 'department') }}</label>
-                            <select id="target"
-                                    name="target"
-                                    class="custom-select text-dark w-auto"
-                            >
-                                {% for name, email in contacts %}
-                                    <option value="{{ name }}">{{ _(_self, name) }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 my-2">
-                            <small class="text-muted">
-                                <span>
-                                    {{ _e(_self, 'recaptcha.message', {
-                                        privacy:
-                                            '<a href="https://policies.google.com/privacy"
-                                               target="blank"
-                                               referrerpolicy="no-referrer"
-                                               class="link-span-only text-white"
-                                            >
-                                                <span>' ~ _(_self, 'recaptcha.privacy') ~ '</span>
-                                                <i class="fas fa-external-link-alt fa-sm"></i>
-                                            </a>',
-                                        terms:
-                                            '<a href="https://policies.google.com/terms"
-                                               target="blank"
-                                               referrerpolicy="no-referrer"
-                                               class="link-span-only text-white"
-                                            >
-                                                <span>' ~ _(_self, 'recaptcha.terms') ~ '</span>
-                                                <i class="fas fa-external-link-alt fa-sm"></i>
-                                            </a>',
-                                    }) }}
-                                </span>
-                            </small>
-                        </div>
-                    </div>
-                </form>
-                -->
             </div>
         </div>
         {% include '_component/office/office.html.twig' with {
@@ -114,8 +19,3 @@
         } only %}
     </div>
 </div>
-<script>
-    function onSubmit(token) {
-        document.getElementById("contact").submit();
-    }
-</script>
