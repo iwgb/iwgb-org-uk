@@ -33,5 +33,8 @@
         "psr-4": {
             "Iwgb\\OrgUk\\": "src/"
         }
+    },
+    "scripts": {
+        "start:dev": "php -S localhost:8888 public/index.php"
     }
 }

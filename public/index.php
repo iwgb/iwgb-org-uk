@@ -9,13 +9,11 @@ use Slim\Factory\AppFactory;
 use Slim\Middleware\ContentLengthMiddleware;
 
 /** @var Container $c */
-$c = require '../bootstrap.php';
+$c = require dirname(__FILE__) . '/../bootstrap.php';
 
 $app = AppFactory::createFromContainer($c);
 
 $app->add(new ContentLengthMiddleware());
-
-$callableResolver = $app->getCallableResolver();
 
 (require APP_ROOT . '/app/routes.php')($app, $c);
 

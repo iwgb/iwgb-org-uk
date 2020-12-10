@@ -7,7 +7,12 @@ Clone the repo and install the dependencies using Composer:
 composer install
 ```
 
-The app can be run from any web server with PHP7.4, with the webroot at `/public`.
+Then run the application using the development server:
+```bash
+composer run-script start:dev
+```
+
+The app will now be running on port 8888.
 
 ## Architecture
 The app retrieves data from Airtable and Ghost, caches it using Doctrine and serves it using the Slim4 microframework. Front-end code is written in Twig.
