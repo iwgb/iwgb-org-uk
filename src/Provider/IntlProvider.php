@@ -25,7 +25,7 @@ class IntlProvider implements Injectable {
                     ]),
                     $c->get(Provider::SETTINGS)['s3']['bucket'],
                     new FilesystemCache(APP_ROOT . '/var/cache/intl'),
-                    "intl/{$c->get(Provider::SETTINGS)['environment']}/",
+                    "intl/prod/",
                     $c->get(Provider::SETTINGS)['s3']['cdnUrl'],
                 ),
                 $c->get(Provider::SETTINGS)['languages'],
