@@ -12,7 +12,7 @@ Then run the application using the development server:
 composer run-script start:dev
 ```
 
-The app will now be running on port 8888.
+The app will now be running on port 49421.
 
 ## Architecture
 The app retrieves data from Airtable and Ghost, caches it using Doctrine and serves it using the Slim4 microframework. Front-end code is written in Twig.

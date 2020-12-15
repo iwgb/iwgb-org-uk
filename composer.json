@@ -35,6 +35,6 @@
         }
     },
     "scripts": {
-        "start:dev": "php -S localhost:8888 public/index.php"
+        "start:dev": "php -S localhost:49421 public/index.php"
     }
 }

@@ -50,12 +50,14 @@ jobs:
         run: 'http GET https://api.keycdn.com/zones/purge/${{ secrets.KEYCDN_ZONE_ID }}.json -a ${{ secrets.KEYCDN_API_KEY}}:'
 
       - name: Verify
-        run: export status=http -h https://iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2
+        run: echo ::set-env name=status::$(http -h https://iwgb.org.uk | grep HTTP/ | cut -d ' ' -f 2)
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
       - name: Check
-        if: status == 500
+        if: env.status == 500
         run: http POST https://maker.ifttt.com/trigger/build_failed/with/key/${{ secrets.IFTTT_KEY }} value1="${{ github.workflow }}" value2="${{ github.repository }}" --ignore-stdin && exit 1
 
       - name: Validate
-        if: status != 500
+        if: env.status != 500
         run: http POST https://maker.ifttt.com/trigger/build_success/with/key/${{ secrets.IFTTT_KEY }} value1="${{ github.workflow }}" value2="${{ github.repository }}" --ignore-stdin
