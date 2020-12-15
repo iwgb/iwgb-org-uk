@@ -55,11 +55,6 @@ class LayoutData {
                 }
 
                 return ['nav' => [
-                    'Donate'    => [
-                        'kind'   => 'internal',
-                        'href'   => '/page/donate',
-                        'mdHide' => true,
-                    ],
                     'News'      => [
                         'kind' => 'menu',
                         'id'   => 'news',
@@ -87,19 +82,17 @@ class LayoutData {
                         'id'   => 'branches',
                         'data' => $branches,
                     ],
-                    'Resources' => [
-                        'kind' => 'menu',
-                        'id'   => 'resources',
-                        'data' =>  Cms::groupBySubcategory(
-                            $this->cms->pagesByTag('category-resources')
-                        ),
-                    ],
                     'About'     => [
                         'kind' => 'menu',
                         'id'   => 'about',
                         'data' => Cms::groupBySubcategory(
                             $this->cms->pagesByTag('category-about')
                         ),
+                    ],
+                    'Support' => [
+                        'kind' => 'internal',
+                        'id'   => 'support',
+                        'href' => '/page/support-and-advice'
                     ],
                 ]];
             },
@@ -108,9 +101,6 @@ class LayoutData {
                     CmsResource::getCacheableFromAll($data['nav']['News']['data']);
                 $data['nav']['Campaigns']['data'] =
                     CmsResource::getCacheableFromAll($data['nav']['Campaigns']['data']);
-
-                $data['nav']['Resources']['data'] =
-                    self::cacheableResourcesFromSubcategoryList($data['nav']['Resources']['data']);
                 $data['nav']['About']['data'] =
                     self::cacheableResourcesFromSubcategoryList($data['nav']['About']['data']);
 
@@ -121,9 +111,6 @@ class LayoutData {
                     CmsResource::buildAllFromCachedObjects($this->cms->ghost, $this->intl, $data['nav']['News']['data']);
                 $data['nav']['Campaigns']['data'] =
                     CmsResource::buildAllFromCachedObjects($this->cms->ghost, $this->intl, $data['nav']['Campaigns']['data']);
-
-                $data['nav']['Resources']['data'] =
-                    self::buildResourcesFromCachedSubcategories($this->cms->ghost, $this->intl, $data['nav']['Resources']['data']);
                 $data['nav']['About']['data'] =
                     self::buildResourcesFromCachedSubcategories($this->cms->ghost, $this->intl, $data['nav']['About']['data']);
 
@@ -139,9 +126,9 @@ class LayoutData {
     public function footer(): array {
         return $this->cache->get('footer',
             fn(): array => ['footer' => [
-                'about'     => $this->cms->pagesByTag('subcategory-about'),
-                'resources' => $this->cms->pagesByTag('subcategory-resources'),
-                'legal'     => $this->cms->pagesByTag('subcategory-legal'),
+                'policies'     => $this->cms->pagesByTag('category-policies'),
+                'about' => $this->cms->pagesByTag('subcategory-about'),
+                'getInvolved'     => $this->cms->pagesByTag('subcategory-get-involved'),
             ]],
             function (array $categories): array {
                 $cacheable = [];
@@ -160,7 +147,7 @@ class LayoutData {
         );
     }
 
-    private static function cacheableResourcesFromSubcategoryList(array $subcategories) {
+    private static function cacheableResourcesFromSubcategoryList(array $subcategories): array {
         $cacheable = [];
         foreach ($subcategories as $subcategory => $resources) {
             $cacheable[$subcategory]['pages'] = CmsResource::getCacheableFromAll($resources['pages']);
@@ -170,7 +157,11 @@ class LayoutData {
         return $cacheable;
     }
 
-    private static function buildResourcesFromCachedSubcategories(Ghost $ghost, IntlController $intl, array $cached) {
+    private static function buildResourcesFromCachedSubcategories(
+        Ghost $ghost,
+        IntlController $intl,
+        array $cached
+    ): array {
         $subcategories = [];
         foreach ($cached as $subcategory => $resources) {
             $subcategories[$subcategory]['pages'] = CmsResource::buildAllFromCachedObjects($ghost, $intl, $resources['pages']);
@@ -178,5 +169,4 @@ class LayoutData {
         }
         return $subcategories;
     }
-
 }
