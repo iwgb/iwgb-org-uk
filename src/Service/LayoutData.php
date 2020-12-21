@@ -92,7 +92,7 @@ class LayoutData {
                     'Support' => [
                         'kind' => 'internal',
                         'id'   => 'support',
-                        'href' => '/page/support-and-advice'
+                        'href' => '/page/support-and-advice',
                     ],
                 ]];
             },

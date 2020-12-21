@@ -12,8 +12,11 @@ class AirtableClientFactory {
         return new Airtable($key, $baseId,
             new FilesystemCache(APP_ROOT . "/var/cache/airtable/{$baseId}"),
             $cachableTables,
-            'https://airtable.iwgb.org.uk/v0',
-            ['X-Proxy-Auth' => $proxyKey],
+            'https://outbound.iwgb.org.uk/v0',
+            [
+                'X-Proxy-Auth' => $proxyKey,
+                'X-Proxy-Destination-Key' => 'airtable',
+            ],
             false,
         );
     }
