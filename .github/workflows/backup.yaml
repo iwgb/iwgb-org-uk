@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Setup
-        uses: kielabokkie/ssh-key-and-known-hosts-action@v1.0.1
+        uses: kielabokkie/ssh-key-and-known-hosts-action@v1.1.0
         with:
           ssh-private-key: ${{ secrets.DEPLOY_KEY }}
           ssh-host: noproxy.cms.iwgb.org.uk
