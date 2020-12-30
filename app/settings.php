@@ -24,11 +24,6 @@ return ['settings' => [
         'branchesBase' => $_ENV['AIRTABLE_BRANCHES_BASE'],
         'proxyKey' => $_ENV['AIRTABLE_PROXY_KEY'],
     ],
-    'mailgun' => [
-        'key' => $_ENV['MAILGUN_API_KEY'],
-        'domain' => $_ENV['MAILGUN_DOMAIN'],
-        'from' => $_ENV['MAILGUN_FROM_ADDR']
-    ],
     'contacts' => [
         'enquiries' => $_ENV['CONTACT_ENQUIRIES'],
         'memberships' => $_ENV['CONTACT_MEMBERSHIPS'],

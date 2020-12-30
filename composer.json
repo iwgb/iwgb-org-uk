@@ -14,7 +14,6 @@
         "aura/session": "^2.1.0",
         "nesbot/carbon": "^2.41",
         "erusev/parsedown": "^1.7",
-        "mailgun/mailgun-php": "^3.1",
         "php-http/curl-client": "^2.1",
         "guzzlehttp/guzzle": "^6.5",
         "twig/twig": "^3.0",
