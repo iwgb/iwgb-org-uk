@@ -48,24 +48,6 @@
 {% endblock %}
 
 {% block body %}
-
-    <div class="container-fluid text-white covid covid__background">
-        <div class="container">
-            <div class="row py-5">
-                <div class="col-12 col-md-6">
-                    <h1>Covid-19</h1>
-                </div>
-                <div class="col-7 col-md-6">
-                    <p>{{ _(_self, 'covidBanner.body') }}</p>
-                    <div>
-                        <a href="/page/covid-19" class="btn btn-light mr-2 mb-2">{{ _(_self, 'covidBanner.responseLink') }}</a>
-                        <a href="/page/support-and-advice" class="btn btn-light mb-2">{{ _(_self, 'covidBanner.supportLink') }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="container mt-3 mb-5 my-md-5">
         {% include 'story/story-grid.html.twig' with {
             featured: featured,

@@ -23,10 +23,6 @@ return function (App $app, Container $c): void {
                 $response->withStatus(StatusCode::NO_CONTENT));
         })->add(CorsMiddleware::withOptions());
 
-        $app->get('/page/covid-19', fn(Request $request, Response $response, array $args) =>
-            Psr7::redirect($response, '/covid-19', StatusCode::MOVED_PERMANENTLY));
-        $app->get('/page/info/coronavirus', fn(Request $request, Response $response, array $args) =>
-            Psr7::redirect($response, '/covid-19', StatusCode::MOVED_PERMANENTLY));
         $app->get('/donate', fn(Request $request, Response $response, array $args) =>
             Psr7::redirect($response, '/page/donate', StatusCode::MOVED_PERMANENTLY));
         $app->get('/page/{subcategory}/{page}', fn(Request $request, Response $response, array $args) =>
@@ -56,8 +52,6 @@ return function (App $app, Container $c): void {
 
         $app->get('/error', Handler\Error::class);
         $app->get('/404', Handler\NotFound::class);
-
-        $app->get('/covid-19[/{page}]', Handler\CovidPage::class);
     });
 
     $app->options('/intl-api/{langpack}[/{language}/{method}]', fn (Request $request, Response $response, array $args) =>
